@@ -1,0 +1,38 @@
+<?php 
+$title = 'поиск';
+$h1 = 'Поиск по сайту';
+
+$counter ='';
+$subh1 ='';
+
+include_once HEAD; ?>
+<body>
+  
+    <!--<div class="container__footer-less">-->
+
+    <?php include_once FIGURE; ?>
+    <?php include_once NAV_ICON; ?>
+        
+        <div class="container__main">
+            <div class= "header__breadcrumb top-content side-content">
+                <a href="/">главная</a>  |  поиск
+            </div>              
+                    
+            <?php include_once TITLE_H1; ?>   
+    
+        <div class="side-content">
+
+            <form action="/search/response/search/" method="get" class="base-form search-form">
+                <input type="search" name="search" placeholder="Введите название организации (адрес) или категорию...">
+                <button type="submit"></button>
+                <label for="" class="search-form__note">Например, <span class ="listing__link italic">восстановление ванн</span></label>
+            </form>
+  
+        </div>
+    
+    <div class="footer__under"></div>
+    </div><!--закрытие container__main-->
+    <div class="footer__under-min720"></div> 
+    <?php include_once FOOTER; ?>
+</body>
+</html>
