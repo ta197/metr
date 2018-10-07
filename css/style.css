@@ -315,7 +315,7 @@ h4{
 
 .category-minimenu{
     margin-top: 45px;
-    margin-bottom: 60px;
+ 
     color: #0677a0;
     font-weight: 400;
 }
@@ -323,6 +323,7 @@ h4{
 .category-minimenu li{
     display: inline-block;
     white-space: nowrap;
+    margin-bottom: 60px;
 }
 
 .category-minimenu li:not(:last-child){
@@ -848,12 +849,13 @@ h2:target {
 
 .add-mininav{
    margin-top: 60px;
-   margin-bottom: 60px;
+   
 }
 .add-mininav__item{
     max-width: 700px; 
     display: inline-block;
-    margin-right: 90px; 
+    margin-right: 90px;
+    margin-bottom: 60px; 
 }
 
 /*/////////////////////////////////////////////*/

@@ -25,7 +25,7 @@ include_once HEAD;
         if(!empty($cat->countGoods)) {
                 echo '<div class = "side-content category-minimenu">
                 <a href = "/catalog/category/cat/'.$cat->cat_id.'" class="button-dark">
-                Каталог категории <q>'.$cat->ucfirst_utf8($cat->name).'</q> 
+                Каталог <q>'.$cat->ucfirst_utf8($cat->name).'</q> 
                 <span class = "counter">('.$cat->countGoods.')</span></a></div>';
             }
         ?>
