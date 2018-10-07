@@ -40,7 +40,7 @@ include_once HEAD;
         </div>
 
         <div class = "side-content category-minimenu">
-            <a href="/category/section/cat/<?= $catObj->cat_id; ?>">Категория &laquo;<?= $catObj->ucfirst_utf8($catObj->name) ?>&raquo;</a>
+            <a href="/category/section/cat/<?= $catObj->cat_id; ?>" class="button-dark">Категория &laquo;<?= $catObj->ucfirst_utf8($catObj->name) ?>&raquo;</a>
         </div>
        
     </div><!--закрытие container__main-->

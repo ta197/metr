@@ -218,8 +218,8 @@ $counter['counter'] = $countCompany;
             </div>
                
             <ul class="add-mininav side-content">
-                <li class="add-mininav__item"><a href="42.html">новые организации</a></li>
-                <li class="add-mininav__item"><a href="42.html">архивные организации</a></li>
+                <li class="add-mininav__item"><a href="42.html" class="button-dark">новые организации</a></li>
+                <li class="add-mininav__item"><a href="42.html" class="button-dark">архивные организации</a></li>
             </ul>
 
         </div><!--закрытие container__main-->

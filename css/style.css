@@ -322,6 +322,7 @@ h4{
 
 .category-minimenu li{
     display: inline-block;
+    white-space: nowrap;
 }
 
 .category-minimenu li:not(:last-child){
@@ -371,7 +372,6 @@ h4{
     background-color: #fdfdfd;
     border-radius: 25px;
     padding: 10px 30px;
-    display: block;
     text-decoration: none;
     border: 1px solid #85a7b4;
     font-weight: 400;
@@ -381,12 +381,14 @@ h4{
     margin-top:20px;
     margin-bottom:20px;
     text-align: left;
+
 }
 .button-dark:hover{
     background-color:#0677a0;
     border-color: #0677a0;
     color: #fdfdfd;
     cursor: pointer;
+    text-decoration: none;
 }
 .button-dark:active{
     border-color: #7f9ba7;
