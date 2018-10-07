@@ -14,19 +14,18 @@ include_once HEAD;
             <?php include_once BRC; echo " | " . $title; ?>
         </div>
         <?php include_once TITLE_H1; ?>
-        
+
         <?php 
         if($catMenu){
             include_once CAT_MENU;
         }
         ?>
-
         
         <?php
         if(!empty($cat->countGoods)) {
                 echo '<div class = "side-content category-minimenu">
                 <a href = "/catalog/category/cat/'.$cat->cat_id.'">
-                каталог категории <q>'.$cat->ucfirst_utf8($cat->name).'</q></a> 
+                Общий каталог категории <q>'.$cat->ucfirst_utf8($cat->name).'</q></a> 
                 <span class = "counter">('.$cat->countGoods.')</span></div>';
             }
         ?>
@@ -53,15 +52,14 @@ include_once HEAD;
 
         <div class="listing side-content">
             <?php 
-                // echo '<pre>';
-                // print_r($this);
-                // echo '</pre>';
+               // echo '<pre>';
+               // print_r($this);
+               // echo '</pre>';
             ?>       
         </div>
     
-    <div class="footer__under"></div>
     </div><!--закрытие container__main-->
-    <div class="footer__under-min720"></div> 
+    
     <?php include_once FOOTER; ?>
       
 </body>

@@ -209,7 +209,7 @@ $counter['counter'] = $countCompany;
             <?php include_once LIST_COMPANIES;?>
             </div>
             
-            <div class="listing side-content">
+            <div>
                 <?php 
                 // echo '<pre>';
                 // print_r($this);
@@ -222,9 +222,7 @@ $counter['counter'] = $countCompany;
                 <li class="add-mininav__item"><a href="42.html">архивные организации</a></li>
             </ul>
 
-        <div class="footer__under"></div>
         </div><!--закрытие container__main-->
-        <div class="footer__under-min720"></div>    
             
         <?php include_once FOOTER; ?>
    

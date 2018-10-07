@@ -9,7 +9,6 @@ include_once HEAD;
     <?php include_once NAV_ICON; ?>
         
         <div class="container__main">
-
             <div class= "header__breadcrumb top-content side-content">
                 <a href="/">главная</a>  |  все категории
             </div>
@@ -18,17 +17,14 @@ include_once HEAD;
 
             <?php include_once CAT_MENU; ?>
             
-            <div class="listing side-content">
+            <div>
             <?php 
                 // echo '<pre>';
                 // print_r($this);
                 // echo '</pre>';
             ?>       
             </div>
-
-        <div class="footer__under"></div>
-        </div><!--закрытие container__main-->
-        <div class="footer__under-min720"></div>       
+        </div><!--закрытие container__main-->    
     
     <?php include_once FOOTER; ?>
     

@@ -24,9 +24,16 @@ $letter ='';
                }
            echo "\t\t".'<dd class="listing__link"><a href="/company/card/c/'.$item['company_id'].'">подробнее</a>';
            if($item['site']) echo '<div class="gap">|</div><a href="http://www.'."{$item['site']}".'">сайт</a>';
-           if(!empty($item['max_catid'])){
-               echo '<div class="gap">|</div><a href="/catalog/catcompany/c/'."{$item['company_id']}".'/cat/'.$cat->cat_id.'">каталог</a>';
-           }
+           
+           //if(!empty($item['max_catid'])){
+           //   echo '<div class="gap">|</div><a href="/catalog/catcompany/c/'."{$item['company_id']}".'/cat/'.$cat->cat_id.'">каталог</a>';
+           //}
+           
+            //ссылка на каталог раздела в одной компании
+            if(!empty($item['cat_catalog'])){
+               echo '<div class="gap">|</div><a href="/catalog/catcompany/c/'."{$item['company_id']}".'/cat/'.$cat->cat_id.'"> '.$cat->name.' в каталоге организации</a>';
+            }
+
            echo '</dd>'."\n";
         echo "</dl>\n";
     endforeach;

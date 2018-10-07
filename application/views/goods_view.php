@@ -82,7 +82,7 @@ include_once HEAD;
         
         <?php if(!empty($listGoods)) include_once LIST_GOODS; ?>
         
-        <div class="listing side-content">
+        <div>
         <?php 
         // echo '<pre>';
         // print_r($this);
@@ -91,13 +91,11 @@ include_once HEAD;
         </div>
         
         <ul class = "side-content category-minimenu">
-            <li><a href="/catalog/company/c/<?= $c->company_id; ?>">каталог организации</a></li>
-            <li><a href="/category/section/cat/<?= $catObj->cat_id; ?>">вернуться в категорию <q><?= $catObj->ucfirst_utf8($catObj->name); ?></q></a></li>
+            <li><a href="/catalog/company/c/<?= $c->company_id; ?>">Каталог организации</a></li>
+            <li><a href="/category/section/cat/<?= $catObj->cat_id; ?>">Категория <q><?= $catObj->ucfirst_utf8($catObj->name); ?></q></a></li>
         </ul>
 
-        <div class="footer__under"></div>
     </div><!--закрытие container__main-->
-    <div class="footer__under-min720"></div>    
             
     <?php include_once FOOTER; ?>
  

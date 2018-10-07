@@ -30,8 +30,10 @@ class CategoryController extends ParentController implements IController
     $this->view->brc = $m->getBrc($this->view->cat);
         $company =new Company();
     $this->view->countCompany = $company->countCompaniesByCategory($id);
-    $this->view->listCompany = $company->getCompaniesByCategory($id);
-
+    //$this->view->listCompany = $company->getCompaniesByCategory($id);
+    
+    $this->view->listCompany = $company->getCompaniesByCategoryAndGoods($id);
+    
     $output = $this->view->render(CATEGORY_VIEW_FILE);
     $fc->setBody($output);
   }

@@ -33,19 +33,17 @@ include_once HEAD;
         
         <div class="listing side-content">
         <?php
-            // echo '<pre>';
-            // print_r($this);
-            // echo '</pre>';
+            //echo '<pre>';
+           // print_r($this);
+           //echo '</pre>';
         ?>             
         </div>
 
         <div class = "side-content category-minimenu">
-            <a href="/catalog">весь каталог сайта</a>
+            <a href="/category/section/cat/<?= $catObj->cat_id; ?>">Категория &laquo;<?= $catObj->ucfirst_utf8($catObj->name) ?>&raquo;</a>
         </div>
        
-        <div class="footer__under"></div>
     </div><!--закрытие container__main-->
-    <div class="footer__under-min720"></div>    
             
     <?php include_once FOOTER; ?>
   

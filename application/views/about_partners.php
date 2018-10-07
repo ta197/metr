@@ -51,13 +51,10 @@ include_once HEAD;
     ?>             
 </div>
           
-    
         <div class = "side-content category-minimenu">
-            <a href="/catalog/company/c/<?= $c->company_id; ?>">каталог организации</a></li>
+            <a href="/about/contacts">как с нами связаться</a></li>
         </div>
 
-
-          
           <div class="listing side-content">
             <?php 
                 // echo '<pre>';
@@ -65,10 +62,8 @@ include_once HEAD;
                 // echo '</pre>';
             ?>       
             </div>
-
-        <div class="footer__under"></div>
+        
     </div><!--закрытие container__main-->
-    <div class="footer__under-min720"></div>    
             
     <?php include_once FOOTER; ?>
 </body>

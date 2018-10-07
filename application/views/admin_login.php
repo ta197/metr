@@ -73,13 +73,8 @@ include_once HEAD;
                 // echo '</pre>';
                 ?>             
             </div>
-                  
-            
-
-
-        <div class="footer__under"></div>
+      
         </div><!--закрытие container__main-->
-        <div class="footer__under-min720"></div>    
             
         <?php include_once FOOTER; ?>
    

@@ -1,7 +1,6 @@
 <?php 
 $title = 'поиск';
 $h1 = 'Поиск по сайту';
-
 $counter ='';
 $subh1 ='';
 
@@ -30,9 +29,8 @@ include_once HEAD; ?>
   
         </div>
     
-    <div class="footer__under"></div>
     </div><!--закрытие container__main-->
-    <div class="footer__under-min720"></div> 
+    
     <?php include_once FOOTER; ?>
 </body>
 </html>

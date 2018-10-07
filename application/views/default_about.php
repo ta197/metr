@@ -57,8 +57,6 @@ include_once HEAD;
          
     ?>             
 </div>
-          
-    
                  
           <div class="listing side-content">
             <?php 
@@ -67,10 +65,12 @@ include_once HEAD;
                 // echo '</pre>';
             ?>       
             </div>
+        
+        <div class = "side-content category-minimenu">
+            <a href="/about/contacts">как с нами связаться</a></li>
+        </div>
 
-        <div class="footer__under"></div>
     </div><!--закрытие container__main-->
-    <div class="footer__under-min720"></div>    
             
     <?php include_once FOOTER; ?>
 

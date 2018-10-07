@@ -17,7 +17,6 @@ foreach($items as $item):
     echo "\t".'<dt class="listing__company-name'.$indent.'">'."$item[name]  | ";
     echo '<span class="listing__link"><a href="/category/section/cat/'.$item['cat_id'].'">подробнее</a>'.'</dt>'."\n";
        
-       
     echo "\n</dl>\n";
 endforeach;
 ?>

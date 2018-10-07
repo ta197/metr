@@ -12,8 +12,6 @@ include_once HEAD; ?>
        
     <?php include_once FIGURE; ?>
 
-    
-        
         <div class="container__main">
             <div class= "header__breadcrumb side-content top-content">
                 <a href="/">главная</a>  |  админ-панель
@@ -23,11 +21,9 @@ include_once HEAD; ?>
             <?php //if(!empty($_COOKIE['role'])) echo $_COOKIE['role'];
             ?>
                     
-                       
             <div class="listing side-content">
             <?php
                
-
             echo 'Welcom, '.$_SESSION['user']['name'];
             //var_dump($_SESSION['user']);    
                 // echo '<pre>';
@@ -36,17 +32,11 @@ include_once HEAD; ?>
                 ?>
                 <li><a href="/admin/userlist">Список пользователей</a></li>
                 <li><a href="/admin/logout">Выход</a>   </li>
-                
                         
             </div>
-               
-            
-
-
-        <div class="footer__under"></div>
+        
         </div><!--закрытие container__main-->
-        <div class="footer__under-min720"></div>    
-            
+        
         <?php include_once FOOTER; ?>
    
 </body>

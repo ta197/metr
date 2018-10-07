@@ -45,10 +45,8 @@ include_once HEAD;
         ?>             
         </div>
 
-        <div class="footer__under"></div>
     </div><!--container__main-->
-    <div class="footer__under-min720"></div>    
-            
+  
     <?php include_once FOOTER; ?>
 
 </body>

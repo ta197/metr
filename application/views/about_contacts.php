@@ -53,7 +53,7 @@ include_once HEAD;
           
     
         <div class = "side-content category-minimenu">
-            <a href="/catalog/company/c/<?= $c->company_id; ?>">каталог организации</a></li>
+            <a href="/about/partners">рекламодателям</a></li>
         </div>
 
 
@@ -66,9 +66,9 @@ include_once HEAD;
             ?>       
             </div>
 
-        <div class="footer__under"></div>
+        
     </div><!--закрытие container__main-->
-    <div class="footer__under-min720"></div>    
+   
             
     <?php include_once FOOTER; ?>
 </body>

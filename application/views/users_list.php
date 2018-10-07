@@ -10,8 +10,6 @@ include_once HEAD;
        
     <?php include_once FIGURE; ?>
 
-    
-        
         <div class="container__main">
             <div class= "header__breadcrumb side-content top-content">
                 <a href="/">главная</a>  | <a href="/admin"> админ-панель</a> | список пользователей
@@ -56,17 +54,10 @@ HEREDOC;
                 // echo '</pre>';
 ?> 
 
-            
-            
                 <a href="/admin/logout">Выход</a>            
             </div>
                
-            
-
-
-        <div class="footer__under"></div>
         </div><!--закрытие container__main-->
-        <div class="footer__under-min720"></div>    
             
         <?php include_once FOOTER; ?>
    

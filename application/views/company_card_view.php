@@ -17,7 +17,6 @@ include_once HEAD;
         
         <?php include_once TITLE_H1; ?>
 
-                
         <?php
         if(!empty($c->about)){
             echo '<p class="side-content lowered_15">'.$c->about.'</p>';
@@ -45,7 +44,6 @@ include_once HEAD;
                 }else{
                     echo "\t\t".'<dd class="lowered_30 bottom_30"><a href="/catalog/company/c/'.$c->company_id.'" class="button">каталог<i class="icon-chevron-right"></i></a></dd>'."\n";
                 }
-               
             }
                 
             if(!empty($item->categories)){
@@ -64,8 +62,6 @@ include_once HEAD;
         ?>             
         </div>
           
-    
-                
           <div class="listing side-content">
             <?php 
                 // echo '<pre>';
@@ -74,9 +70,7 @@ include_once HEAD;
             ?>       
             </div>
 
-        <div class="footer__under"></div>
     </div><!--закрытие container__main-->
-    <div class="footer__under-min720"></div>    
             
     <?php include_once FOOTER; ?>
 </body>

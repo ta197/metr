@@ -120,7 +120,8 @@ GROUP BY id_ul
     //     return $listLegal = array_count_values ($listLegal);    
     // }
 
-      
+
+    // список компаний по категории (без информации о наличии каталога этой категории у компании)
     public function getCompaniesByCategory($id){
         //$arr[] = $this->clearInt($id);
         return self::$db->queryEach(
@@ -143,23 +144,35 @@ GROUP BY id_ul
             [$id]);
     }
 
-    //    LEFT JOIN `places_goods` ON (places_goods.place_id = places_cats.place_id)
-    //         LEFT JOIN `goods` ON (goods.goods_id = places_goods.goods_id AND goods.cat_id = places_cats.cat_id)
-
-    public function countCompaniesByCategory($id){
-        return self::$db->queryAll(
+// список компаний по категории (с информацией о наличии каталога этой категории у компании)
+    public function getCompaniesByCategoryAndGoods($id){
+        //$arr[] = $this->clearInt($id);
+        return self::$db->queryEach(
             "SELECT
-            LEFT(c.company, 1) AS letter, c.company_id
+            p.place_id,
+            c.company, LEFT(c.company, 1) AS letter, c.company_id, c.site, COUNT(goods.goods_id) as cat_catalog,
+            company_to_string(c.name_type, c.shop, legal.name, c.name_legal, c.quotes, c.company) AS company_name, 
+            GROUP_CONCAT(DISTINCT CONCAT_WS('', places_to_string(p.city, p.street, p.house, centres.address, centres.name_center, p.detail, p.unit_floor, p.unit_not),
+                       	phones_to_string(p.tel, p.addtel, p.cell, p.add_cell))
+                        SEPARATOR '~~') 
+                        AS addresses
             FROM `places` AS p
             LEFT JOIN `places_cats` ON (places_cats.place_id = p.place_id)
             JOIN `companies` AS c ON (p.company_id =  c.company_id)
+            LEFT JOIN `centres` ON (p.centre = centres.id)
+            LEFT JOIN `legal` ON (legal.id = c.legal)
+            LEFT JOIN `places_goods` ON (places_goods.place_id = places_cats.place_id)
+            LEFT JOIN `goods` ON (goods.goods_id = places_goods.goods_id AND goods.cat_id = places_cats.cat_id)
             WHERE  places_cats.cat_id = ?
             GROUP BY c.company_id
-            ORDER BY letter",
+            ORDER BY c.company",
             [$id]);
     }
+    //    LEFT JOIN `places_goods` ON (places_goods.place_id = places_cats.place_id)
+    //         LEFT JOIN `goods` ON (goods.goods_id = places_goods.goods_id AND goods.cat_id = places_cats.cat_id)
+    
 
-       public function getCompaniesByGoods($goods){
+    public function getCompaniesByGoods($goods){
         $arr[] = $this->clearInt($goods);
         return self::$db->queryAll(
             "SELECT
@@ -181,6 +194,21 @@ GROUP BY id_ul
             ORDER BY c.company", $arr);
        }
 
+
+    public function countCompaniesByCategory($id){
+        return self::$db->queryAll(
+            "SELECT
+            LEFT(c.company, 1) AS letter, c.company_id
+            FROM `places` AS p
+            LEFT JOIN `places_cats` ON (places_cats.place_id = p.place_id)
+            JOIN `companies` AS c ON (p.company_id =  c.company_id)
+            WHERE  places_cats.cat_id = ?
+            GROUP BY c.company_id
+            ORDER BY letter",
+            [$id]);
+    }
+
+     
       
     public function getTitleCompanyById($id)
         {

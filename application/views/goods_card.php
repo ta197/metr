@@ -75,9 +75,7 @@ include_once HEAD;
             <a href="/catalog">весь каталог сайта</a>
         </div>
        
-        <div class="footer__under"></div>
     </div><!--закрытие container__main-->
-    <div class="footer__under-min720"></div>    
             
     <?php include_once FOOTER; ?>
 </body>
