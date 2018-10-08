@@ -20,7 +20,7 @@
                     </h1>
             </header>
                  
-            <h3 class="subtitle side-content bottom_60">
+            <h3 class="subtitle subtitle_top-indent side-content bottom_60">
                     Более 200 организаций торговли и услуг для строительства, ремонта, отделки
             </h3>
             

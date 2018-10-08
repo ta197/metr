@@ -113,12 +113,12 @@ class Search extends Model
             JOIN `companies` AS c ON (p.company_id =  c.company_id)
             LEFT JOIN `legal` ON (legal.id = c.legal)
             LEFT JOIN `centres` ON (p.centre = centres.id)
-            WHERE   c.company LIKE ?  OR p.city LIKE ?  OR centres.name_center LIKE ? OR c.shop LIKE ? OR p.street LIKE ? 
+            WHERE   c.company LIKE ?  OR p.city LIKE ?  OR centres.name_center LIKE ? OR centres.address LIKE ? OR c.shop LIKE ? OR p.street LIKE ? 
                     OR c.name_legal LIKE ? 
-                    OR legal.name = ? OR p.house LIKE ?  OR p.tel = ? OR p.cell = ?
+                    OR legal.name = ? OR p.house LIKE ? OR p.tel = ? OR p.addtel = ? OR p.cell = ?
             GROUP BY c.company_id
             ORDER BY c.company", 
-            ["%$word%", "%$word%", "%$word%", "%$word%", "%$word%", "%$word%", "$word", "$word", "$word", "$word"]);
+            ["%$word%", "%$word%", "%$word%", "%$word%", "%$word%", "%$word%", "%$word%", "$word", "$word", "$word", "$word", "$word"]);
     }
     
     public function getSearchCat($word){

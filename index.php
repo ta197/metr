@@ -55,6 +55,8 @@ const ADMIN_USERS_LIST_FILE = 'users_list.php';
 
 const COMPANY_FILTERS_JSON = 'company_filters_json.php';
 
+const ARCHIVE_COMPANIES_FILE = 'archhive_companies.php';
+
 
 /* Автозагрузчик классов */
 spl_autoload_register(function ($class){

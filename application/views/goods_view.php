@@ -42,10 +42,11 @@ include_once HEAD;
                 
         <?php 
         if(!empty($goods)):?>
-            <img class = "goods__photo_card side-content" src="/img/goods/99-7031_1.jpg">
+            
             <div class="listing side-content">
+            
                 <dl class="listing__company">
-                    
+                <img class = "goods__photo_card" src="/img/goods/99-7031_1.jpg">
                    <dt class="listing__company-name">
                     <?php if(!empty($goods->short_description)) echo $goods->short_description; ?>
                     </dt>
@@ -90,9 +91,9 @@ include_once HEAD;
         ?>             
         </div>
         
-        <ul class = "side-content category-minimenu">
-            <li><a href="/catalog/company/c/<?= $c->company_id; ?>" class="button-dark">Каталог организации</a></li>
-            <li><a href="/category/section/cat/<?= $catObj->cat_id; ?>" class="button-dark">Категория <q><?= $catObj->ucfirst_utf8($catObj->name); ?></q></a></li>
+        <ul class = "side-content add-mininav">
+            <li class="add-mininav__item"><a href="/catalog/company/c/<?= $c->company_id; ?>" class="button-dark">Каталог организации</a></li>
+            <li class="add-mininav__item"><a href="/category/section/cat/<?= $catObj->cat_id; ?>" class="button-dark">Категория <q><?= $catObj->ucfirst_utf8($catObj->name); ?></q></a></li>
         </ul>
 
     </div><!--закрытие container__main-->

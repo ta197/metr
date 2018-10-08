@@ -13,14 +13,11 @@ class CompanyController extends ParentController implements IController
         $this->view->filters = (new FiltersHandler(null))->getFilters();
         $company =new Company();
         //$listLettersLegal = $company->getAllLettersAndLegal();
-        
         $letters = $company->getLetters();
         $this->view->countCompany = count($letters);
         $this->view->listLetters = $company->uniqueLetters($letters);
         //var_dump($this->view->listLetters);
-
         //$this->view->countCompany = count($listLettersLegal);
-       
        // $this->view->listLetters = $company->listUniqLetters($listLettersLegal);
         $this->view->listCompany = $company->getQueryEachCompanies();
         $this->view->navStatus = $this->view->navStatus('CompanyActiv', 'CompanyDisabled');
@@ -79,5 +76,20 @@ class CompanyController extends ParentController implements IController
         $fc->setBody($output);
     }
     
+    //закрывшиеся организации
+    public function archiveAction(){
+        $fc = FrontController::getInstance();
+
+        $company =new Company();
+        $where = 'WHERE c.archive IS NOT NULL ';
+        $letters = $company->getLetters($where);
+        $this->view->countCompany = count($letters);
+        $this->view->listLetters = $company->uniqueLetters($letters);
+
+        $this->view->listCompany = $company->getArchiveCompanies();
+       
+        $output = $this->view->render(ARCHIVE_COMPANIES_FILE);
+        $fc->setBody($output);
+    }    
    
 }

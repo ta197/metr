@@ -10,6 +10,14 @@ if(substr($h1, 0, 7) === "&laquo;") $indent = ' header_quote-indent';
             if(!empty($counter['counter']))
                 echo '<span class = "counter"> ('.$counter['counted'] . $counter['counter'].')</span>';
             if($subh1) echo '</div>';
-    echo '</h1>'."\n".'</header>';
+
+            
+    echo '</h1>'."\n";
+
+    if(!empty($c->archive)){
+        echo '<h3 class ="red">Организация закрылась в '.$c->archive.' году</h3>';
+    }
+    
+    echo '</header>';
 
     

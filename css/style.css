@@ -43,7 +43,7 @@ body {
 .container__main::after {
     content: '';
     width: 100%;
-    height: 200px;
+    height: 210px;
     display: block;
 }
 
@@ -203,6 +203,13 @@ h4{
     color: #2e5a75;
 }
 
+h3{
+    padding-top: 15px;
+    line-height: 30px;
+    color: #2e5a75;
+    font-size: 20px;
+}
+
 /*/////////////////////////////////////////////*/
 
 .counter{
@@ -265,10 +272,13 @@ h4{
 }
 
 .subtitle{
-    padding-top: 300px;
     font-weight: 200;
     font-size: 26px;
-    /*line-height: 60px;*/
+    line-height: 45px;
+}
+
+.subtitle_top-indent{
+    padding-top: 300px;
 }
 
 
@@ -382,7 +392,7 @@ h4{
     margin-top:20px;
     margin-bottom:20px;
     text-align: left;
-
+    white-space: nowrap;
 }
 .button-dark:hover{
     background-color:#0677a0;
@@ -707,8 +717,7 @@ input[type="radio"]:checked + label:after {
 }
 
 .listing__company-name {
-    display: inline-block;
-    max-width: 600px;
+    max-width: 700px;
     font-weight: 600;
     font-size: 17px;
     color: #2e5a75;
@@ -818,15 +827,18 @@ h2:target {
 }
 
 .goods__photo{
-    position: absolute;
-    max-width: 15%;
-    min-width: 120px;
-    left: 12%;
+    float: left;
+    width: 180px;
     margin-top: -29px;
+    margin-bottom: 30px;
 }
 
-.column{
-    padding-left: 30%;
+.goods__photo:after{
+    clear: both;
+}
+
+.leftfield{
+    margin-left: 220px;
 }
 .ellipsis{
     overflow: hidden; 
@@ -841,15 +853,16 @@ h2:target {
 
 .goods__photo_card{
     max-width: 300px;
-    height: 210px;
-    vertical-align:bottom;
+    position: relative;
+    top:-29px;
+    margin-bottom: 15px;
 }
 
 /*/////////////////////////////////////////////*/
 
 .add-mininav{
    margin-top: 60px;
-   
+   margin-bottom: 30px;
 }
 .add-mininav__item{
     max-width: 700px; 
@@ -1064,6 +1077,16 @@ h2:target {
     }
 }
 
+
+@media screen and (max-width: 650px){
+    .leftfield{
+        margin-left: 0;
+    }
+    .goods__photo{
+        float: none;
+    }
+}
+
 /*/////////////////////////////////////////////*/
 
 @media screen and (max-height: 650px) and (min-width: 960px){
@@ -1140,9 +1163,12 @@ h2:target {
     }
 
     .subtitle{
-        padding-top: 270px;
         font-size: 20px;
         line-height: 30px;
+    }
+
+    .subtitle_top-indent{
+       padding-top: 250px;
     }
 
     .updown {
@@ -1197,10 +1223,14 @@ width: 16px;
 /*/////////////////////////////////////////////*/
 
 
-mark{
-    background-color:#fdfdfd;
+.mark{
+    background-color:#faea0e;
     color: #525255;
     font-weight: 600;
+}
+
+.red{
+    color: #da240c;
 }
 
 .break:after {

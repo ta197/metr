@@ -61,42 +61,7 @@ $counter['counter'] = $countCompany;
         }
     }
 
-    //form.
-    
-
-//     window.onhashchange = function(){
-//  // if(location.hash)
-//     updownElem.className = ''; 
-//     }
-
-
-    
-    // function checkedLetters() {
-    //     //event.preventDefault();
-    //     if (event.target.nodeName == 'A') {
-	// 		//title = event.target.innerHTML;
-    //         //strSearch = location.hash;
-    //         checkedForm();
-    //         //showData(f);
-	// 		letterHash = event.target.getAttribute('href');
-	// 		history.pushState('', '', '/company/query/s' + strSearch + letterHash);
-	// 		}
-    //     }
-    
-    // function getLetterHash() {
-    //     if (event.target.nodeName == 'A') {
-	// 				//title = event.target.innerHTML;
-	// 				letterHash = event.target.getAttribute('href');
-	// 				//history.pushState(null, '', '/company' + strSearch + letterHash);
-	// 			}
-    //             history.pushState(null, '', '/company' + strSearch + letterHash);
-	// }
-   
-	// function clearForm(){
-	// 	while (form.hasChildNodes())
-    //     form.removeChild(form.lastChild);
-    // }
-
+ 
     
     function showData(f){
         form.innerHTML = "";
@@ -219,7 +184,7 @@ $counter['counter'] = $countCompany;
                
             <ul class="add-mininav side-content">
                 <li class="add-mininav__item"><a href="42.html" class="button-dark">новые организации</a></li>
-                <li class="add-mininav__item"><a href="42.html" class="button-dark">архивные организации</a></li>
+                <li class="add-mininav__item"><a href="/company/archive" class="button-dark">архивные организации</a></li>
             </ul>
 
         </div><!--закрытие container__main-->

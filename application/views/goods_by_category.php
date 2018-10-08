@@ -39,9 +39,9 @@ include_once HEAD;
         ?>             
         </div>
 
-        <div class = "side-content category-minimenu">
-            <a href="/category/section/cat/<?= $catObj->cat_id; ?>" class="button-dark">Категория &laquo;<?= $catObj->ucfirst_utf8($catObj->name) ?>&raquo;</a>
-        </div>
+        <ul class = "side-content add-mininav">
+            <li class="add-mininav__item"><a href="/category/section/cat/<?= $catObj->cat_id; ?>" class="button-dark">Категория &laquo;<?= $catObj->ucfirst_utf8($catObj->name) ?>&raquo;</a></li>
+        </ul>
        
     </div><!--закрытие container__main-->
             

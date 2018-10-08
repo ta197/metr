@@ -22,29 +22,29 @@ include_once HEAD;
         
         <?php include_once TITLE_H1; ?>
 
-        <img class = "goods__photo_card side-content" src="/img/goods/99-7031_1.jpg">
         <div class = "listing  side-content">
-        <?php 
-        if(!empty($cardGoods->short_description) OR !empty($cardGoods->long_description) OR !empty($cardGoods->price)):
-            echo '<dl class="listing__company">';
-            echo '<dt class="listing__company-name">';
-            
-            if(!empty($cardGoods->short_description))
-                echo $cardGoods->short_description;
-            echo '</dt>';
-            echo '<dd class="listing__company-address">';
-           
-            if(!empty($cardGoods->long_description))
-                echo $cardGoods->long_description;
-            echo '</dd>';
-            echo '<dd class="listing__company-address">';
-            
-            if(!empty($cardGoods->price))
-                echo 'Средняя цена: '.round((int)$cardGoods->price, 2).' руб.';
-            echo '</dd>';
-            echo '</dl>';
-        endif;
-        ?>
+        
+            <dl class="listing__company">
+            <img class = "goods__photo_card" src="/img/goods/99-7031_1.jpg"> 
+                <dt class="listing__company-name">
+                    <?php 
+                    if(!empty($cardGoods->short_description))
+                        echo $cardGoods->short_description;
+                    ?>
+                </dt>
+                    <dd class="listing__company-address">
+                        <?php   
+                        if(!empty($cardGoods->long_description))
+                        echo $cardGoods->long_description;
+                        ?>
+                    </dd>
+                    <dd class="listing__company-address">
+                        <?php   
+                        if(!empty($cardGoods->price))
+                        echo 'Средняя цена: '.round((int)$cardGoods->price, 2).' руб.';
+                        ?>
+                    </dd>
+            </dl>
             <?php
              if(!empty($listCompany)):
                 echo '<h2 class ="subtitle bottom_60 lowered_15">Где можно приобрести <span class = "counter">('.count($listCompany).')</span></h2>';   
@@ -71,9 +71,9 @@ include_once HEAD;
         ?>             
         </div>
 
-        <div class = "side-content category-minimenu">
-            <a href="/catalog">весь каталог сайта</a>
-        </div>
+        <ul class = "side-content add-mininav">
+           <li class="add-mininav__item"> <a href="/catalog" class="button-dark">весь каталог сайта</a></li>
+        </ul>
        
     </div><!--закрытие container__main-->
             

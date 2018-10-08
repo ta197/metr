@@ -144,8 +144,11 @@ class FiltersHandler extends Model
         if($businessString)
             $where .= '('.$businessString.')';
 
-        if($where)
-            $where = 'WHERE '.$where;
+        if(!empty($where)){
+            $where = 'WHERE (c.archive IS NULL) AND '.$where;
+        }else{
+            $where = ' WHERE c.archive IS NULL ';
+        }
 
         $this->where = $where;   
         return $this;

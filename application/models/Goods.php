@@ -165,7 +165,7 @@ class Goods extends Model
                 JOIN `companies` AS c ON (p.company_id =  c.company_id)
                 LEFT JOIN `centres` ON (p.centre = centres.id)
                 LEFT JOIN `legal` ON (legal.id = c.legal)
-            WHERE g.cat_id = $cat
+            WHERE c.archive IS NULL and g.cat_id = $cat
             GROUP BY g.goods_id
             ORDER BY goods
             ", self::class);
@@ -241,7 +241,7 @@ class Goods extends Model
             JOIN `companies` AS c ON (p.company_id =  c.company_id)
             LEFT JOIN `centres` ON (p.centre = centres.id)
             LEFT JOIN `cats` ON g.cat_id = cats.cat_id
-            WHERE p.place_id = $p
+            WHERE c.archive IS NULL and p.place_id = $p
             GROUP BY g.goods_id
             ORDER BY goods
             ", self::class);

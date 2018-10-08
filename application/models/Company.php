@@ -17,7 +17,7 @@ class Company extends Model
     public $site;
     public $about;
     public $face;
-    //public $p_g;
+    public $archive;
 
     public $company_extend;
     
@@ -41,6 +41,7 @@ class Company extends Model
             FROM `address` AS a
             RIGHT JOIN `companies` AS c ON (a.company_id =  c.company_id)
             LEFT JOIN `legal` ON (legal.id = c.legal)
+            WHERE  c.archive IS NULL
             GROUP BY c.company_id
             ORDER BY c.company");
     }
@@ -60,7 +61,7 @@ LEFT JOIN `centres` ON (p.centre = centres.id)
 GROUP BY id_ul
             */ 
 
-    public function getLetters($where='', $sort='ASC') //список начальных букв, включая латиницу и цифры // не уникальные, а все, чтобы посчитав знать кол-во компаний
+    public function getLetters($where = 'WHERE c.archive IS NULL ', $sort='ASC') //список начальных букв, включая латиницу и цифры // не уникальные, а все, чтобы посчитав знать кол-во компаний
     {
         return self::$db->queryAll(
             "SELECT
@@ -138,7 +139,7 @@ GROUP BY id_ul
             JOIN `companies` AS c ON (p.company_id =  c.company_id)
             LEFT JOIN `centres` ON (p.centre = centres.id)
             LEFT JOIN `legal` ON (legal.id = c.legal)
-            WHERE  places_cats.cat_id = ?
+            WHERE c.archive IS NULL AND places_cats.cat_id = ?
             GROUP BY c.company_id
             ORDER BY c.company",
             [$id]);
@@ -163,7 +164,7 @@ GROUP BY id_ul
             LEFT JOIN `legal` ON (legal.id = c.legal)
             LEFT JOIN `places_goods` ON (places_goods.place_id = places_cats.place_id)
             LEFT JOIN `goods` ON (goods.goods_id = places_goods.goods_id AND goods.cat_id = places_cats.cat_id)
-            WHERE  places_cats.cat_id = ?
+            WHERE  c.archive IS NULL AND  places_cats.cat_id = ?
             GROUP BY c.company_id
             ORDER BY c.company",
             [$id]);
@@ -189,7 +190,7 @@ GROUP BY id_ul
             LEFT JOIN `companies` AS c ON (p.company_id =  c.company_id)
             LEFT JOIN `legal` ON (legal.id = c.legal)
             LEFT JOIN `centres` ON (p.centre = centres.id)
-            WHERE  g.goods_id = ?
+            WHERE  c.archive IS NULL AND  g.goods_id = ?
             GROUP BY p.place_id
             ORDER BY c.company", $arr);
        }
@@ -202,7 +203,7 @@ GROUP BY id_ul
             FROM `places` AS p
             LEFT JOIN `places_cats` ON (places_cats.place_id = p.place_id)
             JOIN `companies` AS c ON (p.company_id =  c.company_id)
-            WHERE  places_cats.cat_id = ?
+            WHERE  c.archive IS NULL AND  places_cats.cat_id = ?
             GROUP BY c.company_id
             ORDER BY letter",
             [$id]);
@@ -214,11 +215,11 @@ GROUP BY id_ul
         {
             return self::$db->queryClass(
                 "SELECT
-                c.company, c.quotes, c.company_id, c.site, c.about, c.face,
+                c.company, c.quotes, c.company_id, c.site, c.about, c.face, c.archive,
                 company_to_string(c.name_type, c.shop, legal.name, c.name_legal, c.quotes, c.company) AS company_name
                 FROM `companies` AS c
                 LEFT JOIN `legal` ON (legal.id = c.legal)  
-                WHERE c.company_id = $id", 
+                WHERE  c.company_id = $id", 
                 self::class
             );
         }
@@ -230,7 +231,7 @@ company_extend_to_string(c.name_type, c.shop, c.legal, c.name_legal) AS company_
 
     */
 
-    public function getCompaniesByFilters($where='', $order = 'c.company', $sort = 'ASC')
+    public function getCompaniesByFilters($where='WHERE c.archive IS NULL ', $order = 'c.company', $sort = 'ASC')
     {
         return self::$db->queryAll(
             "SELECT
@@ -249,5 +250,22 @@ company_extend_to_string(c.name_type, c.shop, c.legal, c.name_legal) AS company_
             ORDER BY $order $sort");
     }
 
+    public function getArchiveCompanies()
+    {
+        return self::$db->queryEach(
+            "SELECT
+            c.company, LEFT(c.company, 1) AS letter, c.company_id, c.site, legal.name,
+            company_to_string(c.name_type, c.shop, legal.name, c.name_legal, c.quotes, c.company) AS company_name,
+            
+            GROUP_CONCAT(CONCAT_WS('', a.ul, a.phone)
+                        SEPARATOR '~~') 
+                        AS addresses
+            FROM `address` AS a
+            RIGHT JOIN `companies` AS c ON (a.company_id =  c.company_id)
+            LEFT JOIN `legal` ON (legal.id = c.legal)
+            WHERE c.archive IS NOT NULL
+            GROUP BY c.company_id
+            ORDER BY c.company");
+    }
 }
 
