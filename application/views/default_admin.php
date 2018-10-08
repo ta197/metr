@@ -24,15 +24,16 @@ include_once HEAD; ?>
             <div class="listing side-content">
             <?php
                
-            echo 'Welcom, '.$_SESSION['user']['name'];
+            echo '<h4>Welcom, '.$_SESSION['user']['name'].'</h4>';
             //var_dump($_SESSION['user']);    
                 // echo '<pre>';
                 // print_r($this);
                 // echo '</pre>';
                 ?>
-                <li><a href="/admin/userlist">Список пользователей</a></li>
-                <li><a href="/admin/logout">Выход</a>   </li>
-                        
+                <ul class="add-mininav">
+                    <li class="add-mininav__item add-mininav__item_block"><a href="/admin/userlist" class="button-dark">Список пользователей</a></li>
+                    <li class="add-mininav__item add-mininav__item_block"><a href="/admin/logout" class="button-dark">Выход</a></li> 
+                </ul>        
             </div>
         
         </div><!--закрытие container__main-->

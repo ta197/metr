@@ -857,6 +857,9 @@ h2:target {
     margin-right: 90px;
     margin-bottom: 60px; 
 }
+.add-mininav__item_block{
+    display: block;
+}
 
 /*/////////////////////////////////////////////*/
  

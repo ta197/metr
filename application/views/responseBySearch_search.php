@@ -42,11 +42,11 @@ include_once HEAD; ?>
             
             ?>
                                     
-            <div class="listing side-content">
+            <div>
                 <?php 
-                echo '<pre>';
-               print_r($this);
-                echo '</pre>';
+                //echo '<pre>';
+                //print_r($this);
+                //echo '</pre>';
                 ?>             
             </div>
     

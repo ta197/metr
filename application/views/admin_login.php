@@ -46,7 +46,7 @@ include_once HEAD;
 
                 <ul>
                 <?php foreach ($errors as $error): ?>
-                    <li><?= $error ?></li>
+                    <li><h4><?= $error ?><h4></li>
                 <?php endforeach; ?>
                 </ul>
             
@@ -59,7 +59,7 @@ include_once HEAD;
                     <input id="password" name="password" placeholder="от 6 до 15 знаков">
                     
                     <div>
-                        <button type="submit">Вход</button>
+                        <button type="submit" class="button-dark">Вход</button>
                     </div>
 
                 </form>
