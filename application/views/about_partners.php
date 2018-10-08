@@ -52,7 +52,7 @@ include_once HEAD;
 </div>
           
         <div class = "side-content category-minimenu">
-            <a href="/about/contacts">как с нами связаться</a></li>
+            <a href="/about/contacts" class="button-dark">как с нами связаться</a></li>
         </div>
 
           <div class="listing side-content">

@@ -48,14 +48,19 @@ class Search extends Model
         foreach($words as $word):
             
             if(mb_strlen($word)>3){
-                $arrWords[] = $word;
+               $arrWords[] = $word;
             }
             if(in_array(mb_strtoupper($word), $this->exceptionWords)){
                 $arrWords[] = $word;
             }
             if((int)$word!== 0){
-                $arrWords[] = (int)$word;
                 $arrWords[] = $word;
+
+                $word = preg_replace("|[-().+?]+|","", $word);
+                if(strlen($word)==11 and substr($word, 0, 1)=='7'){
+                    $word = substr_replace($word, '8', 0, 1); 
+                }
+                $arrWords[] = (int)$word;
             }
         endforeach;
         if($arrWords ==null){
@@ -99,18 +104,21 @@ class Search extends Model
     public function getSearchCompany($word){
         return self::$db->queryAll(
             "SELECT
-            c.company_id, 
-            company_to_string(c.name_type, c.shop, c.legal, c.name_legal, c.quotes, c.company) AS name, 
+            c.company_id, p.tel, p.cell,
+            company_to_string(c.name_type, c.shop, legal.name, c.name_legal, c.quotes, c.company) AS name, 
             GROUP_CONCAT(CONCAT_WS('', places_to_string(p.city, p.street, p.house, centres.address, centres.name_center, p.detail, p.unit_floor, p.unit_not))
                         SEPARATOR '~~') 
                         AS addresses
             FROM `places` AS p
             JOIN `companies` AS c ON (p.company_id =  c.company_id)
+            LEFT JOIN `legal` ON (legal.id = c.legal)
             LEFT JOIN `centres` ON (p.centre = centres.id)
-            WHERE c.company LIKE ?  OR p.city LIKE ?  OR centres.name_center LIKE ? OR c.shop LIKE ? OR p.street LIKE ?OR c.legal = ? OR p.house LIKE ?
+            WHERE   c.company LIKE ?  OR p.city LIKE ?  OR centres.name_center LIKE ? OR c.shop LIKE ? OR p.street LIKE ? 
+                    OR c.name_legal LIKE ? 
+                    OR legal.name = ? OR p.house LIKE ?  OR p.tel = ? OR p.cell = ?
             GROUP BY c.company_id
             ORDER BY c.company", 
-            ["%$word%", "%$word%", "%$word%", "%$word%", "%$word%", "$word", "$word"]);
+            ["%$word%", "%$word%", "%$word%", "%$word%", "%$word%", "%$word%", "$word", "$word", "$word", "$word"]);
     }
     
     public function getSearchCat($word){
