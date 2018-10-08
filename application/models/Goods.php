@@ -141,7 +141,8 @@ class Goods extends Model
             g.long_description,
             AVG(places_goods.price) AS price, 
             GROUP_CONCAT(DISTINCT CONCAT_WS('^', 
-                        company_to_string(c.name_type, c.shop, c.legal, c.name_legal, c.quotes, c.company), 
+                        company_to_string(c.name_type, c.shop, 
+                        legal.name, c.name_legal, c.quotes, c.company), 
                         c.company_id,
                         places_to_string(
                                 p.city, 
@@ -163,6 +164,7 @@ class Goods extends Model
                 INNER JOIN `places` AS p ON p.place_id = places_goods.place_id
                 JOIN `companies` AS c ON (p.company_id =  c.company_id)
                 LEFT JOIN `centres` ON (p.centre = centres.id)
+                LEFT JOIN `legal` ON (legal.id = c.legal)
             WHERE g.cat_id = $cat
             GROUP BY g.goods_id
             ORDER BY goods
