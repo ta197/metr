@@ -1,11 +1,15 @@
 <?php
 if(empty($listCompany)){return;}
-$letter ='';
+if(!empty($listLetters) and empty($countListLetters)){
+    $countListLetters = count($listLetters);
+}
+
+$ancor_label ='';
     foreach ($listCompany as $item):
-        if(!empty($listLetters) and count($listLetters)>3){
-            if(($letter!==$item['letter']) && (strlen($item['letter'])>1)){
-                $letter = $item['letter'];
-                echo '<h2 id="letter'.$letter.'" class ="listing__letter">'.$letter.'</h2>'."\n";
+        if(!empty($listLetters) and $countListLetters >= MIN_ANCOR){
+            if(($ancor_label!==$item['ancor']) && (strlen($item['ancor'])>1)){
+                $ancor_label = $item['ancor'];
+                echo '<h2 id="letter'.$ancor_label.'" class ="listing__letter">'.$ancor_label.'</h2>'."\n";
             }
         }
     

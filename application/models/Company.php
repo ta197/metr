@@ -18,7 +18,7 @@ class Company extends Model
     public $about;
     public $face;
     public $archive;
-
+    public $year;
     public $company_extend;
     
     public $addresses =[];
@@ -28,11 +28,14 @@ class Company extends Model
     }
 
 
-    public function getQueryEachCompanies()
+    public function getEachCompanies($fildAncor, $where = 'WHERE c.archive IS NULL', $andWhere = '', $order = 'c.company', $q = [])
     {
         return self::$db->queryEach(
             "SELECT
-            c.company, LEFT(c.company, 1) AS letter, c.company_id, c.site, legal.name,
+
+           $fildAncor AS ancor,
+
+            c.company, c.company_id, c.site, legal.name, 
             company_to_string(c.name_type, c.shop, legal.name, c.name_legal, c.quotes, c.company) AS company_name,
             
             GROUP_CONCAT(CONCAT_WS('', a.ul, a.phone)
@@ -41,10 +44,13 @@ class Company extends Model
             FROM `address` AS a
             RIGHT JOIN `companies` AS c ON (a.company_id =  c.company_id)
             LEFT JOIN `legal` ON (legal.id = c.legal)
-            WHERE  c.archive IS NULL
+            $where 
+            $andWhere
             GROUP BY c.company_id
-            ORDER BY c.company");
+            ORDER BY $order", 
+            $q);
     }
+
 
          /* представленние address //  SQL_NO_CACHE 
                CREATE VIEW address
@@ -61,35 +67,40 @@ LEFT JOIN `centres` ON (p.centre = centres.id)
 GROUP BY id_ul
             */ 
 
-    public function getLetters($where = 'WHERE c.archive IS NULL ', $sort='ASC') //список начальных букв, включая латиницу и цифры // не уникальные, а все, чтобы посчитав знать кол-во компаний
+
+ // получаем весь список неуникальных анкоров -- это либо перв.буква либо год создания -- по выбору $fildAncor
+
+    public function getAncors($fildAncor, $where = 'WHERE c.archive IS NULL ', $sort = 'ASC', $andWhere ='', $q = []) //список начальных букв, включая латиницу и цифры // не уникальные, а все, чтобы посчитав знать кол-во компаний
     {
         return self::$db->queryAll(
             "SELECT
-            LEFT(c.company, 1) AS letter
+            $fildAncor AS ancor
             FROM `companies` AS c
             LEFT JOIN `places` AS p ON (p.company_id =  c.company_id)
             LEFT JOIN `shop` AS sh ON (sh.id =  p.shop)
             LEFT JOIN `legal` ON (legal.id = c.legal)
-            $where
+            $where $andWhere
             GROUP BY c.company_id
-            ORDER BY letter $sort"
+            ORDER BY ancor $sort", $q
         );
     }
 
+// группировка под одним подзаголовком -- буква или год
     
-    public function uniqueLetters($letters, $order='c.company')
+    public function uniqueAncors($letters, $order='c.company')
     {
         if($order === "c.rating DESC, c.company ") return '';
-        $letters = array_column($letters, 'letter');
+        $letters = array_column($letters, 'ancor');
         $letters = array_unique($letters);
-        $letters = $this->isCyrillicAlphabet($letters);
         if(is_array($letters))
             return $letters;
         return false;
     }
 
-    private function isCyrillicAlphabet ($arr)
+
+    public function isCyrillicAlphabet($arr)
     {
+        if(!is_array($arr)) return;
         $isCyrillicAlphabet = [];
         foreach ($arr as $value){
             if( preg_match("/^[А-Яа-я]/", $value))
@@ -99,30 +110,9 @@ GROUP BY id_ul
         return $isCyrillicAlphabet;
     }
 
-    // public function getAllLettersAndLegal()
-    // {
-    //     return self::$db->queryAll(
-    //         "SELECT
-    //         LEFT(c.company, 1) AS letter, legal.name AS legal
-    //         FROM `companies` AS c
-    //         LEFT JOIN `legal` ON (legal.id = c.legal) 
-    //         ORDER BY letter");
-    // }
 
-    // public function listUniqLetters($arr){
-    //     $helper = new \application\models\Helper();
-    //     $listLetters = $helper->arrByFirstKey($arr, 'letter')->isCyrillicAlphabet()->array;
-    //     return $listUniqLetters = array_unique ($listLetters);    
-    // }
-
-    // public function listCountLegal($arr){
-    //     $helper = new \application\models\Helper();
-    //     $listLegal = $helper->arrByFirstKey($arr, 'legal')->array;
-    //     return $listLegal = array_count_values ($listLegal);    
-    // }
-
-
-    // список компаний по категории (без информации о наличии каталога этой категории у компании)
+// список компаний по категории (без информации о наличии каталога этой категории у компании)
+    
     public function getCompaniesByCategory($id){
         //$arr[] = $this->clearInt($id);
         return self::$db->queryEach(
@@ -146,6 +136,7 @@ GROUP BY id_ul
     }
 
 // список компаний по категории (с информацией о наличии каталога этой категории у компании)
+    
     public function getCompaniesByCategoryAndGoods($id){
         //$arr[] = $this->clearInt($id);
         return self::$db->queryEach(
@@ -169,9 +160,7 @@ GROUP BY id_ul
             ORDER BY c.company",
             [$id]);
     }
-    //    LEFT JOIN `places_goods` ON (places_goods.place_id = places_cats.place_id)
-    //         LEFT JOIN `goods` ON (goods.goods_id = places_goods.goods_id AND goods.cat_id = places_cats.cat_id)
-    
+   
 
     public function getCompaniesByGoods($goods){
         $arr[] = $this->clearInt($goods);
@@ -208,8 +197,6 @@ GROUP BY id_ul
             ORDER BY letter",
             [$id]);
     }
-
-     
       
     public function getTitleCompanyById($id)
         {
@@ -224,12 +211,7 @@ GROUP BY id_ul
             );
         }
 
-    
-
-    /*
-company_extend_to_string(c.name_type, c.shop, c.legal, c.name_legal) AS company_extend
-
-    */
+//  все компаниии по фильтру раздела компании ---------------
 
     public function getCompaniesByFilters($where='WHERE c.archive IS NULL ', $order = 'c.company', $sort = 'ASC')
     {
@@ -250,22 +232,6 @@ company_extend_to_string(c.name_type, c.shop, c.legal, c.name_legal) AS company_
             ORDER BY $order $sort");
     }
 
-    public function getArchiveCompanies()
-    {
-        return self::$db->queryEach(
-            "SELECT
-            c.company, LEFT(c.company, 1) AS letter, c.company_id, c.site, legal.name,
-            company_to_string(c.name_type, c.shop, legal.name, c.name_legal, c.quotes, c.company) AS company_name,
-            
-            GROUP_CONCAT(CONCAT_WS('', a.ul, a.phone)
-                        SEPARATOR '~~') 
-                        AS addresses
-            FROM `address` AS a
-            RIGHT JOIN `companies` AS c ON (a.company_id =  c.company_id)
-            LEFT JOIN `legal` ON (legal.id = c.legal)
-            WHERE c.archive IS NOT NULL
-            GROUP BY c.company_id
-            ORDER BY c.company");
-    }
+
 }
 

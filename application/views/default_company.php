@@ -160,15 +160,7 @@ $counter['counter'] = $countCompany;
                 echo '<div class="listing side-content">'.$error.'</div>';
             ?>             
 
-            <div id ="letters" class="listing side-content">
-                <?php
-                if(!empty($listLetters) and count($listLetters)>3) {
-                    foreach($listLetters as $v){
-                        echo '<a href="#letter'.$v.'" class ="alphabet__letter">'.$v.'</a>';
-                    }
-                }
-                ?>             
-            </div>
+            <?php include_once ALPHABET_LETTERS; ?>
             
             <div id ="listing" class="listing side-content">
             <?php include_once LIST_COMPANIES;?>
@@ -183,7 +175,7 @@ $counter['counter'] = $countCompany;
             </div>
                
             <ul class="add-mininav side-content">
-                <li class="add-mininav__item"><a href="42.html" class="button-dark">новые организации</a></li>
+                <li class="add-mininav__item"><a href="/company/young" class="button-dark">новые организации</a></li>
                 <li class="add-mininav__item"><a href="/company/archive" class="button-dark">архивные организации</a></li>
             </ul>
 

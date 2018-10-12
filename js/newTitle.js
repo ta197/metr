@@ -6,7 +6,7 @@ if (!h1) return;
     title.appendChild(textH1);
     var span = document.createElement("span");
     span.className = "counter";
-    var count = document.createTextNode(' ('+ decodeURIComponent(counter) + ')');
+    var count = document.createTextNode('('+ decodeURIComponent(counter) + ')');
     span.appendChild(count);
     title.appendChild(span);     
 }

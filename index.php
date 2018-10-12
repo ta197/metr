@@ -23,6 +23,7 @@ const HEAD = 'head.inc';
 const FOOTER = 'footer.inc.php';
 const FIGURE = 'figure.inc';
 const TITLE_H1 = 'title_h1.inc';
+const ALPHABET_LETTERS = 'alphabet_letters.inc';
 const CAT_MENU = 'cat_menu.inc';
 const BRC = 'breadcrumb.inc';
 const LIST_COMPANIES = 'list_companies.inc';
@@ -56,6 +57,11 @@ const ADMIN_USERS_LIST_FILE = 'users_list.php';
 const COMPANY_FILTERS_JSON = 'company_filters_json.php';
 
 const ARCHIVE_COMPANIES_FILE = 'archhive_companies.php';
+const YOUNG_COMPANIES_FILE = 'young_companies.php';
+
+/*Числовые константы */
+
+const MIN_ANCOR = 3; //минимальное количество уникальных анкор-ссылок на странице, чтобы они показывались
 
 
 /* Автозагрузчик классов */

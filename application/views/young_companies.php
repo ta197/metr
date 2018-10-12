@@ -1,6 +1,6 @@
 <?php
-$title = 'архивные организации';
-$h1 = 'Организации, прекратившие работу';
+$title = 'новые организации';
+$h1 = 'Новые организации';
 $counter['counter'] = $countCompany;
 include_once HEAD; 
 ?>
@@ -10,15 +10,23 @@ include_once HEAD;
         
         <div class="container__main">
             <div class= "header__breadcrumb side-content top-content">
-                <a href="/">главная</a>  |  <a href="/company">организации</a>  |  архивные организации
+                <a href="/">главная</a>  |  <a href="/company">организации</a>  | новые организации
             </div>
             
-            <?php include_once TITLE_H1; ?> 
-
+            <?php include_once TITLE_H1; ?>
+            
+            <?php
+            if(!empty($listLetters)){
+                array_shift($listLetters);  //чтобы ссылки на года начинались с предпоследнего, т.к. последний - в первом подзаголовке
+                $countListLetters = MIN_ANCOR; //чтобы список имел подзаголовки - год создания независимо от количества
+            }
+            ?>
+            
             <?php include_once ALPHABET_LETTERS; ?>
+            
 
             <div class="listing side-content lowered_16">
-            <?php include_once LIST_COMPANIES;?>
+            <?php include_once LIST_COMPANIES; ?>
             </div>
             
             <div class="listing side-content">
@@ -30,7 +38,7 @@ include_once HEAD;
             </div>
                
             <ul class="add-mininav side-content">
-                <li class="add-mininav__item"><a href="/company/young" class="button-dark">новые организации</a></li>
+                <li class="add-mininav__item"><a href="/company/archive" class="button-dark">архивные организации</a></li>
                 <li class="add-mininav__item"><a href="/company" class="button-dark">все организации</a></li>
             </ul>
 

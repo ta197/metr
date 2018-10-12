@@ -49,13 +49,13 @@ class Db
         //return $id;
     }
 
-    public function execute($sql, $params = [])
-    {
-        $sth ='';
-       $sth = self::$dbh->prepare($sql);
-        $res = $sth->execute($params);
-        return $res;
-    }
+//public function execute($sql, $params = [])
+   // {
+   //     $sth ='';
+   //    $sth = self::$dbh->prepare($sql);
+   //     $res = $sth->execute($params);
+   //     return $res;
+   // }
 
     public function queryAll($sql, $arr_param =[])
     {

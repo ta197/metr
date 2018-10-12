@@ -26,7 +26,7 @@ body {
     -hyphens: manual;
     hyphens: auto;
     word-wrap: break-word;
-    min-width: 320px;
+    /*min-width: 300px;*/
     overflow-y: scroll;
     background-color: #fdfdfd;
     scroll-behavior: smooth; /*только Firefox*/
@@ -219,6 +219,8 @@ h3{
     font-size: small;
     vertical-align: super;
     color: #44606b;
+    margin-left: 5px;
+    white-space: nowrap;
 }
 
 .notice{
@@ -658,14 +660,16 @@ input[type="radio"]:checked + label:after {
     color:  #0677a0;
     font-weight: 200;
     font-size: 20px;
-   
+    white-space: nowrap;
     vertical-align: middle;
-    width: 35px;
+    width: 70px;
     display: inline-block;
     position:relative;
-    left:-0.6rem;
-    text-indent: 0.6rem;
+   left:-26px;
+    text-indent: 4px;
     top: -3px;
+    text-align: center;
+    
 }
 
 .alphabet__letter:hover{
@@ -675,8 +679,10 @@ input[type="radio"]:checked + label:after {
     background-color: #0677a0;
     color: #fdfdfd;
     position:relative;
-    left:-0.6rem;
-    text-indent: 0.6rem;   
+    left:-26px;
+    text-indent: 4px;
+   
+    
 }
 
 /*////////////////////////////////////////////////*/
@@ -703,10 +709,7 @@ input[type="radio"]:checked + label:after {
     font-weight: 400;
 }
 .points{
-    position: absolute;
-    top: -13px;
-    right: -28px;
-    letter-spacing: 10px;
+    float: right;
     color: #fdfdfd;
 }
 .points::before{
@@ -751,14 +754,14 @@ input[type="radio"]:checked + label:after {
 
 h2:target {
     padding-top: 75px;
-    width: 40px;
+    width: 80px;
     position:relative;
     left:-0.6rem;
     text-indent: 0.6rem;
     padding-bottom: 36px;
     margin-bottom: 0px;
-    color: #33424d94;
-    background: linear-gradient(to top,  #fc0 90px, #fdfdfd 45px);
+    color: #fdfdfd;
+    background: linear-gradient(to top,  #8ba5b6 90px, #fdfdfd 45px);
 }
 
 .gap{
@@ -1070,10 +1073,16 @@ h2:target {
         margin-left:0;  
     }
     .top-content{
-        padding-top: 140px; 
+        padding-top: 120px; 
     }
     h2:target {
         padding-top: 120px;
+    }
+    .points{
+        float: none;
+    }
+    .listing__company_search {
+       padding-top: 0px;
     }
 }
 
@@ -1135,12 +1144,36 @@ h2:target {
 }
 
 @media screen and (max-width: 500px){
+    .side-content{
+        padding-left: 30px;
+        padding-right: 25px;
+    }
+    .category-bigmenu{
+        padding-left: 30px;
+        padding-right: 25px;
+    }
+    .category-bigmenu>ul>li {
+        width: auto;
+    }
+    .add-mininav__item{
+        margin-right: 30px;
+    }
     body {
         font-size: 14px;
         line-height: 26px;
      }
     figure {
-        height: 100px;  
+        height: 70px;  
+    }
+    .header__title{
+        font-size: 26px;
+        line-height: 35px;
+        margin-top: 35px;
+        min-height: 45px;
+    }
+    .header__substr-title{
+        font-size: 18px;
+        line-height: 30px;
     }
     
     .nav__icon::before {
@@ -1160,6 +1193,7 @@ h2:target {
         font-size: 32px;
         line-height: 44px;
         width: 78%;
+        padding-top: 95px;
     }
 
     .subtitle{
@@ -1200,7 +1234,20 @@ h2:target {
         padding: 0;
         margin-bottom: 25%;
     }
-
+    .button-dark{
+        padding: 10px 12px;  
+    }
+    .logo__icon::before {
+        font-size: 50px;
+    }
+    .logo__icon{
+       height: 50px;
+    }
+    .logo{
+        margin-left: 30px;
+        margin-top: 10px;
+    }
+    
 }
 
 
