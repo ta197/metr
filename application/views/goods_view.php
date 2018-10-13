@@ -74,8 +74,7 @@ include_once HEAD;
         <?php
             if(!empty($listGoods)){
                 echo '<h2 class = "subtitle side-content">
-                Ещё товары этой компании в категории <q>'.$catObj->ucfirst_utf8($catObj->name).'</q>
-                <span class = "counter">('.count($listGoods).')</span>
+                Ещё товары этой компании в категории <q>'.$catObj->ucfirst_utf8($catObj->name).'</q><span class = "counter">('.count($listGoods).')</span>
                 </h2>';
             }
         endif;

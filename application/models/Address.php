@@ -25,7 +25,7 @@ class Address extends Model
             "SELECT 
             p.place_id, GROUP_CONCAT(DISTINCT places_goods.goods_id) AS goods,
             places_to_string(p.city, p.street, p.house, centres.address, centres.name_center, p.detail, p.unit_floor, p.unit_not) AS addresses, 
-            phones_to_string(p.tel, p.addtel, p.cell, p.add_cell) AS phones, 
+            phones_to_string(p.tel, p.addtel, p.cell, p.add_cell) AS phones, p.coords,
             GROUP_CONCAT(DISTINCT CONCAT(cats.name,' | ' ,cats.cat_id,' | ' ,cats.level) ORDER BY cats.lft
                     SEPARATOR '~~') 
                     AS categories,

@@ -2,9 +2,27 @@
 $title = $c->company_name;
 $h1 = $c->company_name;
 $countPlaces = count($p);
-include_once HEAD;
+//include_once HEAD;
 ?>
+<!DOCTYPE html>
+<html lang="ru-Ru">
+<head>
+    <meta charset="UTF-8">
+    <title><?=$title?></title>
+    <link rel="stylesheet" href="/css/style.css" type="text/css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <script type="text/javascript" src="/js/smoothscroll.js" type="text/javascript"></script>
+    <script type="text/javascript" src="/js/updown.js" type="text/javascript" defer></script>
+    
+    <script src="https://api-maps.yandex.ru/2.1/?apikey=<ваш API-ключ>&lang=ru_RU" type="text/javascript">
+    </script>
+    
+
+
+</head>
 <body>
+
        
     <?php include_once FIGURE; ?>
 
@@ -56,22 +74,45 @@ include_once HEAD;
                 endforeach;  
                 echo '</dd>'."\n";
             }
+            if(!empty($item->coords)){
+                
+               echo '<div id="map" class="lowered_30 8 map" data-lat="'.$item->coords.'" 
+               style="width: 600px; height: 400px"
+               </div>';
+            }
+            
             echo "</dl>\n";
-        endforeach;    
-         
+        endforeach; 
+        
         ?>             
         </div>
-          
+             
+        
           <div class="listing side-content">
             <?php 
-                //echo '<pre>';
-                //print_r($this);
-                //echo '</pre>';
+                echo '<pre>';
+                print_r($this);
+                echo '</pre>';
             ?>       
             </div>
 
     </div><!--закрытие container__main-->
             
     <?php include_once FOOTER; ?>
+    <script type="text/javascript">
+    let coords = document.querySelector(".map").getAttribute('data-lat').split(',', 2);
+        ymaps.ready(init);    
+        function init(){ 
+            var myMap = new ymaps.Map("map", {
+                center: coords,
+                zoom: 16
+            });
+
+        // вместо GeoObject c типом геометрии «Point» (см. предыдущий пример)
+        var myPlacemark = new ymaps.Placemark(coords);
+        myMap.geoObjects.add(myPlacemark);
+        }
+    </script>
+
 </body>
 </html>
