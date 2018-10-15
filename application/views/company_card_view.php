@@ -17,13 +17,10 @@ $countPlaces = count($p);
     
     <script src="https://api-maps.yandex.ru/2.1/?apikey=<ваш API-ключ>&lang=ru_RU" type="text/javascript">
     </script>
-    
-
 
 </head>
 <body>
 
-       
     <?php include_once FIGURE; ?>
 
     <?php include_once NAV_ICON; ?>
@@ -90,9 +87,9 @@ $countPlaces = count($p);
         
           <div class="listing side-content">
             <?php 
-                echo '<pre>';
-                print_r($this);
-                echo '</pre>';
+               // echo '<pre>';
+               // print_r($this);
+               // echo '</pre>';
             ?>       
             </div>
 
@@ -100,17 +97,36 @@ $countPlaces = count($p);
             
     <?php include_once FOOTER; ?>
     <script type="text/javascript">
-    let coords = document.querySelector(".map").getAttribute('data-lat').split(',', 2);
-        ymaps.ready(init);    
-        function init(){ 
-            var myMap = new ymaps.Map("map", {
-                center: coords,
-                zoom: 16
-            });
+    //let coords = document.querySelector(".map").getAttribute('data-lat').split(',', 2);
+    let coords = [
+        [55.400778, 43.807926],
+        [55.397858, 43.846383]
+        
+    ];
+    ymaps.ready(init);    
+    function init(){ 
+        var myMap = new ymaps.Map("map", {
+            center: [55.398958, 43.823494],
+            zoom: 14,
+            controls: ['smallMapDefaultSet']
+        });
 
-        // вместо GeoObject c типом геометрии «Point» (см. предыдущий пример)
-        var myPlacemark = new ymaps.Placemark(coords);
-        myMap.geoObjects.add(myPlacemark);
+   var myGeoObjects = [];
+
+    for (var i = 0; i<coords.length; i++) {
+        myGeoObjects[i] = new ymaps.GeoObject({
+        geometry: {
+            type: "Point",
+            coordinates: coords[i]
+        }
+  });
+}
+
+var myClusterer = new ymaps.Clusterer();
+myClusterer.add(myGeoObjects);
+myMap.geoObjects.add(myClusterer);
+// Установим карте центр и масштаб так, чтобы охватить коллекцию целиком.
+myMap.setBounds(myClusterer.getBounds());
         }
     </script>
 
