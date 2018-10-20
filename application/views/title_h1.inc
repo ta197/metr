@@ -1,6 +1,6 @@
 <?php
 $indent = '';
-if(substr($h1, 0, 7) === "&laquo;") $indent = ' header_quote-indent';
+if(substr($h1, 0, 2) === "«") $indent = ' header_quote-indent';
     echo '<header class="side-content">';
         echo '<h1 class="header__title'.$indent.'" lang="ru-Ru">';
         echo $h1;
