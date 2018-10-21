@@ -90,9 +90,9 @@ include_once HEAD;
         ?>             
         </div>
         
-        <ul class = "side-content add-mininav">
-            <li class="add-mininav__item"><a href="/catalog/company/c/<?= $c->company_id; ?>" class="button-dark">Каталог организации</a></li>
-            <li class="add-mininav__item"><a href="/category/section/cat/<?= $catObj->cat_id; ?>" class="button-dark">Категория <q><?= $catObj->ucfirst_utf8($catObj->name); ?></q></a></li>
+        <ul class = "side-content link-buttons">
+            <li class="link-buttons__item"><a href="/catalog/company/c/<?= $c->company_id; ?>" class="button-dark">Каталог организации</a></li>
+            <li class="link-buttons__item"><a href="/category/section/cat/<?= $catObj->cat_id; ?>" class="button-dark">Категория <q><?= $catObj->ucfirst_utf8($catObj->name); ?></q></a></li>
         </ul>
 
     </div><!--закрытие container__main-->

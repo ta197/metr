@@ -54,7 +54,7 @@ HEREDOC;
                 // echo '</pre>';
 ?> 
 
-                <div class="add-mininav"><a href="/admin/logout" class="button-dark">Выход</a></div>         
+                <div class="link-buttons"><a href="/admin/logout" class="button-dark">Выход</a></div>         
             </div>
                
         </div><!--закрытие container__main-->

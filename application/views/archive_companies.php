@@ -21,17 +21,17 @@ include_once HEAD;
             <?php include_once LIST_COMPANIES;?>
             </div>
             
-            <div class="listing side-content">
-                <?php 
-                //echo '<pre>';
-                //print_r($this);
-                //echo '</pre>';
-                ?>             
-            </div>
+            
+            <?php 
+            //echo '<pre>';
+            //print_r($this);
+            //echo '</pre>';
+            ?>             
+           
                
-            <ul class="add-mininav side-content">
-                <li class="add-mininav__item"><a href="/company/young" class="button-dark">новые организации</a></li>
-                <li class="add-mininav__item"><a href="/company" class="button-dark">все организации</a></li>
+            <ul class="link-buttons side-content">
+                <li class="link-buttons__item"><a href="/company/young" class="button-dark">новые организации</a></li>
+                <li class="link-buttons__item"><a href="/company" class="button-dark">все организации</a></li>
             </ul>
 
         </div><!--закрытие container__main-->

@@ -163,8 +163,6 @@ nav{
 
 .adjustment{
     margin-top: 45px;
-    margin-right: 10%;
-    margin-left: 12%;
     max-width: 850px;
 }
 
@@ -260,7 +258,7 @@ h3{
 }
 
 .header_quote-indent {
-    text-indent: -20px;
+    text-indent: -19px;
 }
 
 .title-big {
@@ -324,10 +322,10 @@ h3{
 }
 
 /*////////////////////////////////////////////////*/
-
+/* 
 .category-minimenu{
     margin-top: 45px;
- 
+    margin-bottom: 60px;
     color: #0677a0;
     font-weight: 400;
 }
@@ -340,9 +338,26 @@ h3{
 
 .category-minimenu li:not(:last-child){
     padding-right: 6%;    
-}
+} */
 
 /*/////////////////////////////////////////////*/
+
+.link-buttons{
+    margin-top: 45px;
+    /* margin-bottom: 30px; */
+ }
+ .link-buttons__item{
+     /* max-width: 700px;  */
+     display: inline-block;
+     margin-right: 90px;
+     margin-bottom: 60px; 
+ }
+ .link-buttons__item_block{
+     display: block;
+ }
+ 
+ /*/////////////////////////////////////////////*/
+
 /* .button{
     margin-left: -3px;
     background-color: #fdfdfd;
@@ -384,17 +399,18 @@ h3{
     margin-left: -3px;
     background-color: #fdfdfd;
     border-radius: 25px;
-    padding: 10px 30px;
+    padding: 9px 30px;
     text-decoration: none;
     border: 1px solid #85a7b4;
     font-weight: 400;
     font-size: 15.4px;
     color: #6089a3;
-    min-width: 145px; 
-    margin-top:20px;
-    margin-bottom:20px;
+    /* min-width: 145px;  */
+    /* margin-top:20px;
+    margin-bottom:20px; */
     text-align: left;
     white-space: nowrap;
+    
 }
 .button-dark:hover{
     background-color:#0677a0;
@@ -442,10 +458,12 @@ input[type="search"] {-webkit-appearance: textfield;}
 }
 
 .base-form  input {
-    width: 300px;   
+    width: 100%;
+    max-width: 400px;
 }
 .search-form  input {
     width: 100%;
+    max-width: 100%;
     -webkit-box-shadow: 0 0 0px 1000px #fdfdfd inset;
     /*margin-bottom: 75px;  */
 }
@@ -681,8 +699,6 @@ input[type="radio"]:checked + label:after {
     position:relative;
     left:-26px;
     text-indent: 4px;
-   
-    
 }
 
 /*////////////////////////////////////////////////*/
@@ -863,21 +879,7 @@ h2:target {
 
 /*/////////////////////////////////////////////*/
 
-.add-mininav{
-   margin-top: 60px;
-   margin-bottom: 30px;
-}
-.add-mininav__item{
-    max-width: 700px; 
-    display: inline-block;
-    margin-right: 90px;
-    margin-bottom: 60px; 
-}
-.add-mininav__item_block{
-    display: block;
-}
 
-/*/////////////////////////////////////////////*/
  
 .logo {
     position: fixed;
@@ -1155,7 +1157,7 @@ h2:target {
     .category-bigmenu>ul>li {
         width: auto;
     }
-    .add-mininav__item{
+    .link-buttons__item{
         margin-right: 30px;
     }
     body {

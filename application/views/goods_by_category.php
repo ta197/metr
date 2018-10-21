@@ -31,16 +31,14 @@ include_once HEAD;
             : LIST_GOODS;
         ?>
         
-        <div class="listing side-content">
         <?php
             //echo '<pre>';
             //print_r($this);
             //echo '</pre>';
         ?>             
-        </div>
 
-        <ul class = "side-content add-mininav">
-            <li class="add-mininav__item"><a href="/category/section/cat/<?= $catObj->cat_id; ?>" class="button-dark">Категория &laquo;<?= $catObj->ucfirst_utf8($catObj->name) ?>&raquo;</a></li>
+        <ul class = "side-content link-buttons">
+            <li class="link-buttons__item"><a href="/category/section/cat/<?= $catObj->cat_id; ?>" class="button-dark">Категория &laquo;<?= $catObj->ucfirst_utf8($catObj->name) ?>&raquo;</a></li>
         </ul>
        
     </div><!--закрытие container__main-->

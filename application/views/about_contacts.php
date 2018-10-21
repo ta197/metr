@@ -11,64 +11,43 @@ include_once HEAD;
         
     <div class="container__main">
         <div class= "header__breadcrumb side-content top-content">
-            <a href="/">главная</a>  |   <a href="/about">о проекте</a>  |  Контакты
+            <a href="/">главная</a>  |   <a href="/about">о проекте</a>  |  контакты
         </div>
         
         <?php include_once TITLE_H1; ?>
-        
-        <p class="side-content lowered_15">
-            Реферат-резюме содержит только основные положения данной темы.</p> 
-        
-        <div class="listing side-content">
-        
-        <?php 
-   
-        // foreach ($p as $item):
-        //     echo '<dl class="listing__company">'."\n\t";
-        //     echo '<dt class="listing__company-name">'."{$item->addresses}</dt>\n";
-        //     if(!empty($item->phones)){
-        //         $phones = ltrim($item->phones, " | ");
-        //         echo "\t\t".'<dd class="listing__company-address">'."$phones</dd>\n";
-        //     }
-               
-        //     if(!empty($item->work_mode))
-        //         echo "\t\t".'<dd class="listing__company-address">режим работы: '."$item->work_mode</dd>\n";
-        //     if(!empty($item->email))
-        //         echo "\t\t".'<dd class="listing__company-address">e-mail: '."$item->email</dd>\n";
-        //     if(!empty($item->categories)){
-        //         $cats = explode("~~", $item->categories);
-        //         echo "\t\t".'<dd class="listing__link">относится к категориям:<div class="separator_rout"></div>';
-        //         foreach ($cats as $key=>$cat):
-        //             $dataLink = explode(" | ", $cat);
-        //             if($key !== 0) echo " | ";
-        //             echo '<a href="/category/section/cat/'."$dataLink[1]".'">'."$dataLink[0]".'</a>';
-        //         endforeach;  
-        //         echo '</dd>'."\n";
-        //     }
-        //     echo "</dl>\n";
-        // endforeach;    
-         
-    ?>             
-</div>
-          
-    
-        <div class = "side-content category-minimenu">
-            <a href="/about/partners" class="button-dark">рекламодателям</a></li>
+
+        <div class="side-content bottom_30">
+
+            <p class="lowered_15">
+                Если у вас есть предложения по улучшению сайта или замечания к его контенту или возникла необходимость связаться с нами, вы можете сделать это, заполнив форму обратной связи или написав нам по адресу: <b>m2arzamas@list.ru.</b></p>
+            <p>Телефон администратора сайта <b>8-903-043-27-33</b> (Татьяна).</p>
+
+            <div class = "link-buttons bottom_60">
+                <a href="/about/partners" class="button-dark">рекламодателям</a>
+            </div>    
+       
+            <h2 class="subtitle lowered_30 bottom_30">Форма обратной связи</h2>
+            
+            <form method="POST" class="base-form">
+
+                <label for="nik">Ваше имя</label>
+                <input id="nik" name="nik" placeholder="Петр Петров">
+
+                <label for="email">Адрес вашей электронной почты</label>
+                <input id="email" name="email" placeholder="email@mail.ru">
+
+                <label for="message">Текст сообщения</label>
+                <input id="message" name="message" type="text-area" placeholder="до 100 знаков">
+
+                <div class = "link-buttons bottom_30">
+                    <button type="submit" class="button-dark">Отправить</button>
+                </div>
+
+            </form>
+
         </div>
-
-
-          
-          <div class="listing side-content">
-            <?php 
-                // echo '<pre>';
-                // print_r($this);
-                // echo '</pre>';
-            ?>       
-            </div>
-
-        
+               
     </div><!--закрытие container__main-->
-   
             
     <?php include_once FOOTER; ?>
 </body>

@@ -51,17 +51,19 @@ include_once HEAD;
     ?>             
 </div>
           
-        <div class = "side-content category-minimenu">
-            <a href="/about/contacts" class="button-dark">как с нами связаться</a></li>
-        </div>
+        <ul class = "side-content link-buttons">
+            <li class = "link-buttons__item">
+                <a href="/about/contacts" class="button-dark">как с нами связаться</a>
+            </li>
+        </ul>
 
-          <div class="listing side-content">
-            <?php 
-                // echo '<pre>';
-                // print_r($this);
-                // echo '</pre>';
-            ?>       
-            </div>
+         
+        <?php 
+            // echo '<pre>';
+            // print_r($this);
+            // echo '</pre>';
+        ?>       
+           
         
     </div><!--закрытие container__main-->
             

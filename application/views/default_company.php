@@ -126,7 +126,7 @@ $counter['counter'] = $countCompany;
             
             <?php include_once TITLE_H1; ?>   
 
-            <div class="adjustment">
+            <div class="side-content adjustment">
             
             <form name="filtersForm" action="/company/filters/search/" class="filters-form" method="get">
                 <?php
@@ -174,9 +174,9 @@ $counter['counter'] = $countCompany;
                 ?>             
             </div>
                
-            <ul class="add-mininav side-content">
-                <li class="add-mininav__item"><a href="/company/young" class="button-dark">новые организации</a></li>
-                <li class="add-mininav__item"><a href="/company/archive" class="button-dark">архивные организации</a></li>
+            <ul class="link-buttons side-content">
+                <li class="link-buttons__item"><a href="/company/young" class="button-dark">новые организации</a></li>
+                <li class="link-buttons__item"><a href="/company/archive" class="button-dark">архивные организации</a></li>
             </ul>
 
         </div><!--закрытие container__main-->

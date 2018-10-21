@@ -63,16 +63,16 @@ include_once HEAD;
             ?>
         </div>
         
-        <div class="listing side-content">
+        
         <?php 
     //     echo '<pre>';
     //    print_r($this);
     //    echo '</pre>';
         ?>             
-        </div>
+       
 
-        <ul class = "side-content add-mininav">
-           <li class="add-mininav__item"> <a href="/catalog" class="button-dark">весь каталог сайта</a></li>
+        <ul class = "side-content link-buttons">
+           <li class="link-buttons__item"><a href="/catalog" class="button-dark">Весь каталог сайта</a></li>
         </ul>
        
     </div><!--закрытие container__main-->

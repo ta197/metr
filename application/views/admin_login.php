@@ -42,7 +42,7 @@ include_once HEAD;
             
             
 
-            <div class="adjustment">
+            <div class="side-content adjustment">
 
                 <ul>
                 <?php foreach ($errors as $error): ?>
@@ -58,7 +58,7 @@ include_once HEAD;
                     <label for="password">Пароль</label>
                     <input id="password" name="password" placeholder="от 6 до 15 знаков">
                     
-                    <div>
+                    <div class ="link-buttons">
                         <button type="submit" class="button-dark">Вход</button>
                     </div>
 

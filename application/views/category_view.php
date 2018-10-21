@@ -23,7 +23,7 @@ include_once HEAD;
         
         <?php
         if(!empty($cat->countGoods)) {
-                echo '<div class = "side-content category-minimenu">
+                echo '<div class = "side-content link-buttons">
                 <a href = "/catalog/category/cat/'.$cat->cat_id.'" class="button-dark">
                 Каталог <q>'.$cat->ucfirst_utf8($cat->name).'</q> 
                 <span class = "counter">('.$cat->countGoods.')</span></a></div>';
@@ -50,13 +50,13 @@ include_once HEAD;
         ?>
             
 
-        <div class="listing side-content">
-            <?php 
-               // echo '<pre>';
-               // print_r($this);
-               // echo '</pre>';
-            ?>       
-        </div>
+        
+    <?php 
+       // echo '<pre>';
+       // print_r($this);
+       // echo '</pre>';
+    ?>       
+       
     
     </div><!--закрытие container__main-->
     

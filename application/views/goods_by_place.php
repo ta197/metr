@@ -35,7 +35,7 @@ include_once HEAD;
             : LIST_GOODS;
     ?>
 
-    <div class="side-content lowered_30 bottom_30">
+    <div class="side-content link-buttons">
         <a href="/catalog/company/c/<?=$c->company_id ?>" class="button-dark">Весь каталог организации</a>
     </div>
     

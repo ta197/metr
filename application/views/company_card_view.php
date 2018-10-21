@@ -55,9 +55,23 @@ $countPlaces = count($p);
 
             if(!empty($item->goods)){
                 if($countPlaces>1){
-                    echo "\t\t".'<dd class="lowered_30 bottom_30"><a href="/catalog/place/p/'.$item->place_id.'" class="button-dark">каталог</a></dd>'."\n";
+                    echo "\t\t".'<dd>
+                                    <ul class="link-buttons">
+                                        <li class="link-buttons__item">
+                                            <a href="/catalog/place/p/'.$item->place_id.'" class="button-dark">Каталог
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </dd>'."\n";
                 }else{
-                    echo "\t\t".'<dd class="lowered_30 bottom_30"><a href="/catalog/company/c/'.$c->company_id.'" class="button-dark">каталог</a></dd>'."\n";
+                    echo "\t\t".'<dd>
+                                    <ul class="link-buttons">
+                                        <li class="link-buttons__item">
+                                            <a href="/catalog/company/c/'.$c->company_id.'" class="button-dark">Каталог
+                                            </a>
+                                        </li>    
+                                    </ul>
+                                </dd>'."\n";
                 }
             }
                 
