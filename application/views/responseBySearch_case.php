@@ -5,7 +5,7 @@
 
 <?php 
  foreach($bySort as $section => $items){
-    echo '<h2 class="side-content subtitle bottom_45 lowered_30">'.$section.'<span class = "counter"> ('.count($items).')</span></h2>';
+    echo '<h2 class="side-content subtitle subtitle__margin-30 bottom_45">'.$section.'<span class = "counter"> ('.count($items).')</span></h2>';
    
     switch($section):
         case 'Компании':  include_once RESPONSE_BY_SEARCH_LIST_COMPANY; break;

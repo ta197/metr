@@ -84,7 +84,7 @@ footer{
     vertical-align: top;
     padding-right: 8%;
     margin: 0;
- }
+}
 
 .footer__column-item{
     display: inline-block;
@@ -179,7 +179,6 @@ nav{
 
 /*/////////////////////////////////////////////*/
 
-
 p { 
     color: #888;
     padding-top: 30px;
@@ -191,8 +190,8 @@ q:lang(ru) {  quotes: "\00AB" "\00BB"; }/* Вид кавычек для русс
 
 /* ///////////////////////////////////////////////////////////////////////// */
 
-h1{
-  
+h2{
+
 }
 
 h4{
@@ -272,15 +271,24 @@ h3{
 }
 
 .subtitle{
+    /* margin-block-start: 0;
+    margin-block-end: 0; */
     font-weight: 200;
     font-size: 26px;
     line-height: 45px;
+    padding-top: 4px;
+    margin-bottom: -4px;
+    margin-top: 45px;
+
+}
+.subtitle__margin-30{
+    margin-top: 30px;
 }
 
 .subtitle_top-indent{
     padding-top: 300px;
+    margin-top: 0;
 }
-
 
 /*/////////////////////////////////////////////*/
 
@@ -321,36 +329,29 @@ h3{
     color: lightslategray;
 }
 
-/*////////////////////////////////////////////////*/
-/* 
-.category-minimenu{
-    margin-top: 45px;
-    margin-bottom: 60px;
-    color: #0677a0;
-    font-weight: 400;
-}
-
-.category-minimenu li{
-    display: inline-block;
-    white-space: nowrap;
-    margin-bottom: 60px;
-}
-
-.category-minimenu li:not(:last-child){
-    padding-right: 6%;    
-} */
 
 /*/////////////////////////////////////////////*/
 
 .link-buttons{
     margin-top: 45px;
-    /* margin-bottom: 30px; */
+    margin-bottom: 30px;
+ }
+ .link-buttons_margin-30{
+    margin-top: 30px;
  }
  .link-buttons__item{
      /* max-width: 700px;  */
      display: inline-block;
      margin-right: 90px;
      margin-bottom: 60px; 
+ }
+
+ .link-buttons__item_bottom-15{
+    margin-bottom: 15px;
+    
+ }
+ .link-buttons__item_top-15{
+    margin-top: 15px;
  }
  .link-buttons__item_block{
      display: block;
@@ -531,10 +532,8 @@ input[type="search"] {-webkit-appearance: textfield;}
 .filters-form{
     position: relative;
     margin-bottom: 30px;
-    /*color: #3f8daa;*/
-   /*padding-top:15px;*/
-   font-weight: 400;
-   font-size: 15.4px;
+    font-weight: 400;
+    font-size: 15.4px;
     color: #6089a3;
 }
 
@@ -579,7 +578,6 @@ input[type="search"] {-webkit-appearance: textfield;}
     background-color:#7f9ba7;
     color:#bdcdd3;
 }
-
 
 /*////////////////////////////////////////////////*/
 
@@ -673,6 +671,7 @@ input[type="radio"]:checked + label:after {
     opacity: 1;
 }
 
+/*////////////////////////////////////////////////*/
 
 .alphabet__letter{
     color:  #0677a0;
@@ -878,7 +877,6 @@ h2:target {
 }
 
 /*/////////////////////////////////////////////*/
-
 
  
 .logo {
@@ -1137,7 +1135,6 @@ h2:target {
         line-height: 20px;
     }
    
-
 }
 
 @media screen and (max-height: 650px) and (max-width: 960px){
@@ -1237,7 +1234,7 @@ h2:target {
         margin-bottom: 25%;
     }
     .button-dark{
-        padding: 10px 12px;  
+        padding: 9px 12px;  
     }
     .logo__icon::before {
         font-size: 50px;
@@ -1306,6 +1303,7 @@ width: 16px;
     padding-top: 15px;
     line-height: 30px;   
 }
+
 .lowered_30{
     padding-top: 30px;
 }

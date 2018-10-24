@@ -73,7 +73,7 @@ include_once HEAD;
             </div>
         <?php
             if(!empty($listGoods)){
-                echo '<h2 class = "subtitle side-content">
+                echo '<h2 class = "subtitle side-content subtitle__margin-30">
                 Ещё товары этой компании в категории <q>'.$catObj->ucfirst_utf8($catObj->name).'</q><span class = "counter">('.count($listGoods).')</span>
                 </h2>';
             }

@@ -47,7 +47,7 @@ include_once HEAD;
             </dl>
             <?php
              if(!empty($listCompany)):
-                echo '<h2 class ="subtitle bottom_60 lowered_15">Где можно приобрести<span class = "counter">('.count($listCompany).')</span></h2>';   
+                echo '<h2 class ="subtitle bottom_60 subtitle__margin-30">Где можно приобрести<span class = "counter">('.count($listCompany).')</span></h2>';   
                 $indent = '';
                 
                 foreach($listCompany as $place){
