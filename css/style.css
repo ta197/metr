@@ -180,7 +180,7 @@ nav{
 /*/////////////////////////////////////////////*/
 
 p { 
-    color: #888;
+    /* color: #888; */
     padding-top: 30px;
     line-height: 30px;
     max-width: 700px;
