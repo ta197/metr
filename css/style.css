@@ -1,15 +1,75 @@
 @import "/fonts/set-icon.css";
 /* @import url(https://netdna.bootstrapcdn.com/font-awesome/2.0/css/font-awesome.css); */
+
 *{  margin: 0;
     padding: 0;
     border: 0;}
-ul { list-style: none; }
+ul, ol { list-style: none; }
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
 
 a {
     text-decoration: none;
     color: inherit;
 }
 a:hover {text-decoration: underline;}
+
+/*/////////////////////////////////////////////*/
+
+p { 
+    /* color: #888; */
+    padding-top: 30px;
+    line-height: 30px;
+    max-width: 700px;
+    font-size: 16px;
+}
+
+.full_width{
+    max-width: 100%;
+}
+
+q:lang(ru) {  quotes: "\00AB" "\00BB"; }/* Вид кавычек для русского языка */ 
+
+
+/* ///////////////////////////////////////////////////////////////////////// */
+h2, h3, h4, h5, h6{
+    margin: 0;
+    padding-top: 15px;
+    line-height: 30px;
+}
+h2{
+   font-size: 24px;
+}
+h2:target {
+    padding-top: 75px;
+    width: 80px;
+    position:relative;
+    left:-0.6rem;
+    text-indent: 0.6rem;
+    padding-bottom: 36px;
+    margin-bottom: 0px;
+    color: #fdfdfd;
+    background: linear-gradient(to top,  #8ba5b6 90px, #fdfdfd 45px);
+}
+h3{
+    color: #2e5a75;
+    font-size: 20px;
+}
+
+
+h4{
+    color: #2e5a75;
+    font-size: 16px;
+}
+h5{
+    font-size: 14px;
+}
+h6{
+    padding-top: 0;
+    font-size: 12px;
+}
 
 /*///////////////////////////////////////////////////////////////*/
 
@@ -30,6 +90,7 @@ body {
     overflow-y: scroll;
     background-color: #fdfdfd;
     scroll-behavior: smooth; /*только Firefox*/
+    vertical-align: baseline;
 }
 
 /*///////////////////////////////////////////////////////////////*/
@@ -116,7 +177,7 @@ nav{
     width: 320px;
     margin-top: 45px;
     color: #d6e3f9;
-    z-index: 160;
+    z-index: 170;
 }
 
 .nav__icon{
@@ -160,51 +221,63 @@ nav{
 }
 
 /*/////////////////////////////////////////////*/
+.header-left{
+    position: fixed;
+    width: 320px;
+    top: 45px;
+    text-align: right;
+    z-index: 171;
+}
+.header-left__avatar {
+    border-radius: 100%;
+    width: 150px;
+    margin: 0 40px 0 130px;
+}
+.header-left__txt {
+    font-weight: 200;
+    color: #e1eafa;
+    margin: 0 60px 0 50px;
+}
+
+.header-left__gap_display {
+    display: none;
+}
+.header-left__contacts{
+    font-weight: 200;
+    color: #e1eafa;
+    margin: 0 60px 0 50px;
+}
+
+.header-left__subname {
+   display: block;
+   font-size: 16px;
+   padding-top: 3px;
+}
+
+/*/////////////////////////////////////////////*/
+
+.section__hr {
+    border-top: solid 2px #efefef;
+    margin-top: 76px;
+    padding-top: 37px;
+}
 
 .adjustment{
     margin-top: 45px;
     max-width: 850px;
 }
 
-/*/////////////////////////////////////////////*/
-
 .side-content {
     padding-right: 10%;
     padding-left: 12%;  
 }
 
+.side-left {
+    padding-left: 12%;  
+}
+
 .top-content{
   padding-top: 75px;
-}
-
-/*/////////////////////////////////////////////*/
-
-p { 
-    /* color: #888; */
-    padding-top: 30px;
-    line-height: 30px;
-    max-width: 700px;
-}
-
-q:lang(ru) {  quotes: "\00AB" "\00BB"; }/* Вид кавычек для русского языка */ 
-
-/* ///////////////////////////////////////////////////////////////////////// */
-
-h2{
-
-}
-
-h4{
-    padding-top: 15px;
-    line-height: 30px;
-    color: #2e5a75;
-}
-
-h3{
-    padding-top: 15px;
-    line-height: 30px;
-    color: #2e5a75;
-    font-size: 20px;
 }
 
 /*/////////////////////////////////////////////*/
@@ -294,7 +367,7 @@ h3{
 
 .category-bigmenu{
     color: #afafaf;
-    padding-left: 12%;
+    /*padding-left: 12%;*/
     margin-top: 65px;
     font-weight: 200;
 }
@@ -303,10 +376,18 @@ h3{
     display: inline-block;
     vertical-align: top;
     margin-right: 10%;
-    width: 290px;
+    width: 300px;
     border-top: 1px dotted #b1d7e5;
     margin-bottom: 80px;
     padding-top: 9px;
+}
+
+.category-bigmenu_three>ul>li{
+    margin-bottom: 30px;
+}
+
+.category-bigmenu_full>ul>li{
+    width: auto;
 }
 
 .category-bigmenu>ul>li a{
@@ -329,6 +410,19 @@ h3{
     color: lightslategray;
 }
 
+/* List */
+
+ol {
+    list-style: decimal;
+    margin: 0 0 0 0;
+    padding-left: 60px;
+}
+
+    ol li {
+        padding-left: 10px;
+        padding-top: 15px;
+    }
+
 
 /*/////////////////////////////////////////////*/
 
@@ -340,7 +434,6 @@ h3{
     margin-top: 30px;
  }
  .link-buttons__item{
-     /* max-width: 700px;  */
      display: inline-block;
      margin-right: 90px;
      margin-bottom: 60px; 
@@ -611,7 +704,6 @@ input[type="radio"]:not(:checked) + label:before{
     width: 18px;
     height: 18px;
     border: 1px solid #84aebe;
-    /*background-color:  #fdfdfd;*/
     background-color: #fdfdfd;
 }
 
@@ -682,11 +774,10 @@ input[type="radio"]:checked + label:after {
     width: 70px;
     display: inline-block;
     position:relative;
-   left:-26px;
+    left:-26px;
     text-indent: 4px;
     top: -3px;
     text-align: center;
-    
 }
 
 .alphabet__letter:hover{
@@ -758,25 +849,12 @@ input[type="radio"]:checked + label:after {
     color: #4f738a;
 }
 
-
 .listing__letter{
     line-height: 25px;
     margin-bottom: 36px;
     font-size: 26px;
     font-weight: 400;
     color: #556d7e94;
-}
-
-h2:target {
-    padding-top: 75px;
-    width: 80px;
-    position:relative;
-    left:-0.6rem;
-    text-indent: 0.6rem;
-    padding-bottom: 36px;
-    margin-bottom: 0px;
-    color: #fdfdfd;
-    background: linear-gradient(to top,  #8ba5b6 90px, #fdfdfd 45px);
 }
 
 .gap{
@@ -981,7 +1059,76 @@ h2:target {
 }
 
 
- 
+/* Table */
+
+.table-wrapper {
+	-webkit-overflow-scrolling: touch;
+	overflow-x: auto;
+}
+table {
+	margin: 0 0 2em 0;
+	width: 100%;
+}
+table tbody tr {
+	border: solid 1px #efefef;
+	border-left: 0;
+	border-right: 0;
+}
+		table tbody tr:nth-child(2n + 1) {
+			background-color: #f7f7f7;
+		}
+	table td {
+		padding: 0.75em 0.75em;
+	}
+	table th {
+		color: #787878;
+		font-size: 0.9em;
+		font-weight: 400;
+		padding: 0 0.75em 0.75em 0.75em;
+		text-align: left;
+	}
+	table thead {
+		border-bottom: solid 2px #efefef;
+	}
+	table tfoot {
+		border-top: solid 2px #efefef;
+	}
+
+code {
+	background: #f7f7f7;
+	border-radius: 0.35em;
+	border: solid 2px #efefef;
+	font-family: "Courier New", monospace;
+	font-size: 0.9em;
+	margin: 0 0.25em;
+	padding: 0.25em 0.65em;
+}
+pre {
+	-webkit-overflow-scrolling: touch;
+	font-family: "Courier New", monospace;
+	font-size: 0.9em;
+	margin: 0 0 2em 0;
+}
+	pre code {
+		display: block;
+		line-height: 1.75em;
+		padding: 1em 1.5em;
+		overflow-x: auto;
+    }
+        
+.bg_grey{
+    border: solid 1px #efefef;
+	border-left: 0;
+    border-right: 0;
+    background-color: #f7f7f7;
+}
+.right-img{
+    width: 82%;
+    margin-bottom: -85px;
+    margin-top: 30px;
+}
+      
+       
 
 /*//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==/*/
 
@@ -1027,6 +1174,39 @@ h2:target {
         background-color: transparent;
         line-height: 20px;
     }
+    .header-left{
+        top: 0;
+        width: 100%;
+        text-align: left;
+    }
+
+    .header-left__avatar {
+        border-radius: 0;
+        width: 100px;
+        float: right;
+        margin: 0;
+    }
+   
+    .header-left__txt{
+        padding: 0;
+        margin: 20px 10px 0 12%;
+        display: inline-block;
+    }
+    .header-left__gap_display {
+        display: inline;
+    }
+    
+    .header-left__contacts p{
+        display: inline;
+    }
+    .header-left__contacts{
+        margin: 0 60px 0 12% ;
+        padding: 0;
+    }
+
+    .header-left__subname {
+        display: inline;
+     }
 
     .container__main{
         margin-left: 0;
@@ -1084,6 +1264,19 @@ h2:target {
     .listing__company_search {
        padding-top: 0px;
     }
+
+    .section__hr {
+        margin-top: 61px;
+        padding-top: 22px;
+    }
+    section:target {
+        padding-top: 120px;
+    }
+    .right-img{
+        margin-bottom: -70px;
+      }
+
+   
 }
 
 
@@ -1105,6 +1298,7 @@ h2:target {
     }
     .nav__icon{
         font-size: 12px;
+        vertical-align: text-top;
     }
 
     figure {
@@ -1134,12 +1328,25 @@ h2:target {
         background-color: transparent;
         line-height: 20px;
     }
-   
+    .header-left__avatar {
+        width: 90px;
+     }
+     .header-left__gap_display {
+        display: inline;
+    }
+    
+    .header-left__contacts p{
+        display: inline;
+        font-size: 13.5px; 
+    }
+
 }
 
 @media screen and (max-height: 650px) and (max-width: 960px){
-    /*для типа 667х375 (горизонтальная ориентация)как IPHONE 
+    /*для типа 667х375  
     написать стили чтобы картинка во весь экран открывалась и её м.б. закрыть*/
+    
+ 
 }
 
 @media screen and (max-width: 500px){
@@ -1147,10 +1354,11 @@ h2:target {
         padding-left: 30px;
         padding-right: 25px;
     }
-    .category-bigmenu{
+    .side-left{
         padding-left: 30px;
         padding-right: 25px;
     }
+    
     .category-bigmenu>ul>li {
         width: auto;
     }
@@ -1180,6 +1388,27 @@ h2:target {
     }
     .nav__icon{
         font-size: 12px;
+    }
+    
+    .header-left__avatar {
+       right: 0;
+       position:absolute;
+       width: 70px;
+    }
+
+    .header-left__txt{
+        margin: 8px 5px 0 25px;
+        display: inline-block;
+        font-size: 15px;
+    }
+    .header-left__contacts{
+        margin: 0 5px 0 25px;
+    }
+    .header-left__contacts p{
+        font-size: 13px; 
+    }
+    .header-left__subname{
+        font-size: 12px; 
     }
 
     .title {
@@ -1246,7 +1475,13 @@ h2:target {
         margin-left: 30px;
         margin-top: 10px;
     }
-    
+    .section__hr {
+        margin-top: 46px;
+        padding-top: 7px;
+    } 
+    section:target {
+        padding-top: 75px;
+    }
 }
 
 
@@ -1268,6 +1503,24 @@ width: 16px;
 
 /*/////////////////////////////////////////////*/
 
+blockquote, q {
+    quotes: none;
+}
+
+blockquote:before, blockquote:after, q:before, q:after {
+    content: '';
+    content: none;
+}
+blockquote {
+    border-left: solid 6px #efefef;
+    font-style: italic;
+    margin: 30px 0 30px 50px;
+    padding: 0.5em 0 0.5em 1.5em;
+    max-width: 650px;
+    color: #979797;
+    font-weight: 600;
+}
+
 
 .mark{
     background-color:#faea0e;
@@ -1278,6 +1531,12 @@ width: 16px;
 .red{
     color: #da240c;
 }
+
+.blue{
+    color:#0677a0;
+    font-weight: 400;
+}
+
 
 .break:after {
     content: '\A';
@@ -1303,6 +1562,10 @@ width: 16px;
     padding-top: 15px;
     line-height: 30px;   
 }
+.lowered_0{
+    padding-top: 0;
+    line-height: 30px;   
+}
 
 .lowered_30{
     padding-top: 30px;
@@ -1322,3 +1585,4 @@ width: 16px;
 .bottom_60{
     padding-bottom: 60px;
 }
+

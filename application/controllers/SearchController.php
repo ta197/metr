@@ -1,23 +1,31 @@
 <?php
 namespace application\controllers;
+use 
+  application\models\View, 
+  application\models\Search;
 
-use application\models\View, application\models\Search;
-
-class SearchController extends ParentController implements IController
+class SearchController 
+  extends ParentController 
+  implements IController
 {
+    
+/////////////////////////////////////////////////////////////////////  
   public function indexAction()
   {
-    $fc = FrontController::getInstance();
-    $this->view->navStatus = $this->view->navStatus('SearchActiv', 'SearchDisabled');
+    $this->view->navStatus = $this->view->navStatus(['metr'], 'SearchActiv', 'SearchDisabled');
     $output = $this->view->render(DEFAULT_SEARCH_FILE);
-    $fc->setBody($output);
+    $this->fc->setBody($output);
   }
 
+/////////////////////////////////////////////////////////////////////
+/**
+ * http://metrkv1/search/response/search/?search=%D0%BE%D0%B1%D0%BE%D0%B8
+ * странца ответа на запрос из формы поиска
+ */
   public function responseAction()
   {
-    $fc = FrontController::getInstance();
-    $query = $fc->getParams()["search"];
-    $this->view->navStatus = $this->view->navStatus('SearchActiv', 'SearchDisabled');
+    $query = $this->fc->getParams()["search"];
+    $this->view->navStatus = $this->view->navStatus(['metr'], 'SearchActiv', 'SearchDisabled');
 
     $search = (new Search());
     $this->view->clearQuery = $search->clearQuery($query);
@@ -33,10 +41,10 @@ class SearchController extends ParentController implements IController
           } else  $this->view->bySort = 0;
       } else  $this->view->bySort = 0;
     } else  $this->view->bySort = 0;
-        
     
     $output = $this->view->render(RESPONSE_BY_SEARCH_FILE);
-    $fc->setBody($output);
+    $this->fc->setBody($output);
   }
+  /////////////////////////////////////////////////////////////////////
 
 }

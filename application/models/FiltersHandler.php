@@ -1,6 +1,8 @@
 <?php
 namespace application\models;
-
+use 
+//application\base\Db, 
+application\base\DB;
 class FiltersHandler extends Model
 {
     public $legalStr = null;
@@ -35,7 +37,7 @@ class FiltersHandler extends Model
 
     public function __construct($decode)
     {
-        parent::__construct();
+        //parent::__construct();
         if(!$decode){
             $this->defaultItem(); return;
         }
@@ -93,7 +95,7 @@ class FiltersHandler extends Model
     }
 
    
-    public function combineWhere() //форирует WHERE и заголовок, переопределяет curr
+    public function combineWhere() //формирует WHERE и заголовок, переопределяет curr
     {
         $where ='';
         $businessArr = [];
@@ -219,25 +221,23 @@ class FiltersHandler extends Model
         $where
         GROUP BY sh.name
         ORDER BY sh.name";
-        return self::$db->queryAll(
-            $sql
-        );
+       
+        return $data = DB::prepare($sql)->execute()->fetchAll();  
     }
 
     private function getLegalFromDB($where) //данные только по legal, готовые
     {
         $sql =
-        "SELECT
-        legal.name AS legal, COUNT(DISTINCT c.company) AS countLegal
-        FROM `companies` AS c
-        LEFT JOIN `places` AS p ON (p.company_id =  c.company_id)
-        LEFT JOIN `shop` AS sh ON (sh.id =  p.shop)
-        LEFT JOIN `legal` ON (legal.id = c.legal)
-        $where
-        GROUP BY legal.name";
-        return self::$db->queryAll(
-            $sql
-        );
+            "SELECT
+            legal.name AS legal, COUNT(DISTINCT c.company) AS countLegal
+            FROM `companies` AS c
+            LEFT JOIN `places` AS p ON (p.company_id =  c.company_id)
+            LEFT JOIN `shop` AS sh ON (sh.id =  p.shop)
+            LEFT JOIN `legal` ON (legal.id = c.legal)
+            $where
+            GROUP BY legal.name";
+       
+        return $data = DB::prepare($sql)->execute()->fetchAll();
     }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

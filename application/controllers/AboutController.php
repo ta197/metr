@@ -5,30 +5,32 @@ use application\models\View;
 
 class AboutController extends ParentController implements IController
 {
-    
+ /////////////////////////////////////////////////////////////////////   
     public function indexAction()
     {
-        $fc = FrontController::getInstance();
-
-        $this->view->navStatus = $this->view->navStatus('AboutActiv', 'AboutDisabled');
+        $this->view->navStatus = $this->view->navStatus(['about'], 'AboutActiv', 'AboutDisabled');
+        $this->view->h1 = 'О проекте';
+        $this->view->title = 'о проекте';
         $output = $this->view->render(DEFAULT_ABOUT_FILE);
-        $fc->setBody($output);
+        $this->fc->setBody($output);
     }
-
+/////////////////////////////////////////////////////////////////////
     public function contactsAction()
     {
-        $fc = FrontController::getInstance();
-        $this->view->navStatus = $this->view->navStatus('ContactsActiv', 'ContactsDisabled');
+        $this->view->navStatus = $this->view->navStatus(['about'],'ContactsActiv', 'ContactsDisabled');
+        $this->view->h1 = 'Контакты';
+        $this->view->title = 'контакты';
         $output = $this->view->render(ABOUT_CONTACTS_FILE);
-        $fc->setBody($output);
+        $this->fc->setBody($output);
     }
-
+/////////////////////////////////////////////////////////////////////
     public function partnersAction()
     {
-        $fc = FrontController::getInstance();
-        $this->view->navStatus = $this->view->navStatus('PartnersActiv', 'PartnersDisabled');
+        $this->view->navStatus = $this->view->navStatus(['about'], 'PartnersActiv', 'PartnersDisabled');
+        $this->view->h1 = 'Рекламодателям';
+        $this->view->title = 'рекламодателям';
         $output = $this->view->render(ABOUT_PARTNERS_FILE);
-        $fc->setBody($output);
+        $this->fc->setBody($output);
     }
 
     

@@ -7,10 +7,8 @@ class IndexController extends ParentController implements IController
 {
   public function indexAction()
   {
-    $fc = FrontController::getInstance();
-   // $view = new View();
     $this->view->title = 'главная';
     $output = $this->view->render(DEFAULT_FILE);
-    $fc->setBody($output);
+    $this->fc->setBody($output);
   }
 }

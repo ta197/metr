@@ -4,15 +4,13 @@ namespace application\models;
 class FiltersItem extends Model
 {
     public $name;
-    
     public $type;
     public $value;
-   
-   
     public $checked = false;
     public $count = null;
     public $curr = '-1';
-
+    
+/////////////////////////////////////////////////////////////////////
     public function __construct($obj, $name ='business[]', $type = 'checkbox', $check = false, $currentCount = '-1'){
         
         if(is_object($obj)){
@@ -116,4 +114,5 @@ class FiltersItem extends Model
             
     }
     
+/////////////////////////////////////////////////////////////////////   
 }

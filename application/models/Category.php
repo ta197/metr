@@ -1,9 +1,9 @@
 <?php
 namespace application\models;
+use application\base\DB;
 
 class Category extends Model {
-    const TABLE = 'cats';
-    //public $db;
+    
     public $name;
     public $cat_id;
     public $parent_id;
@@ -13,38 +13,182 @@ class Category extends Model {
     public $rgt;
     public $level;
     public $countGoods = null;
-       
+    //static public $table = 'cats';
+    
+/////////////////////////////////////////////////////////////////////
+    /**
+     * 
+     */
     public function __construct(){
-      parent::__construct();
+      static::$table = 'cats';
+    }
+
+    
+/////////////////////////////////////////////////////////////////////
+     /**
+     * 
+     */   
+    public function getCategoryObj($id){
+      $nameId = 'cat_id';
+      $fields = "name, $nameId, parent_id, lft, rgt, level, ref";
+      return $this->getObjById($id, $fields, $nameId);
     }
     
-    public function getCategoryObj($id){
-      $pk = 'cat_id';
-      $fields = "name, $pk, parent_id, lft, rgt, level, ref";
-      return $this->getClassObjById($id, $fields, $pk);
-    }
+/////////////////////////////////////////////////////////////////////
+    /**
+     *  
+     */
+    public function getBigCatMenu($fields = 'visible'){
+      switch ($fields):
+       case 'visible': 
+         $fields = "name, cat_id, level, activated "; 
+         $vis = [1, 2]; break;
+       case 'full': 
+         $fields = "name, cat_id, level, activated, visible, lft, rgt"; 
+         $vis = [0, 1]; break;
+       default: 
+         $fields = "name, cat_id, level"; 
+         $vis = [1, 2]; break;
+      endswitch;
+     $sql = "SELECT $fields FROM `cats` 
+        WHERE level>0 AND visible IN (?, ?) 
+        ORDER BY lft";
+       $data = DB::prepare($sql)->execute($vis);
+       if(false !== $data){
+         while ($row = $data->fetch()){
+          yield $row;
+         }
+       }
+   }
+   
+    
+/////////////////////////////////////////////////////////////////////
+     /**
+     * 
+     */  
+     public function countAllCatMenu($p = [0, 1, 2, 1, 2]){
+       $sql = "SELECT COUNT(cats.cat_id)
+         FROM `cats` 
+         WHERE level>? AND visible IN (?, ?) AND activated IN (?, ?)";
+       return $count = DB::prepare($sql)->execute($p)->fetchColumn();  
+     }
 
-    public function getCatObj($id){
-      $id = $this->clearInt($id);
-      return self::$db->queryClass(
-        "SELECT
-        cats.name, cats.cat_id, cats.parent_id, cats.lft, cats.rgt, cats.level, cats.ref 
-        FROM `cats`
-        WHERE cats.cat_id = $id", 
-        self::class
-      );
-    }
+ ///////////////////////////////////////////////////////////////////// 
+    /**
+     * 
+     */   
+     public function getBrc($obj){
+       $arr_param[':lft'] = $this->clearInt($obj->lft);
+       $arr_param[':rgt'] = $this->clearInt($obj->rgt);
+     
+         $sql  = "SELECT name, cat_id FROM `cats` 
+         WHERE lft<:lft AND rgt>:rgt AND level>0 AND visible = 1
+         ORDER BY lft";
+         return $data = DB::prepare($sql)->execute($arr_param)->fetchAll();
+     }
 
-    public function countGoodsByCat($id){
-      $arr[] = $this->clearInt($id);
-      $cG = self::$db->query(
-        "SELECT
-        COUNT(goods.goods_id) as countGoods
-        FROM `goods`
-        WHERE  goods.cat_id = ?",
-        $arr);
-        return $cG['countGoods'];
+
+///////////////////////////////////////////////////////////////////// 
+    /**
+     * аналог getBrcAllCatalog
+     * главная | организации | «Новосел», магазин | каталог | обои // отказалась пока от такого в пользу getBrcAllCatalog
+     * 
+     * не отображает тех категорий, в которых (непосредственно в них) нет товара
+     * исходит из логики: там товара нет - нечего и давать ссылку на нее
+     */     
+    //  public function getBrcCatalog(Category $cat, $cid){
+    //    $arr_param[':lft'] = $this->clearInt($cat->lft);
+    //    $arr_param[':rgt'] = $this->clearInt($cat->rgt);
+    //    $arr_param[':cid'] = $this->clearInt($cid);
+    //      $sql  = "SELECT cats.name AS name, cats.cat_id AS cat_id, cats.parent_id
+    //      FROM `cats` 
+    //      JOIN `places_cats` ON places_cats.cat_id = cats.cat_id
+    //      JOIN `places_goods` ON places_cats.place_id = places_goods.place_id
+    //      JOIN `places` ON places.place_id = places_goods.place_id
+    //      WHERE lft<:lft AND rgt>:rgt AND level>0 AND visible = 1 AND places.company_id = :cid
+    //      GROUP BY cats.name
+    //      ORDER BY lft";
+    //     return $data = DB::prepare($sql)->execute($arr_param)->fetchAll();
+    //  }
+
+    /**
+     * аналог getBrcCatalog ()
+     * главная | организации | «Новосел», магазин | каталог | материалы для чистовой отделки | обои
+     * 
+     * отображает те категории, в которых (непосредственно в них) нет товара
+     * исходит из логики: там товар есть уже потому, что он есть у потомков
+     * не проверена
+     */     
+    public function getBrcAllCatalog(Category $cat, $cid){
+      $arr_param[':lft'] = $this->clearInt($cat->lft);
+       $arr_param[':rgt'] = $this->clearInt($cat->rgt);
+       $arr_param[':cid'] = $this->clearInt($cid);
+      $sql  = "SELECT name, cat_id FROM `cats`
+        JOIN `places` ON places.company_id = :cid
+        WHERE lft<:lft AND rgt>:rgt AND level>0 AND visible = 1 
+        GROUP BY cats.name
+        ORDER BY lft";
+      return $data = DB::prepare($sql)->execute($arr_param)->fetchAll();
     }
+    
+///////////////////////////////////////////////////////////////////// 
+    /**
+     * 
+     */    
+     public function getCatMenu($cat){
+       $lft = $cat->lft;
+       $rgt = $cat->rgt;
+       if(($rgt-$lft)>1){
+         $arr_param[':lft'] = $lft;
+         $arr_param[':rgt'] = $rgt;
+         $sql  = "SELECT name, cat_id, parent_id, level, activated FROM `cats` 
+              WHERE lft>:lft AND rgt<:rgt AND level>0 AND visible = 1
+              ORDER BY lft";
+           return $data = DB::prepare($sql)->execute($arr_param)->fetchAll();   
+       }
+       else return false;
+     }
+   
+ /////////////////////////////////////////////////////////////////////////////////
+    /**
+     * 
+     * сколько штук подменю у категории (для меню на странице категории)
+     */   
+     public function countCatSubMenu($catMenu, $cat){
+       $countCatSubMenu = 0;
+       if(empty($catMenu)) return $countCatSubMenu;
+         foreach($catMenu as $k=>$v){
+             if($v['level']==($cat->level)+1) $countCatSubMenu++;
+         }
+         return $countCatSubMenu;
+     }
+   
+   
+/////////////////////////////////////////////////////////////////////////////////
+   
+/////////////////////////////////////////////////////////////////////////////////
+    /**
+     * 
+     * создание новой категории и добавление ее в дерево
+     */   
+    public function createCategory($name, Category $parentObj = null, $activated, $visible){
+
+      if(!$parentObj){
+        $max_rgt = 20000;
+        $parent_rgt = $max_rgt+1;
+        $parent_level = 0;
+      }else {
+        $parent_rgt = $parentObj->rgt;
+        $parent_level = $parentObj->level;
+      }
+//UPDATE
+//INSERT
+
+//return  $idNewObj;
+      return  $parent_rgt;
+      
+    }
+  
+    
+ /////////////////////////////////////////////////////////////////////////////////
 }
-
-?>

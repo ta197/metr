@@ -1,11 +1,10 @@
 <?php
 namespace application\models;
+use application\base\DB;
 
 class Goods extends Model
 {
-    const TABLE = 'goods';
     
-    // //public $db;
     // public $company;
     // public $quotes;
     // public $shop;
@@ -21,14 +20,21 @@ class Goods extends Model
     // public $company_extend;
     
     // public $addresses =[];
-    
+     
+/////////////////////////////////////////////////////////////////////
+    /**
+     * 
+     */
     public function __construct(){
-        parent::__construct();  
+        static::$table = 'goods';
     }
-
+    
+/////////////////////////////////////////////////////////////////////
+    /**
+     * товары одной компании одной категории (вложенные не берутся)
+    */
     public function getGoodsCompanyByCat($c, $cat){
-        return self::$db->queryAllClass(
-            "SELECT
+        $sql  = "SELECT
             g.goods_id, 
             g.name AS goods, 
             g.date, 
@@ -55,22 +61,26 @@ class Goods extends Model
                 JOIN `companies` AS c ON (p.company_id =  c.company_id)
                 LEFT JOIN `centres` ON (p.centre = centres.id)
             LEFT JOIN `cats` ON g.cat_id = cats.cat_id
-            WHERE p.company_id = $c AND g.cat_id = $cat
+            WHERE p.company_id = ? AND g.cat_id = ?
             GROUP BY g.goods_id
-            ORDER BY goods
-            ", self::class);
+            ORDER BY goods";
+            
+            return $data = DB::prepare($sql)->execute([$c, $cat])->fetchAll(\PDO::FETCH_CLASS, self::class);
     }
 
-    public function getGoodsCompanyByCatExGoods($company, $cat, $g){
-        return self::$db->queryAllClass(
-            "SELECT
+/////////////////////////////////////////////////////////////////////
+    /**
+     * товары одной компании и всех категорий-детей от указанной
+    */
+    public function getGoodsByCompanyAndChildCat($c, $lft, $rgt){
+        $sql  = "SELECT
             g.goods_id, 
             g.name AS goods, 
             g.date, 
             g.short_description,
             g.long_description, 
             places_goods.price AS price,
-            
+            places_goods.unit,
             cats.parent_id,
             GROUP_CONCAT(DISTINCT CONCAT_WS('', places_to_string(
                                                         p.city, 
@@ -90,15 +100,61 @@ class Goods extends Model
                 JOIN `companies` AS c ON (p.company_id =  c.company_id)
                 LEFT JOIN `centres` ON (p.centre = centres.id)
             LEFT JOIN `cats` ON g.cat_id = cats.cat_id
+            WHERE p.company_id = ? AND cats.lft>=? AND cats.rgt<=?
+            GROUP BY g.goods_id
+            ORDER BY goods";
+            
+            return $data = DB::prepare($sql)->execute([$c, $lft, $rgt])->fetchAll(\PDO::FETCH_CLASS, self::class);
+    }    
+
+     
+/////////////////////////////////////////////////////////////////////   
+    /** 
+     * например из главная | категории | материалы для чистовой отделки | напольные покрытия | линолеум | каталог
+     * надо перейти на название товара->«Новосел», магазин
+    */
+    
+    public function getGoodsCompanyByCatExGoods($company, $cat, $g){ 
+        
+        $sql  = "SELECT
+            g.goods_id, 
+            g.name AS goods, 
+            g.date, 
+            g.short_description,
+            g.long_description, 
+            places_goods.price AS price,
+            cats.parent_id,
+         GROUP_CONCAT(DISTINCT CONCAT_WS('', places_to_string(
+                                                     p.city, 
+                                                     p.street, 
+                                                     p.house, 
+                                                     centres.address, 
+                                                     centres.name_center, 
+                                                     p.detail, 
+                                                     p.unit_floor, 
+                                                     p.unit_not),
+                        phones_to_string(p.tel, p.addtel, p.cell, p.add_cell))
+                     SEPARATOR '~~') 
+                     AS addresses
+            FROM `goods` AS g
+            LEFT JOIN `places_goods` ON places_goods.goods_id = g.goods_id
+            LEFT JOIN `places` AS p ON p.place_id = places_goods.place_id
+                JOIN `companies` AS c ON (p.company_id =  c.company_id)
+                LEFT JOIN `centres` ON (p.centre = centres.id)
+            LEFT JOIN `cats` ON g.cat_id = cats.cat_id
             WHERE p.company_id = $company AND g.cat_id = $cat AND g.goods_id !=$g
             GROUP BY g.goods_id
-            ORDER BY goods
-            ", self::class);
+            ORDER BY goods";
+        
+         return $data = DB::prepare($sql)->execute()->fetchAll(\PDO::FETCH_CLASS, self::class);   
     }
-
+    
+/////////////////////////////////////////////////////////////////////
+    /**
+     * 
+     */
     public function getGoodsByCompanyGoods($company, $g){
-        return self::$db->queryClass(
-            "SELECT
+        $sql  = "SELECT
             g.goods_id, 
             g.name AS goods, 
             g.date, 
@@ -125,15 +181,17 @@ class Goods extends Model
                 LEFT JOIN `centres` ON (p.centre = centres.id)
             
             WHERE p.company_id = $company
-            GROUP BY g.goods_id
-            
-            ", self::class);
-    }
+            GROUP BY g.goods_id";
 
-    /*Выводит все товары одной категории с указанием адреса, где купить*/
+        return $data = DB::prepare($sql)->execute([$g, $company])->fetchObject(self::class);
+    }
+    
+/////////////////////////////////////////////////////////////////////
+    /**
+     * Выводит все товары одной категории с указанием адреса, где купить
+     */
     public static function getGoodsByCategory($cat){
-        return self::$db->queryAllClass(
-            " SELECT
+        $sql  = "SELECT
             g.goods_id, 
             g.name AS goods, 
             g.date, 
@@ -141,23 +199,23 @@ class Goods extends Model
             g.long_description,
             AVG(places_goods.price) AS price, 
             GROUP_CONCAT(DISTINCT CONCAT_WS('^', 
-                        company_to_string(c.name_type, c.shop, 
-                        legal.name, c.name_legal, c.quotes, c.company), 
-                        c.company_id,
-                        places_to_string(
-                                p.city, 
-                                p.street, 
-                                p.house, 
-                                centres.address, 
-                                centres.name_center, 
-                                p.detail, 
-                                p.unit_floor, 
-                                p.unit_not),
-                                                       
-                       	phones_to_string(
-                               p.tel, p.addtel, p.cell, p.add_cell))
-                        SEPARATOR '~~') 
-                        AS addresses
+                    company_to_string(c.name_type, c.shop, 
+                    legal.name, c.name_legal, c.quotes, c.company), 
+                    c.company_id,
+                    places_to_string(
+                            p.city, 
+                            p.street, 
+                            p.house, 
+                            centres.address, 
+                            centres.name_center, 
+                            p.detail, 
+                            p.unit_floor, 
+                            p.unit_not),
+                                                   
+                    phones_to_string(
+                           p.tel, p.addtel, p.cell, p.add_cell))
+                    SEPARATOR '~~') 
+                    AS addresses
             
             FROM `goods` AS g
             INNER JOIN `places_goods` ON places_goods.goods_id = g.goods_id
@@ -165,93 +223,106 @@ class Goods extends Model
                 JOIN `companies` AS c ON (p.company_id =  c.company_id)
                 LEFT JOIN `centres` ON (p.centre = centres.id)
                 LEFT JOIN `legal` ON (legal.id = c.legal)
-            WHERE c.archive IS NULL and g.cat_id = $cat
+            WHERE c.archive IS NULL and g.cat_id = ?
             GROUP BY g.goods_id
-            ORDER BY goods
-            ", self::class);
-    }
-
-    /*Выводит все товары одной компании*/
-    public function getGoodsByCompany($c){
-        return self::$db->queryAllClass(
-            "SELECT
-            g.goods_id, 
-            g.name AS goods, 
-            g.date,
-            g.short_description,
-            g.long_description, 
-            places_goods.price AS price,
-            p.place_id, 
-            cats.name AS category,
-            cats.cat_id,
-            cats.parent_id,
-            GROUP_CONCAT(DISTINCT CONCAT_WS('', places_to_string(
-                                                        p.city, 
-                                                        p.street, 
-                                                        p.house, 
-                                                        centres.address, 
-                                                        centres.name_center, 
-                                                        p.detail, 
-                                                        p.unit_floor, 
-                                                        p.unit_not),
-                       	phones_to_string(p.tel, p.addtel, p.cell, p.add_cell))
-                        SEPARATOR '~~') 
-                        AS addresses
-            FROM `goods` AS g
-            LEFT JOIN `places_goods` ON places_goods.goods_id = g.goods_id
-            LEFT JOIN `places` AS p ON p.place_id = places_goods.place_id
-            JOIN `companies` AS c ON (p.company_id =  c.company_id)
-            LEFT JOIN `centres` ON (p.centre = centres.id)
-            LEFT JOIN `cats` ON g.cat_id = cats.cat_id
-            WHERE p.company_id = $c
-            GROUP BY g.goods_id
-            ORDER BY goods
-            ", self::class);
-    }
-
-       /*Выводит все товары одного местоположения*/
-       public function getGoodsByPlace($p){
-        return self::$db->queryAllClass(
-            "SELECT
-            g.goods_id, 
-            g.name AS goods, 
-            g.date,
-            g.short_description,
-            g.long_description, 
-            places_goods.price AS price,
-            p.place_id, 
-            cats.name AS category,
-            cats.cat_id,
-            cats.parent_id,
-            GROUP_CONCAT(DISTINCT CONCAT_WS('', places_to_string(
-                                                        p.city, 
-                                                        p.street, 
-                                                        p.house, 
-                                                        centres.address, 
-                                                        centres.name_center, 
-                                                        p.detail, 
-                                                        p.unit_floor, 
-                                                        p.unit_not),
-                       	phones_to_string(p.tel, p.addtel, p.cell, p.add_cell))
-                        SEPARATOR '~~') 
-                        AS addresses
-            FROM `goods` AS g
-            LEFT JOIN `places_goods` ON places_goods.goods_id = g.goods_id
-            LEFT JOIN `places` AS p ON p.place_id = places_goods.place_id
-            JOIN `companies` AS c ON (p.company_id =  c.company_id)
-            LEFT JOIN `centres` ON (p.centre = centres.id)
-            LEFT JOIN `cats` ON g.cat_id = cats.cat_id
-            WHERE c.archive IS NULL and p.place_id = $p
-            GROUP BY g.goods_id
-            ORDER BY goods
-            ", self::class);
+            ORDER BY goods";
+        
+        return $data = DB::prepare($sql)->execute([$cat])->fetchAll(\PDO::FETCH_CLASS, self::class);
     }
 
     
-    /*Выводит один товар*/
+/////////////////////////////////////////////////////////////////////  
+     /**
+     * Выводит все товары одной компании
+     */
+    public function getGoodsByCompany($name){
+        $sql  = "SELECT
+            g.goods_id, 
+            g.name AS goods, 
+            g.date,
+            g.short_description,
+            g.long_description, 
+            places_goods.price AS price,
+            p.place_id, 
+            cats.name AS category,
+            cats.cat_id,
+            cats.parent_id,
+            GROUP_CONCAT(DISTINCT CONCAT_WS('', places_to_string(
+                                                        p.city, 
+                                                        p.street, 
+                                                        p.house, 
+                                                        centres.address, 
+                                                        centres.name_center, 
+                                                        p.detail, 
+                                                        p.unit_floor, 
+                                                        p.unit_not),
+                       	phones_to_string(p.tel, p.addtel, p.cell, p.add_cell))
+                        SEPARATOR '~~') 
+                        AS addresses
+            FROM `goods` AS g
+            LEFT JOIN `places_goods` ON places_goods.goods_id = g.goods_id
+            LEFT JOIN `places` AS p ON p.place_id = places_goods.place_id
+            JOIN `companies` AS c ON (p.company_id =  c.company_id)
+            LEFT JOIN `centres` ON (p.centre = centres.id)
+            LEFT JOIN `cats` ON g.cat_id = cats.cat_id
+            WHERE p.company_id = ?
+            GROUP BY g.goods_id
+            ORDER BY goods";
+
+            return $data = DB::prepare($sql)->execute([$name])->fetchAll(\PDO::FETCH_CLASS, self::class);
+    }
+    
+/////////////////////////////////////////////////////////////////////
+    /**
+     * 
+     * Выводит все товары одного местоположения
+     */
+    public function getGoodsByPlace($p){
+     
+        $sql  = "SELECT
+        g.goods_id, 
+        g.name AS goods, 
+        g.date,
+        g.short_description,
+        g.long_description, 
+        places_goods.price AS price,
+        p.place_id, 
+        cats.name AS category,
+        cats.cat_id,
+        cats.parent_id,
+        GROUP_CONCAT(DISTINCT CONCAT_WS('', places_to_string(
+                                                    p.city, 
+                                                    p.street, 
+                                                    p.house, 
+                                                    centres.address, 
+                                                    centres.name_center, 
+                                                    p.detail, 
+                                                    p.unit_floor, 
+                                                    p.unit_not),
+                   	phones_to_string(p.tel, p.addtel, p.cell, p.add_cell))
+                    SEPARATOR '~~') 
+                    AS addresses
+        FROM `goods` AS g
+        LEFT JOIN `places_goods` ON places_goods.goods_id = g.goods_id
+        LEFT JOIN `places` AS p ON p.place_id = places_goods.place_id
+        JOIN `companies` AS c ON (p.company_id =  c.company_id)
+        LEFT JOIN `centres` ON (p.centre = centres.id)
+        LEFT JOIN `cats` ON g.cat_id = cats.cat_id
+        WHERE c.archive IS NULL and p.place_id = ?
+        GROUP BY g.goods_id
+        ORDER BY goods";
+    return  $data = DB::prepare($sql)->execute([$p])->fetchAll(\PDO::FETCH_CLASS, self::class);
+    }
+
+    
+/////////////////////////////////////////////////////////////////////
+    /**
+     * 
+     * Выводит один товар
+     */
     public function getGoods($goods){
-        return self::$db->queryClass(
-            "SELECT
+
+        $sql  = "SELECT
             g.goods_id, 
             g.name AS name, 
             g.date,
@@ -264,17 +335,29 @@ class Goods extends Model
             cats.lft,
             cats.rgt,
             AVG(places_goods.price) AS price 
-        
             FROM `goods` AS g
             LEFT JOIN `places_goods` ON places_goods.goods_id = g.goods_id
             LEFT JOIN `cats` ON g.cat_id = cats.cat_id
-            WHERE g.goods_id = $goods
+            WHERE g.goods_id = ?
             GROUP BY g.goods_id
-            ORDER BY name
-            ", self::class);
+            ORDER BY name";
+        
+        return $goods = DB::prepare($sql)->execute([$goods])->fetchObject(self::class);
     }
     
-
+    
+/////////////////////////////////////////////////////////////////////
+    /**
+     * 
+     * Выводит количество товаров одной категории по её id
+     */
+    public function countGoodsByCat($id){
+        return $this->countRowIdByField('goods_id', 'cat_id', $id);
+      }
+    
+    
+    
+/////////////////////////////////////////////////////////////////////
     /* Компания - адесная информация
     SELECT companies.company, places.*
 FROM `places`
@@ -283,7 +366,8 @@ ORDER BY companies.company
     */
 
    
-
+    
+/////////////////////////////////////////////////////////////////////
                /* представленние address //  SQL_NO_CACHE 
                CREATE VIEW address
 AS

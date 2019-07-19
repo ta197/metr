@@ -1,132 +1,56 @@
 <?php
 namespace application\base;
 
-use application\models\Singleton;
-
-class Db
+class DB 
 {
-    use Singleton;    
+	private static $instance = null;
+    final private function __construct() {}
+    final private function __clone() {}
+    public static function getInstance()
+    {
+        if (self::$instance === null)
+        {
+			$opt  = [
+				\PDO::ATTR_ERRMODE            => \PDO::ERRMODE_EXCEPTION,
+				\PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC,
+				\PDO::ATTR_EMULATE_PREPARES   => TRUE,
+				\PDO::ATTR_STATEMENT_CLASS    => array('application\base\MyPDOStatement'),
+			];
 
-    private static $dbh;
-    //static $stmts = array();
-    //$params = parse_ini_file ('config.ini');
-    
-    private function __construct()
-    {
-       try{
-        $params = parse_ini_file ('config.ini');
-        self::$dbh = new \PDO($params['db.conn'], $params['db.user'], $params['db.pass']);
-            self::$dbh->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-           //$pdo = $this->pdo;
-           
-               //return self::$dbh;
-            }
-            catch (PDOException $e){
-            echo "Соединения с базой нет.".$e-> getMessage();
-            }
-    }
-    
-    function prepareStatement( $stmt_s )
-    {
-        if ( isset( self::$stmts[$stmt_s])){
-            return self::$stmts[$stmt_s];
+			$params = parse_ini_file ('config.ini');
+	
+            $dsn = 'mysql:host='.$params['db.host'].';dbname='.$params['db.name'].';charset='.$params['db.charset'];
+			self::$instance = new \PDO($dsn, $params['db.user'], $params['db.pass'], $opt);
+			
         }
-        $stmt_handle = self::$dbh->prepare($stmt_s);
-        self::$stmts[$stmt_s]=$stmt_handle;
-        return $stmt_handle;
-    } 
-
-    protected function doStatement( $stmt_s, $values_a )
-    {
-        $sth = $this->prepareStatement( $stmt_s );
-        $sth->closeCursor();
-        $db_result = $sth->execute( $values_a );
-        return $sth;
+        return self::$instance;
     }
-  
-    public function lastInsertId()
-    {
-        //return $id;
+    public static function __callStatic($method, $args) {
+        return call_user_func_array(array(self::getInstance(), $method), $args);
     }
-
-//public function execute($sql, $params = [])
-   // {
-   //     $sth ='';
-   //    $sth = self::$dbh->prepare($sql);
-   //     $res = $sth->execute($params);
-   //     return $res;
-   // }
-
-    public function queryAll($sql, $arr_param =[])
-    {
-        $stmt = self::$dbh->prepare($sql);
-        $res = $stmt->execute($arr_param);
-        if (false !== $res) {
-            return $stmt->fetchAll(\PDO::FETCH_ASSOC);
-        }
-        return [];
-    }
-   
-    public function queryAllClass($sql,$class)
-    {
-        //var_dump($sql);
-        $sth = self::$dbh->prepare($sql);
-        
-        $res = $sth->execute();
-            if (false !== $res){
-            return $sth->fetchAll(\PDO::FETCH_CLASS, $class);
-        }
-        return [];
-        //var_dump($sth);
-    }
-   
-   
-    public function query ($sql, $q=[])
-    {
-        $sth = self::$dbh->prepare($sql);
-        //$q =$sth->quote($q);
-        $res =$sth->execute($q);
-        if (false !== $res) {
-           return $sth->fetch(\PDO::FETCH_ASSOC);
-        }
-        return [];
-    }
-    
-    public function queryEach ($sql, $q =[])
-    {
-        $stmt = self::$dbh->prepare($sql);
-        //$row_count = $stmt->rowCount();
-        $res =$stmt->execute($q);
-        if (false !== $res) {
-            while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)){
-                yield $row;
-            }  
-        }
-        return[];
-    }
-   
-    
-   
-
-
-    public function queryAllStd ($sql, $q)
-    {
-        $sth = self::$dbh->prepare($sql);
-        $res = $sth->execute($q);
-        if (false !== $res){
-            return $sth->fetchAll(\PDO::FETCH_OBJ);
-        }
-        return [];
-    }
-    
-    public function queryClass ($sql, $class)
-    {
-        $sth = self::$dbh->prepare($sql);
-        $res = $sth->execute();
-        if (false !== $res) {
-            return $sth->fetchObject($class);
-        }
-        return [];
-    }
-    
 }
+
+
+// // with two variables and one row returned
+// $sql  = "SELECT * FROM users WHERE name = ? AND password=?";
+// return $data = DB::prepare($sql)->execute([$_POST['name'],$_POST['pass']])->fetch();
+
+// echo $user['name'];
+
+// // with one variable and single value returned
+// $sql   = "SELECT count(*) FROM users WHERE age > ?";
+// $count = DB::prepare($sql)->execute([$age])->fetchColumn();
+//return $count;
+// echo $count;
+
+// // without variables and getting more than one rows
+// $sql  = "SELECT * FROM users ORDER BY id DESC";
+// return $data = DB::prepare($sql)->execute()->fetchAll();
+// foreach($data as $row) {
+//     echo $user['name'];
+// }
+
+// //insert with getting insert id
+// $sql  = "INSERT INTO users VALUES (NULL,?,?,?)";
+// $user = DB::prepare($sql)->execute([$name,$pass,$email])->fetch();
+// $id   = DB::lastInsertId();

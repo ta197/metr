@@ -30,7 +30,7 @@ function newListCompanies(l, listLetters = null){
         ddLink.setAttribute('class', "listing__link");
         
         var aLink = document.createElement("a");
-        aLink.setAttribute('href', "/company/card/c/"+ l[i].company_id);
+        aLink.setAttribute('href', "/company/card/name/"+ l[i].company_id);
         var textLink = document.createTextNode("подробнее");
         aLink.appendChild(textLink);
         ddLink.appendChild(aLink);

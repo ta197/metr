@@ -1,6 +1,6 @@
 <?php
 namespace application\models;
-
+use application\base\DB;
 class Search extends Model
 {
     public $query;
@@ -9,7 +9,7 @@ class Search extends Model
         ];
 
     public function __construct(){
-        parent::__construct();  
+        //parent::__construct();  
     }
 ////////////////////////////////////////////////////////////////
 
@@ -102,8 +102,7 @@ class Search extends Model
     }
 
     public function getSearchCompany($word){
-        return self::$db->queryAll(
-            "SELECT
+        $sql  = "SELECT
             c.company_id, p.tel, p.cell,
             company_to_string(c.name_type, c.shop, legal.name, c.name_legal, c.quotes, c.company) AS name, 
             GROUP_CONCAT(CONCAT_WS('', places_to_string(p.city, p.street, p.house, centres.address, centres.name_center, p.detail, p.unit_floor, p.unit_not))
@@ -117,24 +116,23 @@ class Search extends Model
                     OR c.name_legal LIKE ? 
                     OR legal.name = ? OR p.house LIKE ? OR p.tel = ? OR p.addtel = ? OR p.cell = ?
             GROUP BY c.company_id
-            ORDER BY c.company", 
-            ["%$word%", "%$word%", "%$word%", "%$word%", "%$word%", "%$word%", "%$word%", "$word", "$word", "$word", "$word", "$word"]);
+            ORDER BY c.company";
+        
+        return $data = DB::prepare($sql)->execute(["%$word%", "%$word%", "%$word%", "%$word%", "%$word%", "%$word%", "%$word%", "$word", "$word", "$word", "$word", "$word"])->fetchAll();
     }
     
     public function getSearchCat($word){
-        return self::$db->queryAll(
-            "SELECT cats.cat_id, cats.name
+        $sql  = "SELECT cats.cat_id, cats.name
             FROM `cats` 
-            WHERE cats.name LIKE ? AND cats.visible = 1", 
-            ["%$word%"]);
+            WHERE cats.name LIKE ? AND cats.visible = 1";
+            return $data = DB::prepare($sql)->execute(["%$word%"])->fetchAll();
     }
 
     public function getSearchGoods($word){
-        return self::$db->queryAll(
-            "SELECT goods.goods_id, goods.name
+        $sql  = "SELECT goods.goods_id, goods.name
             FROM `goods` 
-            WHERE goods.name LIKE ?",
-            ["%$word%"]);
+            WHERE goods.name LIKE ?";
+            return $data = DB::prepare($sql)->execute(["%$word%"])->fetchAll();
     }
 
     // public function getSearchPlace($word){
@@ -202,7 +200,6 @@ class Search extends Model
         uasort ($rawData, function ($x, $y) {
             return ($x[0][0] < $y[0][0]);
         });
-        //var_dump($rawData);
         return $rawData;
     }
 

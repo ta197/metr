@@ -3,11 +3,8 @@ namespace application\models;
 
 class ParseFilters extends Model
 {
-    public function __construct(){
-      
-    }
-   
-   
+    
+/////////////////////////////////////////////////////////////////////   
     public function decodeFilters()
     {
 
@@ -27,7 +24,8 @@ class ParseFilters extends Model
         }
         return $raw;
     }
-
+    
+/////////////////////////////////////////////////////////////////////
     public function queryFilters(){
         if(isset($_GET)) {
             $raw =[];
@@ -43,5 +41,6 @@ class ParseFilters extends Model
             return (object)$raw;
         }
     }
-
+    
+/////////////////////////////////////////////////////////////////////
 }
