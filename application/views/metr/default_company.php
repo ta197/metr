@@ -163,9 +163,9 @@
             
             <div>
                 <?php 
-                 echo '<pre>';
-                    print_r($this);
-                 echo '</pre>';
+                //  echo '<pre>';
+                //     print_r($this);
+                //  echo '</pre>';
                 ?>             
             </div>
                

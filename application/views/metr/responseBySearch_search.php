@@ -1,7 +1,4 @@
 <?php 
-$title = 'поиск';
-$h1 = 'Результат поиска';
-
 $count = 0;
     if($bySort){
         foreach($bySort as $k => $val){

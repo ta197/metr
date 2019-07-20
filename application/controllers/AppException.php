@@ -20,6 +20,8 @@ class AppException extends \Exception
         $fc = FrontController::getInstance(); 
         $view = new View();
         $output = header("HTTP/1.0 404 Not Found");
+        $view->title = '404';
+        $view->h1 = 'Ошибка 404';
         $view->error = $e->message;
         $view->modul = $modul;
 

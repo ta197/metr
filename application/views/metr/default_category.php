@@ -14,9 +14,9 @@ include_once HEAD;
             <?php include_once CAT_MENU; ?>
             
             <?php 
-                echo '<pre>';
-                print_r($this);
-                echo '</pre>';
+                // echo '<pre>';
+                // print_r($this);
+                // echo '</pre>';
             ?>       
            
         </div><!--закрытие container__main-->    

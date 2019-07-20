@@ -13,6 +13,8 @@ class SearchController
   public function indexAction()
   {
     $this->view->navStatus = $this->view->navStatus(['metr'], 'SearchActiv', 'SearchDisabled');
+    $this->view->title = 'поиск';
+    $this->view->h1 = 'Поиск по сайту';
     $output = $this->view->render(DEFAULT_SEARCH_FILE);
     $this->fc->setBody($output);
   }
@@ -26,7 +28,8 @@ class SearchController
   {
     $query = $this->fc->getParams()["search"];
     $this->view->navStatus = $this->view->navStatus(['metr'], 'SearchActiv', 'SearchDisabled');
-
+    $this->view->title = 'поиск';
+    $this->view->h1 = 'Результат поиска';
     $search = (new Search());
     $this->view->clearQuery = $search->clearQuery($query);
     $this->view->errQuery = $search->errorQueryExecution($this->view->clearQuery);

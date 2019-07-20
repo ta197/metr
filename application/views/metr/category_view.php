@@ -50,9 +50,9 @@ include_once HEAD;
 
         
     <?php 
-        echo '<pre>';
-        print_r($this);
-        echo '</pre>';
+        // echo '<pre>';
+        // print_r($this);
+        // echo '</pre>';
     ?>       
        
     

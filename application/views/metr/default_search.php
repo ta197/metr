@@ -1,10 +1,4 @@
-<?php 
-$title = 'поиск';
-$h1 = 'Поиск по сайту';
-$counter ='';
-$subh1 ='';
-
-include_once HEAD; ?>
+<?php include_once HEAD; ?>
 <body>
   
     <?php include_once FIGURE; ?>
