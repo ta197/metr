@@ -54,3 +54,12 @@ class DB
 // $sql  = "INSERT INTO users VALUES (NULL,?,?,?)";
 // $user = DB::prepare($sql)->execute([$name,$pass,$email])->fetch();
 // $id   = DB::lastInsertId();
+
+
+
+    //     $cat = DB::quote('%'.$word.'%');
+    //    // echo $cat; die;
+    //         $sql  = "SELECT cats.cat_id, cats.name
+    //         FROM `cats` 
+    //         WHERE cats.name LIKE $cat AND cats.visible = 1";
+    //     return $data = DB::query($sql)->fetchAll();    

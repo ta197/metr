@@ -1,7 +1,7 @@
 <?php
 namespace application\base;
 
-class DBException extends \Exception
+class DBException extends \PDOException
 {
     private $error;
     function __construct( DB_Error $error )

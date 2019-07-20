@@ -122,10 +122,25 @@ class Search extends Model
     }
     
     public function getSearchCat($word){
-        $sql  = "SELECT cats.cat_id, cats.name
-            FROM `cats` 
-            WHERE cats.name LIKE ? AND cats.visible = 1";
+        try{
+            $sql  = "SELECT cats.cat_id, cats.name
+                FROM `cats` 
+                WHERE cats.name LIKE ? AND cats.visible = 1";
             return $data = DB::prepare($sql)->execute(["%$word%"])->fetchAll();
+       // }catch(DB_Exception $e){
+       //     echo $e->getErrorObject();
+        }catch(PDOException $e){
+            return $e->getMessage();
+        }
+        
+       
+        
+    //     $cat = DB::quote('%'.$word.'%');
+    //    // echo $cat; die;
+    //         $sql  = "SELECT cats.cat_id, cats.name
+    //         FROM `cats` 
+    //         WHERE cats.name LIKE $cat AND cats.visible = 1";
+    //     return $data = DB::query($sql)->fetchAll();    
     }
 
     public function getSearchGoods($word){
