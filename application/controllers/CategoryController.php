@@ -18,8 +18,7 @@ class CategoryController extends ParentController implements IController
     $this->view->counter = $catMenu->countAllCatMenu();
     $this->view->catMenu = $catMenu->getBigCatMenu();
     $this->view->navStatus = $this->view->navStatus(['metr'], 'CategoryActiv', 'CategoryDisabled');
-    $output = $this->view->render(DEFAULT_CATEGORY_FILE);
-    $this->fc->setBody($output);
+  
   }
 
 
@@ -48,8 +47,7 @@ class CategoryController extends ParentController implements IController
          
     $this->view->listCompany = $company->getCompaniesByCategoryAndGoods($id);
     $this->view->navStatus = $this->view->navStatus(['metr'], 'CategoryActiv');
-    $output = $this->view->render(CATEGORY_VIEW_FILE);
-    $this->fc->setBody($output);
+
   }
 /////////////////////////////////////////////////////////////////////
 

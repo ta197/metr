@@ -60,6 +60,23 @@ class Category extends Model {
          }
        }
    }
+
+     
+/////////////////////////////////////////////////////////////////////
+    /**
+     *  
+     */
+    public function getCatMenuIncLevelZero(){
+  
+     $sql = "SELECT name, cat_id, level, rgt FROM `cats`
+        ORDER BY lft";
+       $data = DB::prepare($sql)->execute();
+       if(false !== $data){
+         while ($row = $data->fetch()){
+          yield $row;
+         }
+       }
+   }  
    
     
 /////////////////////////////////////////////////////////////////////
@@ -172,7 +189,9 @@ class Category extends Model {
      * создание новой категории и добавление ее в дерево
      */   
     public function createCategory($name, Category $parentObj = null, $activated, $visible){
-
+      $params = parse_ini_file ('config.ini');
+      $DB = $params['db.name'];
+      
       if(!$parentObj){
         $max_rgt = 20000;
         $parent_rgt = $max_rgt+1;

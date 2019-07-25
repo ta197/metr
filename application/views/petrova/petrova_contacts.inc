@@ -14,7 +14,7 @@
 		</li>
 		<li><h4>Соцсети</h4>
 			<ul>
-				<li><a href="https://vk">ВКонтакте</a></li>
+				<li><a href="https://vk.com/ta197">ВКонтакте</a></li>
                 <li><a href="https://ok.ru/profile/558561760000">ОК</a></li>
 			</ul>
 		</li>

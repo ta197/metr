@@ -25,9 +25,9 @@ class CompanyController extends ParentController implements IController
         
         $this->view->listCompany = $company->getCompaniesByName();
         $this->view->navStatus = $this->view->navStatus(['metr'], 'CompanyActiv', 'CompanyDisabled');
+        $this->file_layout = 'index_company';
+        $this->file_view = 'index_company';
       
-        $output = $this->view->render(DEFAULT_COMPANY_FILE);
-        $this->fc->setBody($output);
     }
 
  ///////////////////////////////////////////////////////////////////// 
@@ -37,8 +37,11 @@ class CompanyController extends ParentController implements IController
  */
   public function filtersAction()
   {
+    //var_dump(  $__POST ); die;
       $parse = new ParseFilters();
+      //var_dump(  $parse ); die;
       $search = $this->fc->getParams()["search"];
+    // var_dump(  $search ); die;
      
       if(!$search) $decode = $parse->decodeFilters();
       else $decode = $parse->queryFilters();
@@ -65,12 +68,19 @@ class CompanyController extends ParentController implements IController
       
       if($search){
           $this->view->navStatus = $this->view->navStatus(['metr'], 'CompanyActiv', 'CompanyDisabled');
-          $output = $this->view->render(DEFAULT_COMPANY_FILE);
+          $this->file_layout = 'index_company';
+          $this->file_view = 'index_company';
+          //$output = $this->view->render(DEFAULT_COMPANY_FILE);
       }else{
-          $output = $this->view->render(COMPANY_FILTERS_JSON);
+        $this->file_layout = false;
+        $this->file_view  = COMPANY_FILTERS_JSON;
+//exit;
       }
+
+      // echo '<pre>';
+     // print_r($this->file_view);
+      // echo '</pre>';
       
-      $this->fc->setBody($output);
   }
   
     
@@ -89,8 +99,8 @@ class CompanyController extends ParentController implements IController
 
         $this->view->listCompany = $company->getCompaniesByName($archive = 'IS NOT NULL');
         $this->view->navStatus = $this->view->navStatus(['metr'], 'CompanyActiv');
-        $output = $this->view->render(ARCHIVE_COMPANIES_FILE);
-        $this->fc->setBody($output);
+        $this->view->title = 'архивные организации';
+        $this->view->h1 = 'Организации, прекратившие работу';
     } 
 
     
@@ -110,8 +120,8 @@ class CompanyController extends ParentController implements IController
 
         $this->view->listCompany = $company->getCompaniesByYears(START_WORK_YEAR);
         $this->view->navStatus = $this->view->navStatus(['metr'], 'CompanyActiv');
-        $output = $this->view->render(YOUNG_COMPANIES_FILE);
-        $this->fc->setBody($output);
+        $this->view->title = 'новые организации';
+        $this->view->h1 = 'Новые организации';
     }
     
 /////////////////////////////////////////////////////////////////////
@@ -135,8 +145,11 @@ class CompanyController extends ParentController implements IController
        if($this->view->name){
             $this->view->p = (new Address())->getPlacesByCompanyId($id);
             $this->view->navStatus = $this->view->navStatus(['metr'], 'CompanyActiv');
-            $output = $this->view->render(COMPANY_CARD_VIEW_FILE);
-            $this->fc->setBody($output);
+            $this->view->title = $this->view->name->company_name;
+            $this->view->h1 = $this->view->name->company_name;
+            $this->view->countPlaces = count($this->view->p);
+
+            $this->view->file_layout = 'company_card';
        }else{
             throw new AppException("!company");
        }

@@ -11,6 +11,7 @@ use
 
 class AdminController extends ParentController implements IController
 {
+    public $file_layout = 'admin';
 
 /////////////////////////////////////////////////////////////////////
     /**
@@ -21,8 +22,10 @@ class AdminController extends ParentController implements IController
         $this->view->navStatus = $this->view->navStatus(['admin'], 'IndexActiv', 'IndexDisabled');
         $this->view->title = 'админ-панель';
         $this->view->h1 = 'Админ-панель';
-        $output = $this->view->render(DEFAULT_ADMIN_FILE);
-        $this->fc->setBody($output);
+
+
+       // $output = $this->view->render(DEFAULT_ADMIN_FILE);
+        //$this->fc->setBody($output);
     }
 
 /////////////////////////////////////////////////////////////////////
@@ -72,7 +75,7 @@ class AdminController extends ParentController implements IController
                     $this->view->quote_query = $createCat->name;
                 }else{
                     $this->view->createCat = false;
-                    header("Location: http://{$_SERVER['HTTP_HOST']}/admin/createcategory");
+                    header("Location: http://{$_SERVER['HTTP_HOST']}/admin/createcategory/name/$post");
                     exit;
                 }
             }
@@ -82,40 +85,28 @@ class AdminController extends ParentController implements IController
         $this->view->navStatus = $this->view->navStatus(['admin'], 'CategoryActiv', 'CategoryDisabled');
         $this->view->title = 'категории';
         $this->view->h1 = 'Категории';
-        $output = $this->view->render(ADMIN_CATEGORY_FILE);
-        $this->fc->setBody($output);
+        //$output = $this->view->render(ADMIN_CATEGORY_FILE);
+        //$this->fc->setBody($output);
     }
 
-/////////////////////////////////////////////////////////////////////
-    /**
-     * 
-     */
-    public function createcompanyAction(){
-        
-        $catMenu = new Category();
-            $this->view->catMenu = $catMenu->getBigCatMenu();
-            
-        $this->view->navStatus = $this->view->navStatus(['admin'], 'CategoryActiv', 'CategoryDisabled');
-        $this->view->title = 'компании';
-        $this->view->h1 = 'Добавить компанию';
-        $output = $this->view->render(ADMIN_CREATE_COMPANY_FILE);
-        $this->fc->setBody($output);
-    }
+
 
     /////////////////////////////////////////////////////////////////////
     /**
      * 
      */
     public function createcategoryAction(){
-        
+        $newCat = $this->fc->getParams()["name"];
+        $this->view->newCat = urldecode($newCat);
         $cat = new Category();
-            //$this->view->catMenu = $catMenu->getBigCatMenu();
-            $name= 'utggt';
-            $id = 15;
+            $this->view->catMenuIncLevelZero = $cat->getCatMenuIncLevelZero();
+            $this->view->catMenu = $cat->getBigCatMenu('full');
+           // $name= 'utggt';
+           // $id = 15;
             //$activated = 1 , $visible = 1
-            $parentObj = $cat->getCategoryObj($id);
+           // $parentObj = $cat->getCategoryObj($id);
 
-            $catid=  $cat-> createCategory($name, $parentObj, $activated = 1 , $visible = 1); 
+           // $catid=  $cat-> createCategory($name, $parentObj, $activated = 1 , $visible = 1); 
             
 //SELECT WHERE name = $name;
 
@@ -125,10 +116,10 @@ class AdminController extends ParentController implements IController
             // exit;
 
         $this->view->title = 'новая категория';
-        $this->view->h1 = 'Добавить категорию';    
+        $this->view->h1 = 'Добавить категорию '.$this->view->quote_ucfirst($this->view->newCat);    
         $this->view->navStatus = $this->view->navStatus(['admin'], 'CategoryActiv', 'CategoryDisabled');
-        $output = $this->view->render(ADMIN_CREATE_CATEGORY_FILE);
-        $this->fc->setBody($output);
+        //$output = $this->view->render(ADMIN_CREATE_CATEGORY_FILE);
+       // $this->fc->setBody($output);
     }
 
      /////////////////////////////////////////////////////////////////////
@@ -145,8 +136,8 @@ class AdminController extends ParentController implements IController
             }else{
                 $this->view->category = 'no';
                 $this->view->navStatus = $this->view->navStatus(['admin'], 'CompanyActiv');
-                $output = $this->view->render(ADMIN_CREATE_CATEGORY_FILE);
-                $this->fc->setBody($output);
+                //$output = $this->view->render(ADMIN_CREATE_CATEGORY_FILE);
+               // $this->fc->setBody($output);
             }
         }
 
@@ -171,8 +162,8 @@ class AdminController extends ParentController implements IController
             $this->view->title = 'организации';
             $this->view->h1 = 'Организации';    
             $this->view->navStatus = $this->view->navStatus(['admin'], 'CompanyActiv', 'CompanyDisabled');
-            $output = $this->view->render(ADMIN_COMPANY_FILE);
-            $this->fc->setBody($output);
+            //$output = $this->view->render(ADMIN_COMPANY_FILE);
+            //$this->fc->setBody($output);
         }else{
             if(count($par)>1){
                 throw new AppException("Лишние параметры");
@@ -200,6 +191,22 @@ class AdminController extends ParentController implements IController
         }catch(AppException $e){
             $e->err404($e, $fc->modul);
         }
+    }
+
+    /////////////////////////////////////////////////////////////////////
+    /**
+     * 
+     */
+    public function createcompanyAction(){
+        
+        $catMenu = new Category();
+            $this->view->catMenu = $catMenu->getBigCatMenu();
+            
+            $this->view->navStatus = $this->view->navStatus(['admin'], 'CompanyActiv', 'CompanyDisabled');
+        $this->view->title = 'компании';
+        $this->view->h1 = 'Добавить компанию';
+        //$output = $this->view->render(ADMIN_CREATE_COMPANY_FILE);
+        //$this->fc->setBody($output);
     }
 /////////////////////////////////////////////////////////////////////
 

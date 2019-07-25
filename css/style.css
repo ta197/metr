@@ -535,7 +535,7 @@ input[type="search"] {-webkit-appearance: textfield;}
     margin-bottom: 45px;  
 }
 
-.base-form  input {
+.base-form  input, select {
     display: block;
     outline: none;
     /*background: transparent;*/
@@ -551,7 +551,7 @@ input[type="search"] {-webkit-appearance: textfield;}
     margin-bottom: 15px;
 }
 
-.base-form  input {
+.base-form  input{
     width: 100%;
     max-width: 400px;
 }
@@ -561,6 +561,12 @@ input[type="search"] {-webkit-appearance: textfield;}
     -webkit-box-shadow: 0 0 0px 1000px #fdfdfd inset;
     /*margin-bottom: 75px;  */
 }
+
+.base-form select{
+    width: 100%;
+    max-width: 700px; 
+}
+
 
 .search-form  button {
     outline: none;
@@ -790,6 +796,31 @@ input[type="radio"]:checked + label:after {
     left:-26px;
     text-indent: 4px;
 }
+
+/*////////////////////////////////////////////////*/
+
+#tree span:hover {
+    cursor: pointer;
+    font-weight: bold;
+  }
+  /* #tree span.hover, для приоритета перед :hover также добавлен подселектор */
+  
+  #tree span.hover,
+  #tree span.hover:hover {
+    color: red;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  span.avatar {
+    padding: 1px;
+    border: 1px dotted black;
+    background: white;
+    cursor: pointer;
+    opacity: 0.6;
+    filter: progid: DXImageTransform.Microsoft.Alpha(opacity=60);
+    /* IE opacity */
+  }
 
 /*////////////////////////////////////////////////*/
 

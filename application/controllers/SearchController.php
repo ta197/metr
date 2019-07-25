@@ -15,8 +15,6 @@ class SearchController
     $this->view->navStatus = $this->view->navStatus(['metr'], 'SearchActiv', 'SearchDisabled');
     $this->view->title = 'поиск';
     $this->view->h1 = 'Поиск по сайту';
-    $output = $this->view->render(DEFAULT_SEARCH_FILE);
-    $this->fc->setBody($output);
   }
 
 /////////////////////////////////////////////////////////////////////
@@ -44,9 +42,6 @@ class SearchController
           } else  $this->view->bySort = 0;
       } else  $this->view->bySort = 0;
     } else  $this->view->bySort = 0;
-    
-    $output = $this->view->render(RESPONSE_BY_SEARCH_FILE);
-    $this->fc->setBody($output);
   }
   /////////////////////////////////////////////////////////////////////
 

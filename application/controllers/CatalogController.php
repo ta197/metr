@@ -33,14 +33,10 @@ class CatalogController  extends ParentController implements IController
         $cat = $this->fc->getParams()["cat"];
         $instCat = new Category();
         $this->view->catObj = $instCat->getCategoryObj($cat);
-           
         $this->view->brc = $instCat->getBrc($this->view->catObj);
         $this->view->listGoods = (new Goods())->getGoodsByCategory($cat);
         $this->view->counter = count($this->view->listGoods);
         $this->view->navStatus = $this->view->navStatus(['metr'], 'CategoryActiv');
-        $output = $this->view->render(GOODS_BY_CATEGORY_FILE);
-        $this->fc->setBody($output);
-
     }
 
 
@@ -71,7 +67,7 @@ class CatalogController  extends ParentController implements IController
             $this->view->h1 = $this->view->goods->goods;
             $this->view->subh1 = ' в организации '.$this->view->name->company_name;
             $this->view->navStatus = $this->view->navStatus(['metr'], 'CompanyActiv');
-            $output = $this->view->render(GOODS_CARD_BY_COMPANY_FILE);
+            $this->view->file_view = 'goods_card_by_company';
            
         }else{//каталог товаров
             $this->view->listGoods = $goods->getGoodsByCompanyAndChildCat($company, $this->view->catObj->lft, $this->view->catObj->rgt);
@@ -80,10 +76,9 @@ class CatalogController  extends ParentController implements IController
             $this->view->subh1 = ' в организации '.$this->view->name->company_name;
             $this->view->counter = count($this->view->listGoods);
             $this->view->navStatus = $this->view->navStatus(['metr'], 'CompanyActiv');
-            $output = $this->view->render(GOODS_BY_CATEGORY_AND_COMPANY_FILE);
+            $this->view->file_view = 'goods_by_category_and_company';
         }
-        
-        $this->fc->setBody($output);
+       
     }
 
 
@@ -100,8 +95,8 @@ class CatalogController  extends ParentController implements IController
         $this->view->listGoods = (new Goods())->getGoodsByCompany($company);
         $this->view->counter = count($this->view->listGoods);
         $this->view->navStatus = $this->view->navStatus(['metr'], 'CompanyActiv');
-        $output = $this->view->render(GOODS_BY_COMPANY_FILE);
-        $this->fc->setBody($output);
+        $this->view->title = $this->view->name->company.' | каталог';
+        $this->view->h1 = 'Каталог организации '.$this->view->name->company_name;
     }
 
 /////////////////////////////////////////////////////////////////////
@@ -113,13 +108,12 @@ class CatalogController  extends ParentController implements IController
     public function goodsAction()
     {
         $goods = $this->fc->getParams()["g"];
-        //$view = new View();
         $this->view->cardGoods = (new Goods())->getGoods($goods);
         $this->view->brc = (new Category())->getBrc($this->view->cardGoods);
         $this->view->listCompany = (new Company())->getCompaniesByGoods($goods);
         $this->view->navStatus = $this->view->navStatus(['metr'], 'CategoryActiv');
-        $output = $this->view->render(GOODS_CARD_FILE);
-        $this->fc->setBody($output);
+        $this->view->title = $this->view->h1 = $this->view->cardGoods->name;
+        $this->view->componentLinkBRC = '/category/section/cat/';
     }
 
 /////////////////////////////////////////////////////////////////////  
@@ -137,8 +131,6 @@ class CatalogController  extends ParentController implements IController
         $this->view->title = $this->view->name->company.' | каталог';
         $this->view->h1 = 'Каталог организации '.$this->view->name->company_name;
         $this->view->subh1 =' (адрес: '.$this->view->name->address.')';
-        $output = $this->view->render(GOODS_BY_PLACE_FILE);
-        $this->fc->setBody($output);
     }   
 /////////////////////////////////////////////////////////////////////
 

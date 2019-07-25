@@ -9,16 +9,22 @@ class FrontController
           $_params, 
           $_body, 
           $first, 
-          $modul = 'metr';
+          $modul = 'metr',
+          $route = [];
     
   final private function __construct(){ 
     $this->splits = explode('/', trim($_SERVER['REQUEST_URI'],'/'));
     $this->first = $this->splits[0];
+    
+    
     //Какой сontroller использовать?
     $this->_controller = !empty($this->splits[0]) ? "\application\controllers\\".ucfirst($this->splits[0]).'Controller' : '\application\controllers\IndexController';
+    $this->route['controller'] = !empty($this->splits[0]) ? $this->splits[0] : 'index';
     //Какой action использовать?
     $this->_action = !empty($this->splits[1]) ? $this->splits[1].'Action' : 'indexAction';
+    $this->route['action'] = !empty($this->splits[1]) ? $this->splits[1]: "index_{$this->route['controller']}";
     $this->modul = $this->getModul();
+    $this->route['modul'] = $this->getModul();
   }
 
   public function checkParams(){
@@ -54,9 +60,14 @@ class FrontController
       $rc = new \ReflectionClass($this->getController());
       if($rc->implementsInterface('application\\controllers\\'.'IController')) {
         if($rc->hasMethod($this->getAction())) {
-          $controller = $rc->newInstance();
+          $controller = $rc->newInstance($this->route);
+          
           $method = $rc->getMethod($this->getAction());
+         
           $method->invoke($controller);
+          $controller->runView();
+          
+         
         } else {
           throw new AppException("Action");
         }
@@ -69,7 +80,7 @@ class FrontController
   }
 
   private function getModul(){
-    switch($this->first):
+    switch($this->route['controller']):
       case 'admin': return "admin"; 
       case 'petrova': return "petrova";
       case 'company': return "metr";

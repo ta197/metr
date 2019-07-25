@@ -1,15 +1,22 @@
 <?php
 namespace application\models;
-
+use application\views;
 class View
 {
-    protected $data = [
+    public $data = [
         'is_admin'=> 0,
         'title'=> 'справочник',
         'counter' => ''
     ];
+    public $route;
+    public $file_layout;
+    public $file_view;
+
     
-    public function __construct(){
+    public function __construct($route){
+        $this->route = $route;
+        //$this->file_layout = $file_layout ?: LAYOUT_DEFAULT_FILE;
+       // $this->file_view = $file_view;
         
         //$this->data['h1'] = '';
         //$this->data['subh1'] = '';
@@ -97,6 +104,7 @@ class View
             case 'counter': $v = (int)$v; 
                             $this->data['counter'] = $v; 
                             break;
+          
         endswitch;
         $this->data[$k] = $v; 
     }    
@@ -104,6 +112,10 @@ class View
     public function __get($k)
     {
         return $this->data[$k];
+    }
+
+    public function setFileView($file_view){
+        $this->file_view = $file_view;
     }
     
      public function __isset($k)
@@ -123,15 +135,34 @@ class View
     }
 
     //по Борисову
-    public function render($file) {
+    public function render() {
         //$file - текущее представление
-        ob_start();
-        foreach ($this->data as $prop=> $value){
-            $$prop = $value;
+        $file_view = "././application/views/{$this->route['modul']}/{$this->route['controller']}/{$this->file_view}.php";
+     ob_start();
+     foreach ($this->data as $prop=> $value){
+        $$prop = $value;
+    }
+    
+        if(is_file($file_view)){
+            include ($file_view);
+        }else{
+           echo $file_view = "Не найден вид {$file_view}";
         }
-        include($file);
-        return ob_get_clean();
-        }
+        
+        $content = ob_get_clean();
+
+        
+    if(false === $this->file_layout) return $content;
+    
+    $file_layout = "././application/views/layouts/{$this->file_layout}.php";
+    
+    if(is_file($file_layout)){
+        include_once $file_layout;
+    }else{
+        echo $file_layout = "Не найден шаблон {$file_layout}";
+    }
+
+    }
 
  /* 
   //по Степанцеву 
