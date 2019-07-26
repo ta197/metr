@@ -20,11 +20,12 @@ class FrontController
     //Какой сontroller использовать?
     $this->_controller = !empty($this->splits[0]) ? "\application\controllers\\".ucfirst($this->splits[0]).'Controller' : '\application\controllers\IndexController';
     $this->route['controller'] = !empty($this->splits[0]) ? $this->splits[0] : 'index';
+
     //Какой action использовать?
     $this->_action = !empty($this->splits[1]) ? $this->splits[1].'Action' : 'indexAction';
     $this->route['action'] = !empty($this->splits[1]) ? $this->splits[1]: "index_{$this->route['controller']}";
     $this->modul = $this->getModul();
-    $this->route['modul'] = $this->getModul();
+    $this->route['modul'] = $this->modul;
   }
 
   public function checkParams(){
@@ -66,7 +67,6 @@ class FrontController
          
           $method->invoke($controller);
           $controller->runView();
-          
          
         } else {
           throw new AppException("Action");
@@ -81,13 +81,14 @@ class FrontController
 
   private function getModul(){
     switch($this->route['controller']):
-      case 'admin': return "admin"; 
-      case 'petrova': return "petrova";
-      case 'company': return "metr";
-      case 'category': return "metr"; 
-      case 'search': return "metr";
-      case 'about': return "metr";
-      default: return "metr"; 
+      case 'index': return "metr"; break;
+      case 'admin': return "admin"; break;
+      case 'petrova': return "petrova"; break;
+      case 'company': return "metr"; break;
+      case 'category': return "metr"; break;
+      case 'search': return "metr"; break;
+      case 'about': return "metr"; break;
+      default: return "err"; break;
     endswitch;
   }
 
@@ -95,7 +96,9 @@ class FrontController
     switch($prop):
       case 'modul': return $this->modul;
       case 'first': return $this->first;
-      default: throw new Exception('Неизвестное свойство!');
+      default:
+      return $this->route;
+        //throw new \Exception('Неизвестное свойство!');
     endswitch;
   }
 

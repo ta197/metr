@@ -1,16 +1,5 @@
-<?php
-$title = 'Резюме Петровой Т. В.';
-include_once HEAD;
-?>
-<body>
-       
-    <?php include_once FIGURE; ?>
-
-    <?php include_once HEADER_REZUME; ?>
-        
-    <div class="container__main">
         <div class= "header__breadcrumb side-content top-content">
-            резюме Петровой Т.В.
+			<?php echo $title; ?>
         </div>
         
         <header class="side-content">
@@ -31,7 +20,7 @@ include_once HEAD;
 		<ul>
 			<li><h4>Что мне интересно</h4>
 			<ul>
-				<li><a href="/petrova/develop/">веб-разработка</a></li>
+				<li><a href="/petrova/develop">веб-разработка</a></li>
 				<li><a href="/petrova/design">дизайн</a></li>
 	            <li><a href="/petrova/proofs">корректура</a></li>
 				<li>верстка</li>
@@ -82,14 +71,3 @@ include_once HEAD;
 		    </section> 
         </div>
  
-        <?php 
-            // echo '<pre>';
-            // print_r($this);
-            // echo '</pre>';
-        ?>       
-           
-    </div><!--закрытие container__main-->
-            
-    <?php include_once FOOTER_REZUME; ?>
-</body>
-</html>

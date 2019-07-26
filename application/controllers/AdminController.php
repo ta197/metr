@@ -23,9 +23,6 @@ class AdminController extends ParentController implements IController
         $this->view->title = 'админ-панель';
         $this->view->h1 = 'Админ-панель';
 
-
-       // $output = $this->view->render(DEFAULT_ADMIN_FILE);
-        //$this->fc->setBody($output);
     }
 
 /////////////////////////////////////////////////////////////////////
@@ -35,8 +32,8 @@ class AdminController extends ParentController implements IController
     public function loginAction(){
         $this->view->title = 'авторизация';
         $this->view->h1 = 'Авторизация';
-        $output = $this->view->render(ADMIN_LOGIN_FILE);
-        $this->fc->setBody($output);
+        //$output = $this->view->render(ADMIN_LOGIN_FILE);
+        //$this->fc->setBody($output);
     }
 
 /////////////////////////////////////////////////////////////////////
@@ -44,19 +41,19 @@ class AdminController extends ParentController implements IController
      * 
      */    
     public function logoutAction(){
-        $output = $this->view->render(ADMIN_LOGOUT_SCRIPT);
-        $this->fc->setBody($output);
+       // $output = $this->view->render(ADMIN_LOGOUT_SCRIPT);
+       // $this->fc->setBody($output);
     }
 
 /////////////////////////////////////////////////////////////////////
     /**
      * 
      */
-     public function userlistAction(){
+     public function userslistAction(){
         $this->view->title = 'список пользователей';
         $this->view->h1 = 'Список пользователей'; 
-        $output = $this->view->render(ADMIN_USERS_LIST_FILE);
-        $this->fc->setBody($output);
+       // $output = $this->view->render(ADMIN_USERS_LIST_FILE);
+       // $this->fc->setBody($output);
     }
 
 /////////////////////////////////////////////////////////////////////

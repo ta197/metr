@@ -5,39 +5,52 @@ use application\models\View, application\models\Company, application\models\Addr
 
 class PetrovaController extends ParentController implements IController
 {
+    public $file_layout = 'petrova';
     
     public function indexAction()
     {
         $this->view->navStatus = $this->view->navStatus(['rezume'], 'IndexRezumeActiv', 'IndexRezumeDisabled');
-        $output = $this->view->render(DEFAULT_PETROVA_FILE);
-        $this->fc->setBody($output);
+        $this->view->title = 'Резюме Петровой Т. В.';
     }
 
 //////////////////////////////////////////////////////////////////////
 
     public function developAction()
     {
-        $id = $this->fc->getParams()["example"];
-        
-        switch($id):
-            case 'metr': $output = $this->view->render(PETROVA_METR_FILE); break;
-            default: $this->view->navStatus = $this->view->navStatus(['rezume'], 'DevelopActiv', 'DevelopDisabled'); $output = $this->view->render(PETROVA_DEVELOP_FILE); 
-        endswitch;
-        $this->fc->setBody($output);
+        try{
+            if(null !== ($this->fc->getParams())){
+                if(isset($this->fc->getParams()["example"])){
+                    $id = $this->fc->getParams()["example"];
+                    switch($id):
+                      case 'metr': 
+                         $this->view->title = 'резюме | пример';
+                         $this->file_view = 'metr';
+                         break;
+                      default: 
+                         throw new AppException(" name !metr");
+                  endswitch;
+                  }else{
+                    throw new AppException(" name !example");
+                  }
+            }else{
+                $this->view->title = 'резюме | разработка';
+            }
+
+        }catch(AppException $e){
+            $e->err404($e, $this->fc->route);
+        }
     }
     
     public function designAction()
     {
         $this->view->navStatus = $this->view->navStatus(['rezume'], 'DesignActiv', 'DesignDisabled');
-        $output = $this->view->render(PETROVA_DESIGN_FILE);
-        $this->fc->setBody($output);
+        $this->view->title = 'резюме | дизайн';
     }
 
     public function proofsAction()
     {
         $this->view->navStatus = $this->view->navStatus(['rezume'], 'ProofsActiv', 'ProofsDisabled');
-        $output = $this->view->render(PETROVA_PROOFS_FILE);
-        $this->fc->setBody($output);
+        $this->view->title = 'резюме | корректор';
     }
 
 //////////////////////////////////////////////////////////////////////
@@ -45,21 +58,18 @@ class PetrovaController extends ParentController implements IController
     public function educationAction()
     {
         $this->view->navStatus = $this->view->navStatus(['rezume'], 'EducationActiv', 'EducationDisabled');
-        $output = $this->view->render(PETROVA_EDUCATION_FILE);
-        $this->fc->setBody($output);
+        $this->view->title = 'резюме | образование';
     }
 
     public function experienceAction()
     {
         $this->view->navStatus = $this->view->navStatus(['rezume'], 'ExperienceActiv', 'ExperienceDisabled');
-        $output = $this->view->render(PETROVA_EXPERIENCE_FILE);
-        $this->fc->setBody($output);
+        $this->view->title = 'резюме | опыт работы';
     }
     public function addAction()
     {
         $this->view->navStatus = $this->view->navStatus(['rezume'], 'AddActiv', 'AddDisabled');
-        $output = $this->view->render(PETROVA_ADD_FILE);
-        $this->fc->setBody($output);
+        $this->view->title = 'резюме | дополнительно';
     }
 
  //////////////////////////////////////////////////////////////////////

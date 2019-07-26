@@ -30,24 +30,37 @@ class CategoryController extends ParentController implements IController
  */
   public function sectionAction()
   {
-    $id = $this->fc->getParams()["cat"];
-    
-    $instCat = new Category();
-    $this->view->cat = $instCat->getCategoryObj($id);
-    $this->view->title =  $this->view->cat->name;
-    $this->view->h1 =  $this->view->cat->name;
+    try{
+      if(isset($this->fc->getParams()["cat"])){
+        $id = $this->fc->getParams()["cat"];
+        $id = (int)$id;
+        if(empty ($id))
+            throw new AppException("cat name !num");
+      }else{
+        throw new AppException("cat !name");
+      }
+      $instCat = new Category();
+      $this->view->cat = $instCat->getCategoryObj($id);
+      if($this->view->cat){
+        $this->view->title =  $this->view->cat->name;
+        $this->view->h1 =  $this->view->cat->name;
 
-    $this->view->catMenu = $instCat->getCatMenu($this->view->cat);
+        $this->view->catMenu = $instCat->getCatMenu($this->view->cat);
 
-    $this->view->cat->countGoods = (new Goods())->countGoodsByCat($id);
-    $this->view->countCatSubMenu = $instCat->countCatSubMenu($this->view->catMenu, $this->view->cat); 
-    $this->view->brc = $instCat->getBrc($this->view->cat);
-        $company = new Company();
-    $this->view->counter = $company->countCompaniesByCategory($id);
-         
-    $this->view->listCompany = $company->getCompaniesByCategoryAndGoods($id);
-    $this->view->navStatus = $this->view->navStatus(['metr'], 'CategoryActiv');
+        $this->view->cat->countGoods = (new Goods())->countGoodsByCat($id);
+        $this->view->countCatSubMenu = $instCat->countCatSubMenu($this->view->catMenu, $this->view->cat); 
+        $this->view->brc = $instCat->getBrc($this->view->cat);
+          $company = new Company();
+          $this->view->counter = $company->countCompaniesByCategory($id);
+          $this->view->listCompany = $company->getCompaniesByCategoryAndGoods($id);
 
+        $this->view->navStatus = $this->view->navStatus(['metr'], 'CategoryActiv');
+      }else{
+        throw new AppException("!cat");
+      }
+    }catch(AppException $e){
+      $e->err404($e, $this->fc->route);
+    }
   }
 /////////////////////////////////////////////////////////////////////
 

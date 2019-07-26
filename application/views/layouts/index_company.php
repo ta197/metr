@@ -56,7 +56,6 @@
         }
     }
 
- 
     
     function showData(f){
         form.innerHTML = "";
@@ -118,9 +117,9 @@
         <?=$content; ?> 
         <div class="listing side-content">    
             <?php 
-                echo '<pre>';
-                    print_r($this);
-               echo '</pre>';
+                //echo '<pre>';
+                    //print_r($this);
+                //echo '</pre>';
             ?>       
         </div>
         </div><!--закрытие container__main-->

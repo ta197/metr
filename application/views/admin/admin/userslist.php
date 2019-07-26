@@ -1,13 +1,8 @@
 <?php
 session_start();
-$users = require_once ADMIN_USERS_FILE;
-include_once HEAD; 
+$users = require_once 'admin_users.inc';
+//$users = require_once ADMIN_USERS_FILE;
 ?>
-<body>
-       
-    <?php include_once FIGURE; ?>
-    <?php include_once ADMIN_NAV_ICON; ?>
-        <div class="container__main">
             <div class= "header__breadcrumb side-content top-content">
                 <a href="/">главная</a>  | <a href="/admin"> админ-панель</a> | список пользователей
             </div>
@@ -53,10 +48,3 @@ HEREDOC;
 
                 <div class="link-buttons"><a href="/admin/logout" class="button-dark">Выход</a></div>         
             </div>
-               
-        </div><!--закрытие container__main-->
-            
-        <?php include_once ADMIN_FOOTER; ?>
-   
-</body>
-</html>

@@ -17,16 +17,34 @@ class View
         $this->route = $route;
         //$this->file_layout = $file_layout ?: LAYOUT_DEFAULT_FILE;
        // $this->file_view = $file_view;
+    }
+
+    public function render() {
+       
+        $file_view = "././application/views/{$this->route['modul']}/{$this->route['controller']}/{$this->file_view}.php";
+        ob_start();
+        foreach ($this->data as $prop=> $value){
+            $$prop = $value;
+        }
+    
+        if(is_file($file_view)){
+            include ($file_view);
+        }else{
+           echo $file_view = "Не найден вид {$file_view}";
+        }
         
-        //$this->data['h1'] = '';
-        //$this->data['subh1'] = '';
-        //$this->data['counted'] =  ''; // строка перед counter
-       //$this->data['componentLinkBRC'] = ''; // строка в BRC 
-       // $this->data['errQuery'] = '';
-       // $this->data['query'] = ''; // используетс в empty_response.inc
-        // $this->data['is_admin'] = 0;
-        // $this->data['title'] = 'справочник';
-        // $this->data['counter'] =  ''; // количество (у h1)        
+        $content = ob_get_clean();
+        
+        if(false === $this->file_layout) return $content;
+        
+        $file_layout = "././application/views/layouts/{$this->file_layout}.php";
+        
+        if(is_file($file_layout)){
+            include_once $file_layout;
+        }else{
+            echo $file_layout = "Не найден шаблон {$file_layout}";
+        }
+
     }
 
     public function navStatus($menu, ...$items){
@@ -134,38 +152,10 @@ class View
        include $template;
     }
 
-    //по Борисову
-    public function render() {
-        //$file - текущее представление
-        $file_view = "././application/views/{$this->route['modul']}/{$this->route['controller']}/{$this->file_view}.php";
-     ob_start();
-     foreach ($this->data as $prop=> $value){
-        $$prop = $value;
-    }
-    
-        if(is_file($file_view)){
-            include ($file_view);
-        }else{
-           echo $file_view = "Не найден вид {$file_view}";
-        }
-        
-        $content = ob_get_clean();
+   
 
-        
-    if(false === $this->file_layout) return $content;
-    
-    $file_layout = "././application/views/layouts/{$this->file_layout}.php";
-    
-    if(is_file($file_layout)){
-        include_once $file_layout;
-    }else{
-        echo $file_layout = "Не найден шаблон {$file_layout}";
-    }
-
-    }
 
  /* 
-  //по Степанцеву 
     public function render($file) {
     // $file - текущее представление 
     ob_start();

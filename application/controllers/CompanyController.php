@@ -22,12 +22,11 @@ class CompanyController extends ParentController implements IController
         $letters = $company->getAncorsByAlphabet();
         $this->view->counter = count($letters);
         $this->view->listLetters = $company->isCyrillicAlphabet($company->uniqueAncors($letters));
-        
         $this->view->listCompany = $company->getCompaniesByName();
+
         $this->view->navStatus = $this->view->navStatus(['metr'], 'CompanyActiv', 'CompanyDisabled');
         $this->file_layout = 'index_company';
         $this->file_view = 'index_company';
-      
     }
 
  ///////////////////////////////////////////////////////////////////// 
@@ -37,11 +36,8 @@ class CompanyController extends ParentController implements IController
  */
   public function filtersAction()
   {
-    //var_dump(  $__POST ); die;
       $parse = new ParseFilters();
-      //var_dump(  $parse ); die;
       $search = $this->fc->getParams()["search"];
-    // var_dump(  $search ); die;
      
       if(!$search) $decode = $parse->decodeFilters();
       else $decode = $parse->queryFilters();
@@ -70,17 +66,11 @@ class CompanyController extends ParentController implements IController
           $this->view->navStatus = $this->view->navStatus(['metr'], 'CompanyActiv', 'CompanyDisabled');
           $this->file_layout = 'index_company';
           $this->file_view = 'index_company';
-          //$output = $this->view->render(DEFAULT_COMPANY_FILE);
       }else{
         $this->file_layout = false;
-        $this->file_view  = COMPANY_FILTERS_JSON;
-//exit;
+        $this->file_view  = 'company_filters_json';
       }
 
-      // echo '<pre>';
-     // print_r($this->file_view);
-      // echo '</pre>';
-      
   }
   
     
@@ -88,6 +78,9 @@ class CompanyController extends ParentController implements IController
     /**
      * http://metrkv1/company/archive
      * архивные, т.е. закрывшиеся, организации 
+     * 
+     * layout_default
+     * 
      */
     public function archiveAction(){
 
@@ -96,8 +89,8 @@ class CompanyController extends ParentController implements IController
         $this->view->counter = count($letters);
        
         $this->view->listLetters = $company->isCyrillicAlphabet($company->uniqueAncors($letters));
-
         $this->view->listCompany = $company->getCompaniesByName($archive = 'IS NOT NULL');
+
         $this->view->navStatus = $this->view->navStatus(['metr'], 'CompanyActiv');
         $this->view->title = 'архивные организации';
         $this->view->h1 = 'Организации, прекратившие работу';
@@ -109,7 +102,9 @@ class CompanyController extends ParentController implements IController
  * http://metrkv1/company/young
  * новые организации - год, с какого считать новыми 
  *      в файле \application\constans.php
- * организации, начавшие работу с определенного года и последующие 
+ * организации, начавшие работу с определенного года и последующие
+ * 
+ * layout_default 
  */
     public function youngAction(){
         
@@ -117,8 +112,8 @@ class CompanyController extends ParentController implements IController
         $letters = $company->getAncorsByYears(START_WORK_YEAR);
         $this->view->counter = count($letters);
         $this->view->listLetters = $company->uniqueAncors($letters);
-
         $this->view->listCompany = $company->getCompaniesByYears(START_WORK_YEAR);
+
         $this->view->navStatus = $this->view->navStatus(['metr'], 'CompanyActiv');
         $this->view->title = 'новые организации';
         $this->view->h1 = 'Новые организации';
@@ -128,6 +123,7 @@ class CompanyController extends ParentController implements IController
 /**
  * http://metrkv1/company/card/name/9
  * карточка организации
+ * layout с картами company_card
  */
    public function cardAction()
    {
@@ -144,18 +140,19 @@ class CompanyController extends ParentController implements IController
        $this->view->name = (new Company())->getTitleCompanyById($id);
        if($this->view->name){
             $this->view->p = (new Address())->getPlacesByCompanyId($id);
+            $this->view->countPlaces = count($this->view->p);
+
             $this->view->navStatus = $this->view->navStatus(['metr'], 'CompanyActiv');
             $this->view->title = $this->view->name->company_name;
             $this->view->h1 = $this->view->name->company_name;
-            $this->view->countPlaces = count($this->view->p);
 
-            $this->view->file_layout = 'company_card';
+            $this->file_layout = 'company_card'; //map
        }else{
             throw new AppException("!company");
        }
        
     }catch(AppException $e){
-        $e->err404($e, $this->fc->modul);
+        $e->err404($e, $this->fc->route);
     }
    }
 

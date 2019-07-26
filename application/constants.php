@@ -55,7 +55,7 @@ const ADMIN_CAT_MENU = 'admin_cat_menu.inc';
 const ADMIN_FOOTER = 'admin_footer.inc';
 const ADMIN_CREATE_CATEGORY_FILE ='admin_create_category.php';
 
-const COMPANY_FILTERS_JSON = 'company_filters_json';
+//const COMPANY_FILTERS_JSON = 'company_filters_json';
 // const COMPANY_CARD_VIEW_FILE = 'company_card_view.php';
 // const ARCHIVE_COMPANIES_FILE = 'archive_companies.php';
 // const YOUNG_COMPANIES_FILE = 'young_companies.php';
@@ -81,7 +81,7 @@ const PETROVA_CONTACTS = 'petrova_contacts.inc';
 //const TITLE_H1_REZUME = 'title_rezume.inc';
 
 const LAYOUT_DEFAULT_FILE = 'layout_default';
-
+const DEFAULT_ERR = 'default_err';
 
 /*Числовые константы */
 

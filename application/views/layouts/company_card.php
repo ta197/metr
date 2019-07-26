@@ -9,8 +9,7 @@
     <script type="text/javascript" src="/js/smoothscroll.js" type="text/javascript"></script>
     <script type="text/javascript" src="/js/updown.js" type="text/javascript" defer></script>
     
-    <script src="https://api-maps.yandex.ru/2.1/?apikey=<ваш API-ключ>&lang=ru_RU" type="text/javascript">
-    </script>
+    <script src="https://api-maps.yandex.ru/2.1/?apikey=<ваш API-ключ>&lang=ru_RU" type="text/javascript"></script>
 
 </head>
 <body>
@@ -18,10 +17,7 @@
     <?php include_once FIGURE; ?>
 
     <?php include_once NAV_ICON; ?>
-    <?php
-
-//include_once HEAD;
-?>       
+     
     <div class="container__main">
     <?=$content; ?>
     <div class="listing side-content">    

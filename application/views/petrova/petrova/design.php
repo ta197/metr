@@ -1,15 +1,3 @@
-<?php
-$title = 'резюме | дизайн';
-
-include_once HEAD;
-?>
-<body>
-       
-    <?php include_once FIGURE; ?>
-
-    <?php include_once HEADER_REZUME; ?>
-        
-    <div class="container__main">
         <div class= "header__breadcrumb side-content top-content">
             <a href="/petrova">резюме Петровой Т.В.</a> |   дизайн
         </div>
@@ -72,10 +60,3 @@ include_once HEAD;
            //print_r($this);
            // echo '</pre>';
         ?>       
-           
-        
-    </div><!--закрытие container__main-->
-            
-    <?php include_once FOOTER_REZUME; ?>
-</body>
-</html>

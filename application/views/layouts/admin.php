@@ -2,9 +2,9 @@
 // session_start();
 // if(empty($_SESSION['user'])){
 //     header('Location: /admin/login');
-//}
+// }
 
-//setcookie("name", "John", time()-3600);
+// setcookie("name", "John", time()-3600);
 include_once HEAD; ?>
 <body>
        

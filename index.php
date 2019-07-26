@@ -28,7 +28,7 @@ try{
     $front->checkParams();
     $front->route();
 }catch(application\controllers\AppException $e){
-    $e->err404($e, $front->modul);
+    $e->err404($e, $front->route);
 }
 
 
