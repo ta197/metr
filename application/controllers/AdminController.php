@@ -32,8 +32,6 @@ class AdminController extends ParentController implements IController
     public function loginAction(){
         $this->view->title = 'авторизация';
         $this->view->h1 = 'Авторизация';
-        //$output = $this->view->render(ADMIN_LOGIN_FILE);
-        //$this->fc->setBody($output);
     }
 
 /////////////////////////////////////////////////////////////////////
@@ -41,8 +39,6 @@ class AdminController extends ParentController implements IController
      * 
      */    
     public function logoutAction(){
-       // $output = $this->view->render(ADMIN_LOGOUT_SCRIPT);
-       // $this->fc->setBody($output);
     }
 
 /////////////////////////////////////////////////////////////////////
@@ -52,8 +48,6 @@ class AdminController extends ParentController implements IController
      public function userslistAction(){
         $this->view->title = 'список пользователей';
         $this->view->h1 = 'Список пользователей'; 
-       // $output = $this->view->render(ADMIN_USERS_LIST_FILE);
-       // $this->fc->setBody($output);
     }
 
 /////////////////////////////////////////////////////////////////////
@@ -79,11 +73,10 @@ class AdminController extends ParentController implements IController
         }
         $this->view->counter = $cat->countAllCatMenu([0, 0, 1, 0, 1]);
         $this->view->catMenu = $cat->getBigCatMenu('full');
+
         $this->view->navStatus = $this->view->navStatus(['admin'], 'CategoryActiv', 'CategoryDisabled');
         $this->view->title = 'категории';
         $this->view->h1 = 'Категории';
-        //$output = $this->view->render(ADMIN_CATEGORY_FILE);
-        //$this->fc->setBody($output);
     }
 
 
@@ -115,8 +108,6 @@ class AdminController extends ParentController implements IController
         $this->view->title = 'новая категория';
         $this->view->h1 = 'Добавить категорию '.$this->view->quote_ucfirst($this->view->newCat);    
         $this->view->navStatus = $this->view->navStatus(['admin'], 'CategoryActiv', 'CategoryDisabled');
-        //$output = $this->view->render(ADMIN_CREATE_CATEGORY_FILE);
-       // $this->fc->setBody($output);
     }
 
      /////////////////////////////////////////////////////////////////////
@@ -133,13 +124,8 @@ class AdminController extends ParentController implements IController
             }else{
                 $this->view->category = 'no';
                 $this->view->navStatus = $this->view->navStatus(['admin'], 'CompanyActiv');
-                //$output = $this->view->render(ADMIN_CREATE_CATEGORY_FILE);
-               // $this->fc->setBody($output);
             }
         }
-
-        
-            //$this->view->catMenu = $catMenu->getBigCatMenu();
         
     }
 
@@ -156,11 +142,11 @@ class AdminController extends ParentController implements IController
             $this->view->counter = count($letters);
             $this->view->listLetters = $company->isCyrillicAlphabet($company->uniqueAncors($letters));
             $this->view->listCompany = $company->getCompaniesByName();
+
+            $this->view->navStatus = $this->view->navStatus(['admin'], 'CompanyActiv', 'CompanyDisabled');
             $this->view->title = 'организации';
             $this->view->h1 = 'Организации';    
-            $this->view->navStatus = $this->view->navStatus(['admin'], 'CompanyActiv', 'CompanyDisabled');
-            //$output = $this->view->render(ADMIN_COMPANY_FILE);
-            //$this->fc->setBody($output);
+           
         }else{
             if(count($par)>1){
                 throw new AppException("Лишние параметры");
@@ -172,8 +158,8 @@ class AdminController extends ParentController implements IController
                     if($this->view->name){
                          $this->view->p = (new Address())->getPlacesByCompanyId($id);
 
-                         $output = $this->view->render(COMPANY_CARD_VIEW_FILE);
-                         $this->fc->setBody($output);
+                         //$output = $this->view->render(COMPANY_CARD_VIEW_FILE);
+                        // $this->fc->setBody($output);
                     }
                     else{
                         throw new AppException("Нет организации с таким id");
@@ -186,7 +172,7 @@ class AdminController extends ParentController implements IController
             }
         }  
         }catch(AppException $e){
-            $e->err404($e, $fc->modul);
+            $e->err404($e, $this->fc->route);
         }
     }
 
@@ -199,11 +185,9 @@ class AdminController extends ParentController implements IController
         $catMenu = new Category();
             $this->view->catMenu = $catMenu->getBigCatMenu();
             
-            $this->view->navStatus = $this->view->navStatus(['admin'], 'CompanyActiv', 'CompanyDisabled');
+        $this->view->navStatus = $this->view->navStatus(['admin'], 'CompanyActiv', 'CompanyDisabled');
         $this->view->title = 'компании';
         $this->view->h1 = 'Добавить компанию';
-        //$output = $this->view->render(ADMIN_CREATE_COMPANY_FILE);
-        //$this->fc->setBody($output);
     }
 /////////////////////////////////////////////////////////////////////
 

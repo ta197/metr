@@ -15,8 +15,8 @@
         if(!empty($cat->countGoods)) {
                 echo '<div class = "side-content link-buttons">
                 <a href = "/catalog/category/cat/'.$cat->cat_id.'" class="button-dark">
-                Каталог <q>'.$this->ucfirst_utf8($cat->name).'</q> 
-                <span class = "counter">('.$cat->countGoods.')</span></a></div>';
+                Каталог '.$this->quote_ucfirst($cat->name) 
+                .'<span class = "counter">('.$cat->countGoods.')</span></a></div>';
             }
         ?>
 

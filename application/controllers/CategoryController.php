@@ -12,13 +12,13 @@ class CategoryController extends ParentController implements IController
   
   public function indexAction()
   {
-    $this->view->title = 'категории';
-    $this->view->h1 = 'Все категории';
-        $catMenu = new Category();
+    $catMenu = new Category();
     $this->view->counter = $catMenu->countAllCatMenu();
     $this->view->catMenu = $catMenu->getBigCatMenu();
+    
     $this->view->navStatus = $this->view->navStatus(['metr'], 'CategoryActiv', 'CategoryDisabled');
-  
+    $this->view->title = 'категории';
+    $this->view->h1 = 'Все категории';
   }
 
 

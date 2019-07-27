@@ -86,6 +86,7 @@ class FrontController
       case 'petrova': return "petrova"; break;
       case 'company': return "metr"; break;
       case 'category': return "metr"; break;
+      case 'catalog': return "metr"; break;
       case 'search': return "metr"; break;
       case 'about': return "metr"; break;
       default: return "err"; break;

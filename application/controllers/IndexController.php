@@ -8,6 +8,6 @@ class IndexController extends ParentController implements IController
   public function indexAction()
   {
     $this->view->title = 'главная';
-    $this->view->file_layout = 'index';
+    //$this->view->file_layout = 'index';
   }
 }
