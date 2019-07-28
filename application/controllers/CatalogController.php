@@ -115,7 +115,7 @@ class CatalogController  extends ParentController implements IController
         $this->view->cardGoods = (new Goods())->getGoods($goods);
         $this->view->brc = (new Category())->getBrc($this->view->cardGoods);
         $this->view->listCompany = (new Company())->getCompaniesByGoods($goods);
-        //$this->view->componentLinkBRC = '/category/section/cat/';
+        $this->view->componentLinkBRC = '/category/section/cat/';
 
         $this->view->navStatus = $this->view->navStatus(['metr'], 'CategoryActiv');
         $this->view->title = $this->view->h1 = $this->view->cardGoods->name;

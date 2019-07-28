@@ -21,7 +21,7 @@
 </section>
 <section id="hobby" class="section__hr">    
     <h2>Увлечения</h2>
-<p class="lowered_15">Английский язык.</p>
+<p class="lowered_15"><a href="/petrova/education/certificate/english" target ="blank" class="blue">Английский язык.</a></p>
 <p class="lowered_15">Чтение художественной литературы.</p>
 <p class="lowered_15">Путешествия.</p>       
 <p class="lowered_15">Дизайн (интерьеров, моделирование одежды, украшения).</p>     

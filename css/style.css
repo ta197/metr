@@ -1617,3 +1617,7 @@ blockquote {
     padding-bottom: 60px;
 }
 
+.max_600{
+    width: 100%;
+    max-width: 600px;  
+}

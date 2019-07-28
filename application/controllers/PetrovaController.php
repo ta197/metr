@@ -57,8 +57,30 @@ class PetrovaController extends ParentController implements IController
 
     public function educationAction()
     {
-        $this->view->navStatus = $this->view->navStatus(['rezume'], 'EducationActiv', 'EducationDisabled');
-        $this->view->title = 'резюме | образование';
+        try{
+            if(isset($this->fc->getParams()["certificate"])){
+              $id = $this->fc->getParams()["certificate"];
+              $this->view->title = 'резюме | сертификат';
+              $this->file_view = 'certificate';
+              $this->view->h1 = 'Сертификат';
+              switch($id){
+                case 'english':  
+                    $this->view->subh1 = 'по английскому';
+                    break;
+                default:  $this->view->subh1 = '';
+              }
+             // $this->view->subh1 = 'Сертификат';
+
+            }else{
+                $this->view->title = 'резюме | образование';
+              //throw new AppException("img !name");
+            }
+        
+        
+        }catch(AppException $e){
+        $e->err404($e, $this->fc->route);
+        }
+      $this->view->navStatus = $this->view->navStatus(['rezume'], 'EducationActiv', 'EducationDisabled');
     }
 
     public function experienceAction()
