@@ -82,46 +82,9 @@
 
 	
 <div class="side-content">
-	<section class="section__hr">	
-		<h2>Электронные сертификаты</h2>
-		<div class="table-wrapper lowered_30 ">
-			<table>
-				<thead>
-					<tr>
-						<th>Год</th>
-						<th>Сертификат</th>
-						<th>Кем выдан</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>2019</td>
-						<td>Английский. Продвинутый</td>
-						<td>englishdom.ru</td>
-					</tr>
-					<tr>
-						<td>2019</td>
-						<td><a href="https://geekbrains.ru/go/69WG4F" target ="_blank" class="blue">JavaScript. Средний уровень</a></td>
-						<td>GeekBrains</td>
-					</tr>
-					<tr>
-						<td>2018</td>
-						<td><a href="https://geekbrains.ru/go/6u7OhL" target ="_blank" class="blue">HTML&CSS. Сложный уровень</a></td>
-						<td>GeekBrains</td>
-					</tr>
-					<tr>
-						<td>2018</td>
-						<td><a href="https://geekbrains.ru/go/OFaIhn" target ="_blank" class="blue">Python. Начальный уровень</a></td>
-						<td>GeekBrains</td>
-					</tr>
-					<tr>
-						<td>2017</td>
-						<td><a href="https://geekbrains.ru/go/zyWG6J" target ="_blank" class="blue">PHP. Начальный уровень</a></td>
-						<td>GeekBrains</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
+	<section class="section__hr">
+	<h2>Электронные сертификаты</h2>	
+		<? include_once PETROVA_CERTIFICATES ;?>
 	</section>
 	<section class="section__hr">	
 		<h2>Образование</h2>
@@ -133,10 +96,5 @@
 </div>      
       
 <?php include_once PETROVA_CONTACTS; ?>	
-     
-    <?php 
-       //echo '<pre>';
-       //print_r($this);
-       //echo '</pre>';
-    ?>       
+   
        

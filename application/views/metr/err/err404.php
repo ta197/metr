@@ -23,5 +23,7 @@
 </ul>
 
 <div class="side-content">
-    <?=$error?>
+    <?php
+    //echo $error;
+    ?>
 </div>

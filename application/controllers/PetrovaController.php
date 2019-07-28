@@ -35,7 +35,7 @@ class PetrovaController extends ParentController implements IController
             }else{
                 $this->view->title = 'резюме | разработка';
             }
-
+            $this->view->navStatus = $this->view->navStatus(['rezume'], 'DevelopActiv', 'DevelopDisabled');
         }catch(AppException $e){
             $e->err404($e, $this->fc->route);
         }
