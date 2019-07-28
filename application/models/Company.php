@@ -16,16 +16,17 @@ class Company extends Model
     public $archive;
     public $year;
     public $company_extend;
-    
+    protected $pk = 'company_id';
+    public static $table = 'companies';
     public $addresses =[];
     
 /////////////////////////////////////////////////////////////////////
      /**
      * 
      */   
-    public function __construct(){
-        static::$table = 'companies';
-    }
+    //public function __construct(){
+        
+    //}
 
 /////////////////////////////////////////////////////////////////////
     /**

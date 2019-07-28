@@ -5,6 +5,7 @@ use application\base\DB;
 abstract class Model
 {
     static public $table;
+    protected $pk = 'id';
 
  /////////////////////////////////////////////////////////////////////
     /**
@@ -20,13 +21,14 @@ abstract class Model
      * используется напр. в Category.php ->getCategoryObj($id)
      * http://metrkv1/category/section/cat/88
      * вернет объект (класса, из которого вызвать; поля - из $fields) 
-     * по значению ($id) поля с именес $nameId
+     * по значению ($id) поля с именес $pk
      */ 
-    public function getObjById($id, $fields, $nameId) {
+    public function getObjById($id, $fields, $pk='') {
+        $pk = $pk ?: $this->pk;
         $id = $this->clearInt($id);
             $sql  = "SELECT $fields
             FROM ".static::$table."
-            WHERE $nameId = ?";
+            WHERE $pk = ?";
     return $data = DB::prepare($sql)->execute([$id])->fetchObject(static::class);
     }
 
@@ -35,18 +37,34 @@ abstract class Model
      * 
      * запись в таблице по полю в виде объекта
      */ 
-    public function getRowByField($nameField, $field) {
-        //$id = $this->clearInt($id);
+    public function findOneObj($id, $field ='') {
+        $field = $field ?: $this->pk;
             $sql  = "SELECT *
             FROM ".static::$table."
-            WHERE $nameField = ?";
-    return $data = DB::prepare($sql)->execute([$field])->fetchObject(static::class);
+            WHERE $field = ?";
+    return $data = DB::prepare($sql)->execute([$id])->fetchObject(static::class);
     }    
     
+
 /////////////////////////////////////////////////////////////////////
     /**
      * 
-     * используется напр. в 
+     * запись в таблице по первичному ключу
+     */ 
+    public function findOne($id, $field ='') {
+        $field = $field ?: $this->pk;
+            $sql  = "SELECT *
+            FROM ".static::$table."
+            WHERE $field = ?
+            LIMIT 1";
+    return $data = DB::prepare($sql)->execute([$id])->fetch();
+    }    
+    
+/////////////////////////////////////////////////////////////////////
+
+    /**
+     * 
+     * используется напр. в goods->countGoodsByCat($id)
      */
     public function countRowIdByField($nameRowId, $nameField, $idField) {
         $idField = $this->clearInt($idField);

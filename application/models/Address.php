@@ -9,7 +9,8 @@ class Address extends Model
     public $cell;
     public $addtel;
     public $add_cell;
-
+    protected $pk = 'place_id';
+    static public $table = 'places';
     public $addresses;
     public $categories;
 
@@ -17,9 +18,9 @@ class Address extends Model
     /**
     * 
     */    
-    public function __construct(){
-        static::$table = 'places';
-    }
+    //public function __construct(){
+        
+    //}
    
  /////////////////////////////////////////////////////////////////////
     /**

@@ -4,30 +4,16 @@ use application\base\DB;
 
 class Goods extends Model
 {
-    
-    // public $company;
-    // public $quotes;
-    // public $shop;
-    // public $legal;
-    // public $name_legal;
-    // public $site;
-    // public $about;
-    // public $face;
-
-    // public $lft;
-    // public $rgt;
-
-    // public $company_extend;
-    
-    // public $addresses =[];
+    static public $table = 'goods';
+    protected $pk = 'goods_id';
      
 /////////////////////////////////////////////////////////////////////
     /**
      * 
      */
-    public function __construct(){
-        static::$table = 'goods';
-    }
+    //public function __construct(){
+        
+    //}
     
 /////////////////////////////////////////////////////////////////////
     /**

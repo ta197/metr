@@ -8,9 +8,9 @@ class Search extends Model
         'ИП', 'ООО', 'ТЦ', 'БЦ', 'ДВП', 'ДСП', 'ДОМ', '№1', 'ПР.', 'УЛ.'
         ];
 
-    public function __construct(){
-        //parent::__construct();  
-    }
+    //public function __construct(){
+       
+    //}
 ////////////////////////////////////////////////////////////////
 
     public function clearQuery($query)

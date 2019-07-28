@@ -29,7 +29,7 @@ class AppException extends \Exception
        $output = header("HTTP/1.0 404 Not Found");
        $this->view->title = '404';
        $this->view->h1 = 'Ошибка 404';
-       $this->error = $e->message;
+       $this->view->error = $e->message;
        $this->view->modul = $route['modul'];
 
         switch($this->view->modul):

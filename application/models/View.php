@@ -1,6 +1,10 @@
 <?php
 namespace application\models;
-use application\views;
+
+use 
+    application\views, 
+    application\controllers\AppException;
+
 class View
 {
     public $data = [
@@ -15,34 +19,36 @@ class View
     
     public function __construct($route){
         $this->route = $route;
-        //$this->file_layout = $file_layout ?: LAYOUT_DEFAULT_FILE;
-       // $this->file_view = $file_view;
     }
 
     public function render() {
-       
-        $file_view = "././application/views/{$this->route['modul']}/{$this->route['controller']}/{$this->file_view}.php";
-        ob_start();
-        foreach ($this->data as $prop=> $value){
-            $$prop = $value;
-        }
+        try{
+            $file_view = "././application/views/{$this->route['modul']}/{$this->route['controller']}/{$this->file_view}.php";
+            ob_start();
+            foreach ($this->data as $prop=> $value){
+                $$prop = $value;
+            }
     
-        if(is_file($file_view)){
-            include ($file_view);
-        }else{
-           echo $file_view = "Не найден вид {$file_view}";
-        }
+            if(is_file($file_view)){
+                include ($file_view);
+            }else{
+               //echo $file_view = "Не найден вид {$file_view}";
+               throw new AppException("Не найден file_view");
+            }
         
-        $content = ob_get_clean();
+            $content = ob_get_clean();
         
-        if(false === $this->file_layout) return $content;
+            if(false === $this->file_layout) return $content;
         
-        $file_layout = "././application/views/layouts/{$this->file_layout}.php";
+            $file_layout = "././application/views/layouts/{$this->file_layout}.php";
         
-        if(is_file($file_layout)){
-            include_once $file_layout;
-        }else{
-            echo $file_layout = "Не найден шаблон {$file_layout}";
+            if(is_file($file_layout)){
+                include_once $file_layout;
+            }else{
+                echo $file_layout = "Не найден шаблон {$file_layout}";
+            }
+        }catch(AppException $e){
+            $e->err404($e, $this->route);
         }
 
     }

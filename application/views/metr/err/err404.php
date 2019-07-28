@@ -21,3 +21,7 @@
         <a href="/" class="button-dark">на главную</a>
     </li>  
 </ul>
+
+<div class="side-content">
+    <?=$error?>
+</div>

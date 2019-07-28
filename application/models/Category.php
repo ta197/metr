@@ -13,15 +13,16 @@ class Category extends Model {
     public $rgt;
     public $level;
     public $countGoods = null;
-    //static public $table = 'cats';
+    protected $pk = 'cat_id';
+    public  static $table = 'cats';
     
 /////////////////////////////////////////////////////////////////////
     /**
      * 
      */
-    public function __construct(){
-      static::$table = 'cats';
-    }
+    //public function __construct(){
+     
+   // }
 
     
 /////////////////////////////////////////////////////////////////////
@@ -29,9 +30,9 @@ class Category extends Model {
      * 
      */   
     public function getCategoryObj($id){
-      $nameId = 'cat_id';
-      $fields = "name, $nameId, parent_id, lft, rgt, level, ref";
-      return $this->getObjById($id, $fields, $nameId);
+      //$nameId = 'cat_id';
+      $fields = "name, {$this->pk}, parent_id, lft, rgt, level, ref";
+      return $this->getObjById($id, $fields);
     }
     
 /////////////////////////////////////////////////////////////////////
