@@ -21,7 +21,8 @@
         <h3 class="bottom_45"> К какому разделу будет относиться (и его уровень, id)</h3>
         <ul>
             <li>
-                <?php include_once 'cat_menu_optionsForSelect.php'; ?>
+                <?php 
+                //include_once 'cat_menu_optionsForSelect.php'; ?>
             </li>
         </ul >
         </fieldset>
@@ -56,7 +57,7 @@
 
 <h3 class="listing side-content">Существующее меню</h3>
 <?php 
-    include_once ADMIN_CAT_MENU 
+    //include_once ADMIN_CAT_MENU 
 ?>
     <?php 
         echo '<pre>';

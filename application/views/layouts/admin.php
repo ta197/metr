@@ -15,7 +15,9 @@ include_once HEAD; ?>
         <?=$content; ?>
         </div><!--закрытие container__main-->
         
-        <?php include_once ADMIN_FOOTER; ?>
+        <?php 
+         require_once ADMIN_FOOTER;
+        ?>
    
 </body>
 </html>

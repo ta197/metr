@@ -10,7 +10,7 @@
 			<tbody>
 				<tr>
 					<td>2019</td>
-					<td><a href="/petrova/education/certificate/english" target ="blank" class="blue">Английский. Продвинутый</a></td>
+					<td><a href="/petrova/rezume/education/certificate/english" target ="blank" class="blue">Английский. Продвинутый</a></td>
 					<td>englishdom.ru</td>
 				</tr>
 				<tr>

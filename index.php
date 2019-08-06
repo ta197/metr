@@ -1,7 +1,4 @@
 <?php
-error_reporting(E_ALL);
-
-//error_reporting(0);
 /* Пути по-умолчанию для поиска файлов */
 set_include_path(get_include_path()
 					.PATH_SEPARATOR.'application/controllers'
@@ -20,16 +17,18 @@ spl_autoload_register(function ($class){
       if (file_exists($filename)){include $filename;}
 });
 
+new application\controllers\App;
+
 /* Инициализация и запуск FrontController */
 $front = application\controllers\FrontController::getInstance();
 
-try{
+//try{
     //Есть ли параметры и их значения?
     $front->checkParams();
     $front->route();
-}catch(application\controllers\AppException $e){
-    $e->err404($e, $front->route);
-}
+//}catch(application\controllers\AppException $e){
+    //$e->err404($e, $front);
+//}
 
 
 /* Вывод данных */

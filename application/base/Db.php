@@ -4,8 +4,10 @@ namespace application\base;
 class DB 
 {
 	private static $instance = null;
-    final private function __construct() {}
+    final private function __construct(){}
+        
     final private function __clone() {}
+
     public static function getInstance()
     {
         if (self::$instance === null)
@@ -25,6 +27,7 @@ class DB
         }
         return self::$instance;
     }
+
     public static function __callStatic($method, $args) {
         return call_user_func_array(array(self::getInstance(), $method), $args);
     }

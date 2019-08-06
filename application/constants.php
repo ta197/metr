@@ -1,23 +1,30 @@
 <?php
-/*inc для  views */
-const NAV_ICON = 'nav_icon.inc';
-const HEAD = 'head.inc';
-const FOOTER = 'footer.inc';
-const FIGURE = 'figure.inc';
-const TITLE_H1 = 'title_h1.inc';
-const ALPHABET_LETTERS = 'alphabet_letters.inc';
-const CAT_MENU = 'cat_menu.inc';
-const BRC = 'breadcrumb.inc';
-const LIST_COMPANIES = 'list_companies.inc';
-const LIST_GOODS = 'list_goods.inc';
-const ERROR = 'error.inc';
 
-const EMPTY_RESPONSE = 'empty_response.inc';
- const RESPONSE_BY_SEARCH_CASE = 'responseBySearch_case.inc';
-const RESPONSE_BY_SEARCH_LIST_COMPANY = 'responseBySearch_list_company.inc';
-const RESPONSE_BY_SEARCH_LIST_CATEGORY = 'responseBySearch_list_category.inc';
-const RESPONSE_BY_SEARCH_LIST_GOODS = 'responseBySearch_list_goods.inc';
-const RESPONSE_BY_SEARCH_LIST_PLACE = 'responseBySearch_list_place.inc';
+const DEBUG = 1;
+const PREFIX = ['admin', 'petrova']; // not main
+const CONFIG = 'config/config.php';
+const CACHE = 'tmp/cache';
+
+/*inc для  views */
+
+const NAV_ICON = 'application/views/main/nav_icon.inc';
+const HEAD = 'application/views/main/head.inc';
+const FOOTER = 'application/views/main/footer.inc';
+const FIGURE = 'application/views/main/figure.inc';
+const TITLE_H1 = 'application/views/main/title_h1.inc';
+const ALPHABET_LETTERS = 'application/views/main/alphabet_letters.inc';
+const CAT_MENU = 'application/views/main/cat_menu.inc';
+const BRC = 'application/views/main/breadcrumb.inc';
+const LIST_COMPANIES = 'application/views/main/list_companies.inc';
+const LIST_GOODS = 'application/views/main/list_goods.inc';
+const ERROR = 'application/views/main/error.inc';
+
+const EMPTY_RESPONSE = 'application/views/main/search/empty_response.inc';
+ const RESPONSE_BY_SEARCH_CASE = 'application/views/main/search/responseBySearch_case.inc';
+const RESPONSE_BY_SEARCH_LIST_COMPANY = 'application/views/main/search/responseBySearch_list_company.inc';
+const RESPONSE_BY_SEARCH_LIST_CATEGORY = 'application/views/main/search/responseBySearch_list_category.inc';
+const RESPONSE_BY_SEARCH_LIST_GOODS = 'application/views/main/search/responseBySearch_list_goods.inc';
+const RESPONSE_BY_SEARCH_LIST_PLACE = 'application/views/main/search/responseBySearch_list_place.inc';
 
 const ADMIN_CAT_MENU = 'admin_cat_menu.inc';
 const ADMIN_FOOTER = 'admin_footer.inc';

@@ -2,8 +2,7 @@
 namespace application\models;
 
 use 
-    application\views, 
-    application\controllers\AppException;
+    application\views;
 
 class View
 {
@@ -13,16 +12,35 @@ class View
         'counter' => ''
     ];
     public $route;
-    public $file_layout;
+    public $file_layout = LAYOUT_DEFAULT_FILE;
     public $file_view;
 
     
     public function __construct($route){
         $this->route = $route;
+
     }
 
+    // public function findLayoutByModul() {
+
+    //     switch($this->route['modul']):
+    //         case 'admin':  
+    //             $this->file_layout = 'admin';
+    //             break;
+    //         case 'petrova':  
+    //             $this->file_layout = 'petrova';
+    //             break;
+    //         case 'main':  
+    //             $this->file_layout = LAYOUT_DEFAULT_FILE;
+    //             //$this->route['controller'] ='err';
+    //            break;    
+    //         default: 
+    //            $this->file_layout = DEFAULT_ERR;
+    //            $this->route['controller'] ='err';
+    //     endswitch;
+    // }
+
     public function render() {
-        try{
             $file_view = "././application/views/{$this->route['modul']}/{$this->route['controller']}/{$this->file_view}.php";
             ob_start();
             foreach ($this->data as $prop=> $value){
@@ -32,8 +50,7 @@ class View
             if(is_file($file_view)){
                 include ($file_view);
             }else{
-               //echo $file_view = "Не найден вид {$file_view}";
-               throw new AppException("Не найден file_view");
+               throw new \Exception("Не найден вид {$file_view}", 500);
             }
         
             $content = ob_get_clean();
@@ -45,12 +62,9 @@ class View
             if(is_file($file_layout)){
                 include_once $file_layout;
             }else{
-                echo $file_layout = "Не найден шаблон {$file_layout}";
+                //echo $file_layout = "Не найден шаблон {$file_layout}";
+                throw new \Exception("Не найден шаблон {$file_layout}", 500);
             }
-        }catch(AppException $e){
-            $e->err404($e, $this->route);
-        }
-
     }
 
     public function navStatus($menu, ...$items){

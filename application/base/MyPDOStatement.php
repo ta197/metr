@@ -1,6 +1,8 @@
 <?php
 namespace application\base;
-use  application\base\_DB;
+
+use  application\base\DB;
+
 class MyPDOStatement extends \PDOStatement
 {
 	public function execute($data = array())

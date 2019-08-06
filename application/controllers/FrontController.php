@@ -1,37 +1,55 @@
 <?php
 namespace application\controllers;
 
+use application\controllers\Singleton;
+
 class FrontController
 {
-  private static $instance = null;
+  use Singleton;    
+  
   private $_controller, 
           $_action, 
           $_params, 
           $_body, 
-          $first, 
-          $modul = 'metr',
           $route = [];
     
-  final private function __construct(){ 
+  final private function __construct()
+  { 
     $this->splits = explode('/', trim($_SERVER['REQUEST_URI'],'/'));
-    $this->first = $this->splits[0];
+    $this->splits = $this->shiftPrefix($this->splits);
+      
+    if(!empty($this->splits[0])){
+      $this->_controller = '\application\controllers\\'. "{$this->route['modul']}". '\\'.ucfirst($this->splits[0]).'Controller';
+      $this->route['controller'] = $this->splits[0];
+    }else{
+      $this->_controller = '\application\controllers\\'. "{$this->route['modul']}". '\IndexController';
+      $this->route['controller'] = 'index';
+    }
     
-    
-    //Какой сontroller использовать?
-    $this->_controller = !empty($this->splits[0]) ? "\application\controllers\\".ucfirst($this->splits[0]).'Controller' : '\application\controllers\IndexController';
-    $this->route['controller'] = !empty($this->splits[0]) ? $this->splits[0] : 'index';
+    if(!empty($this->splits[1])){
+      $this->_action = $this->splits[1].'Action';
+      $this->route['action'] = $this->splits[1];
+    }else{
+      $this->_action = 'indexAction';
+      $this->route['action'] = "index_{$this->route['controller']}";
+    }
+ }
 
-    //Какой action использовать?
-    $this->_action = !empty($this->splits[1]) ? $this->splits[1].'Action' : 'indexAction';
-    $this->route['action'] = !empty($this->splits[1]) ? $this->splits[1]: "index_{$this->route['controller']}";
-    $this->modul = $this->getModul();
-    $this->route['modul'] = $this->modul;
+  private function shiftPrefix($splits)
+  {
+    if(!in_array($splits[0], PREFIX)){
+      $this->route['modul'] = 'main';
+    }else{
+      $this->route['modul'] = array_shift ($splits);
+    }
+    return $splits;
   }
 
-  public function checkParams(){
+  public function checkParams()
+  {
     $cnt = count($this->splits);
     if($cnt % 2 !== 0 and $cnt!==1){
-      throw new AppException("Нечетный splits");
+      throw new \Exception("Нечетный splits", 404);
     }
     if(!empty($this->splits[2])){
       $keys = $values = [];
@@ -47,59 +65,35 @@ class FrontController
         $this->_params = array_combine($keys, $values);
     }
   }
-
-  final private function __clone() {}
-
-  public static function getInstance(){ 
-    if (null === self::$instance) 
-      self::$instance = new self;
-    return self::$instance;
-  }
        
   public function route() {
     if(class_exists($this->getController())) {
       $rc = new \ReflectionClass($this->getController());
       if($rc->implementsInterface('application\\controllers\\'.'IController')) {
         if($rc->hasMethod($this->getAction())) {
-          $controller = $rc->newInstance($this->route);
-          
           $method = $rc->getMethod($this->getAction());
-         
+          $controller = $rc->newInstance($this);
           $method->invoke($controller);
           $controller->runView();
          
         } else {
-          throw new AppException("Action");
+          throw new \Exception("Нет action  $this->_action", 404);
         }
       } else {
-        throw new AppException("Interface");
+        throw new \Exception("Interface", 404);
       }
     } else {
-      throw new AppException("Controller");
+      throw new \Exception('Нет контроллера  ' .$this->route['controller'], 404);
     }
-  }
-
-  private function getModul(){
-    switch($this->route['controller']):
-      case 'index': return "metr"; break;
-      case 'admin': return "admin"; break;
-      case 'petrova': return "petrova"; break;
-      case 'company': return "metr"; break;
-      case 'category': return "metr"; break;
-      case 'catalog': return "metr"; break;
-      case 'search': return "metr"; break;
-      case 'about': return "metr"; break;
-      default: return "err"; break;
-    endswitch;
   }
 
   public function __get($prop){
     switch($prop):
-      case 'modul': return $this->modul;
-      case 'first': return $this->first;
+      case 'modul': return $this->route['modul'];
+      case 'route': return $this->route;
       default:
-      return $this->route;
-        //throw new \Exception('Неизвестное свойство!');
+      //return $this->route;
+        throw new \Exception('Неизвестное свойство!');
     endswitch;
   }
 
