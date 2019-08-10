@@ -2,11 +2,10 @@
 namespace application\controllers\petrova;
 
 //use application\models\View, application\models\Company, application\models\Address, application\models\FiltersHandler, application\models\ParseFilters;
-use application\controllers\App, application\controllers\ParentController, application\controllers\IController;
+use  vendor\engine\core\App,  vendor\engine\core\IController;
 
-class RezumeController extends ParentController implements IController
+class RezumeController extends ParentPetrovaController implements IController
 {
-    public $file_layout = 'petrova';
     
     public function indexAction()
     {

@@ -63,7 +63,7 @@
 			<p >Подтверждением того, что знания не забылись мной с институтских времен, могут служить сертификаты "Отличник Тотального диктанта". Последний - 2019 года.</p>
 			<div class="row">
 				<article class="lowered_30 work-item">
-					<a href="/img/fulls/certificate_big.jpg" class="image fit thumb "><img src="/img/thumbs/certificate_small.jpg" alt="" /></a>
+					<a href="/public/img/fulls/certificate_big.jpg" class="image fit thumb "><img src="/public/img/thumbs/certificate_small.jpg" alt="" /></a>
 					<h5>Сертификат отличника. </h5>
                         <p>Отсканированный документ за 2019 год </p>
 				</article>

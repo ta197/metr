@@ -15,7 +15,7 @@
     <div class="listing side-content">
     
         <dl class="listing__company">
-        <img class = "goods__photo_card" src="/img/goods/99-7031_1.jpg">
+        <img class = "goods__photo_card" src="/public/img/goods/99-7031_1.jpg">
            <dt class="listing__company-name">
             <?php if(!empty($goods->short_description)) echo $goods->short_description; ?>
             </dt>

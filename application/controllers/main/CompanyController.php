@@ -7,7 +7,7 @@ use
     application\models\Address, 
     application\models\FiltersHandler, 
     application\models\ParseFilters;
-    use application\controllers\App, application\controllers\ParentController, application\controllers\IController;
+    use  vendor\engine\core\App, vendor\engine\core\IController;
     
 class CompanyController extends ParentController implements IController
 {

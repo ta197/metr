@@ -1,11 +1,10 @@
 <?php
 namespace application\controllers\admin;
 
-use application\controllers\App, application\controllers\ParentController, application\controllers\IController;
+use  vendor\engine\core\App,  vendor\engine\core\IController;
 
-class IndexController extends ParentController implements IController
+class IndexController extends ParentAdminController implements IController
 {
-    public $file_layout = 'admin';
 
 /////////////////////////////////////////////////////////////////////
     /**

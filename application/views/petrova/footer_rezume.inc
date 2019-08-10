@@ -16,7 +16,7 @@ echo <<<HEREDOC
         <li class="footer__column-item"> <a href="/petrova/rezume/add" class="footer__nav-item">дополнительно</a></li>
     </ul>
     <ul class="footer__column">
-        <li class="footer__column-item"><a  href="/petrova/rezume/">главная</a></li><br/>
+        <li class="footer__column-item"><a  href="/petrova">главная</a></li><br/>
     </ul>
 HEREDOC;
 }else{
@@ -32,7 +32,7 @@ echo <<<HEREDOC
         <li class="footer__column-item"> <a href="/petrova/rezume/add" class="footer__nav-item{$navStatus['rezume']['AddActiv']}{$navStatus['rezume']['AddDisabled']}">дополнительно</a></li>
     </ul>
     <ul class="footer__column">
-        <li class="footer__column-item"><a  href="/petrova/rezume/" class="footer__nav-item{$navStatus['rezume']['IndexRezumeActiv']}{$navStatus['rezume']['IndexRezumeDisabled']}">главная</a></li><br/>
+        <li class="footer__column-item"><a  href="/petrova" class="footer__nav-item{$navStatus['rezume']['IndexRezumeActiv']}{$navStatus['rezume']['IndexRezumeDisabled']}">главная</a></li><br/>
     </ul>
 HEREDOC;
 }

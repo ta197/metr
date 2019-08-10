@@ -1,7 +1,7 @@
 <?php
 $config = [
     'components' => [
-        'cache' => 'libs\Cache',
+        'cache' => 'vendor\engine\libs\Cache',
     ]
 ];
 return $config;

@@ -1,8 +1,7 @@
 <?php
 namespace application\models;
-use 
-//application\base\Db, 
-application\base\DB;
+use  vendor\engine\core\base\DB, vendor\engine\core\Model;
+
 class FiltersHandler extends Model
 {
     public $legalStr = null;

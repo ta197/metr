@@ -5,7 +5,7 @@
     foreach ($listGoods as $item):
       
         echo '<dl class="listing__company long">'."\n\t";
-           echo '<img class = "goods__photo" src="/img/goods/99-7031_1.jpg">';
+           echo '<img class = "goods__photo" src="/public/img/goods/99-7031_1.jpg">';
             echo '<dt class="listing__company-name leftfield"><a href="/catalog/goods/g/'.$item->goods_id.'">'.$item->goods.'</a></dt>'."\n";
 
                 if($item->price){

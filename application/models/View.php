@@ -1,9 +1,6 @@
 <?php
 namespace application\models;
 
-use 
-    application\views;
-
 class View
 {
     public $data = [
@@ -91,7 +88,9 @@ class View
                 'IndexActiv' => " nav__icon_activ",
                 'IndexDisabled' => ' nav__icon_disabled',
                 'CategoryActiv' => " nav__icon_activ",
-                'CategoryDisabled' => ' nav__icon_disabled'],
+                'CategoryDisabled' => ' nav__icon_disabled',
+                'UserActiv' => " nav__icon_activ",
+                'UserDisabled' => ' nav__icon_disabled'],
             'rezume' => 
                 ['DevelopDisabled' => ' footer__nav-item_disabled',
                 'DevelopActiv' => " footer__nav-item_activ",

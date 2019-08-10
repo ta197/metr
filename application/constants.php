@@ -33,7 +33,8 @@ const ADMIN_NAV_ICON = 'admin_nav_icon.inc';
 const HEADER_REZUME = 'header_rezume.inc';
 const FOOTER_REZUME = 'footer_rezume.inc';
 const PETROVA_CONTACTS = 'petrova_contacts.inc';
-const PETROVA_CERTIFICATES = 'petrova_certificate.inc';
+//const PETROVA_MENU_EXAMPLE = 'menu_example.inc';
+const PETROVA_CERTIFICATES = 'petrova_certificates.inc';
 
 const LAYOUT_DEFAULT_FILE = 'layout_default';
 const DEFAULT_ERR = 'default_err';

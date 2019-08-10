@@ -2,7 +2,7 @@
 namespace application\controllers\main;
 
 use application\models\View;
-use application\controllers\App, application\controllers\ParentController, application\controllers\IController;
+use  vendor\engine\core\App,  vendor\engine\core\IController;
 
 class AboutController extends ParentController implements IController
 {

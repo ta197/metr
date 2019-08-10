@@ -10,6 +10,11 @@ echo <<<HEREDOC
         <li class="footer__column-item"><a href="/about/contacts" class="footer__nav-item">как с нами связаться</a></li><br/>
         <li class="footer__column-item"> <a href="/about/partners" class="footer__nav-item">рекламодателям</a></li>
     </ul>
+    <ul class="footer__column">
+        <li class="footer__column-item"><a href="/user/signup" class="footer__nav-item">signup</a></li><br/>
+        <li class="footer__column-item"><a href="/user/login" class="footer__nav-item">login</a></li><br/>
+        <li class="footer__column-item"> <a href="/user/logout" class="footer__nav-item">logout</a></li>
+    </ul>
 HEREDOC;
 }else{
 echo <<<HEREDOC
@@ -17,6 +22,11 @@ echo <<<HEREDOC
         <li class="footer__column-item"><a href="/about" class="footer__nav-item{$navStatus['about']['AboutActiv']}{$navStatus['about']['AboutDisabled']}"> о проекте</a></li><br/>
         <li class="footer__column-item"><a href="/about/contacts" class="footer__nav-item{$navStatus['about']['ContactsActiv']}{$navStatus['about']['ContactsDisabled']}">как с нами связаться</a></li><br/>
         <li class="footer__column-item"> <a href="/about/partners" class="footer__nav-item{$navStatus['about']['PartnersActiv']}{$navStatus['about']['PartnersDisabled']}">рекламодателям</a></li>
+    </ul>
+    <ul class="footer__column">
+        <li class="footer__column-item"><a href="/user/signup" class="footer__nav-item">signup</a></li><br/>
+        <li class="footer__column-item"><a href="/user/login" class="footer__nav-item">login</a></li><br/>
+        <li class="footer__column-item"><a href="/user/logout" class="footer__nav-item">logout</a></li>
     </ul>
 HEREDOC;
 }

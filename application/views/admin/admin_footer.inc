@@ -4,12 +4,12 @@
            
 <ul class="footer__column">
         <li class="footer__column-item"><a  href="/">на сайт</a></li><br/>
-        <li class="footer__column-item"><a  href="/admin/logout">выход</a></li>
+        <li class="footer__column-item"><a  href="/admin/users/logout">выход</a></li>
     </ul>
 
  <ul class="footer__column">
-        <li class="footer__column-item"><a  href="/admin/login">регистрация</a></li><br/>
-        <li class="footer__column-item"><a  href="/admin/login">вход</a></li>
+        <li class="footer__column-item"><a  href="/admin/users/login">регистрация</a></li><br/>
+        <li class="footer__column-item"><a  href="/admin/users/login">вход</a></li>
     </ul>
 
     <ul class="footer__column">

@@ -65,13 +65,13 @@
                	<a href="https://github.com/ta197/metr"  target ="_blank" class="button-dark">github</a>
           		</li>   
 		</ul>
-		<p class="lowered_15"><a href="/petrova/develop/example/metr#idea" class="blue">Идея</a> была обеспечить поиск по сайту тремя способами:</p>
+		<p class="lowered_15"><a href="/petrova/rezume/develop/example/metr#idea" class="blue">Идея</a> была обеспечить поиск по сайту тремя способами:</p>
 		<ol>
 			<li>для тех, кому нужна услуга или товар, надо найти все организации, их предоставляющие;</li>
 			<li>для тех, кто ищет конкретную организацию;</li>
 			<li>для тех, кто ищет по отрывочным данным, например по названию улицы, номеру телефона, одному слову в названии и т.д.</li>
 		</ol>
-		<p class="lowered_15">Исходя из задачи на сайте 3 раздела: <a href="/petrova/develop/example/metr#cat" class="blue">категории</a>, <a href="/petrova/develop/example/metr#filter" class="blue">компании</a>, <a href="/petrova/develop/example/metr#search" class="blue">поиск</a>.</p>
+		<p class="lowered_15">Исходя из задачи на сайте 3 раздела: <a href="/petrova/rezume/develop/example/metr#cat" class="blue">категории</a>, <a href="/petrova/rezume/develop/example/metr#filter" class="blue">компании</a>, <a href="/petrova/rezume/develop/example/metr#search" class="blue">поиск</a>.</p>
        	<ul class = "link-buttons">
            	<li class = "link-buttons__item link-buttons__item_bottom-15 ">
                	<a href="/" target ="_blank" class="button-dark">на сайт</a>

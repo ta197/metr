@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <title><?=$title?></title>
-    <link rel="stylesheet" href="/css/style.css" type="text/css" />
+    <link rel="stylesheet" href="/public/css/style.css" type="text/css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script type="text/javascript" src="/js/json2.js" ></script>
-    <script type="text/javascript" src="/js/getXmlHttpRequest.js"></script>
-    <script type="text/javascript" src="/js/FilterFormRequest.js"></script>
-    <script type="text/javascript" src="/js/newTitle.js"></script>
-    <script type="text/javascript" src="/js/newForm.js"></script>
-    <script type="text/javascript" src="/js/newLetters.js"></script>
-    <script type="text/javascript" src="/js/newListCompanies.js"></script>
-    <script type="text/javascript" src="/js/smoothscroll.js"></script>
-    <script type="text/javascript" src="/js/updown.js" defer></script>
+    <script type="text/javascript" src="/public/js/json2.js" ></script>
+    <script type="text/javascript" src="/public/js/getXmlHttpRequest.js"></script>
+    <script type="text/javascript" src="/public/js/FilterFormRequest.js"></script>
+    <script type="text/javascript" src="/public/js/newTitle.js"></script>
+    <script type="text/javascript" src="/public/js/newForm.js"></script>
+    <script type="text/javascript" src="/public/js/newLetters.js"></script>
+    <script type="text/javascript" src="/public/js/newListCompanies.js"></script>
+    <script type="text/javascript" src="/public/js/smoothscroll.js"></script>
+    <script type="text/javascript" src="/public/js/updown.js" defer></script>
     <!-- <script>document.write('<style>.js_hidden { display: none; }</style>');</script> -->
     
     <script type="text/javascript">

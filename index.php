@@ -17,10 +17,10 @@ spl_autoload_register(function ($class){
       if (file_exists($filename)){include $filename;}
 });
 
-new application\controllers\App;
+new  vendor\engine\core\App;
 
 /* Инициализация и запуск FrontController */
-$front = application\controllers\FrontController::getInstance();
+$front =  vendor\engine\core\FrontController::getInstance();
 
 //try{
     //Есть ли параметры и их значения?

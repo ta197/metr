@@ -1,5 +1,6 @@
 <?php
 namespace application\models;
+use  vendor\engine\core\Model;
 
 class FiltersItem extends Model
 {

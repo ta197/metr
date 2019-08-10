@@ -3,7 +3,7 @@
 </div>              
 <?php include_once TITLE_H1; ?>
 <div class ="side-content bottom_60">
-    <img class ="max_600" src="/img/petrova/4267.jpg" alt="сертификат <?=$subh1?>">   
+    <img class ="max_600" src="/public/img/petrova/4267.jpg" alt="сертификат <?=$subh1?>">   
 </div>
 
  <ul class = "link-buttons side-content lowered_15">

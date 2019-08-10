@@ -1,6 +1,6 @@
 <?php
 namespace application\models;
-use application\base\DB;
+use  vendor\engine\core\base\DB, vendor\engine\core\Model;
 
 class Goods extends Model
 {

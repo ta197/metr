@@ -6,7 +6,7 @@ use     application\models\View,
         application\models\Category, 
         application\models\Company, 
         application\models\Address;
-use application\controllers\App, application\controllers\ParentController, application\controllers\IController;        
+use  vendor\engine\core\App,  vendor\engine\core\IController;        
 
 class CatalogController  extends ParentController implements IController
 {
@@ -79,7 +79,7 @@ class CatalogController  extends ParentController implements IController
             $goods = new Goods();
             if(isset($par["g"])){ //один товар
                 $g = (int)$par["g"];
-                    if(empty ($g)) throw new \Exception("g не число", 404);
+                    if(empty($g)) throw new \Exception("g не число", 404);
                 $this->view->goods = $goods->getGoodsByCompanyGoods($company, $g);
                     if($this->view->goods){
                         $this->view->listGoods = $goods->getGoodsCompanyByCatExGoods($company, $cat, $g);

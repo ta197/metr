@@ -1,5 +1,5 @@
 <div class= "header__breadcrumb side-content top-content">
-    <a href="/">главная</a>  |  админ-панель
+    <a href="/">На сайт</a>  |  админ-панель
 </div>
 
 <?php include_once TITLE_H1; ?>   
@@ -16,7 +16,7 @@
     // echo '</pre>';
     ?>
     <ul class="link-buttons">
-        <li class="link-buttons__item"><a href="/admin/userslist" class="button-dark">Список пользователей</a></li>
-        <li class="link-buttons__item"><a href="/admin/logout" class="button-dark">Выход</a></li> 
+        <li class="link-buttons__item"><a href="/admin/users" class="button-dark">Список пользователей</a></li>
+        <li class="link-buttons__item"><a href="/admin/users/logout" class="button-dark">Выход</a></li> 
     </ul>        
 </div>

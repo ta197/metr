@@ -1,11 +1,10 @@
 <?php
 namespace application\controllers\petrova;
 
-use application\controllers\App, application\controllers\ParentController, application\controllers\IController;
+use  vendor\engine\core\App,  vendor\engine\core\IController;
 
-class IndexController extends ParentController implements IController
+class IndexController extends ParentPetrovaController implements IController
 {
-    public $file_layout = 'petrova';
     
     public function indexAction()
     {

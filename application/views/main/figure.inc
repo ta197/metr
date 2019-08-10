@@ -1,3 +1,3 @@
 <figure>
-        <img src="/img/zastavka.jpg" alt="Пример фото" class ="figure-photo__default"/>
+        <img src="/public/img/zastavka.jpg" alt="Пример фото" class ="figure-photo__default"/>
 </figure>

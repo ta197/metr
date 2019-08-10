@@ -1,5 +1,5 @@
             <div class= "header__breadcrumb side-content top-content">
-                <a href="/admin">главная</a>  |  организации
+                <a href="/">На сайт</a>  | <a href="/admin"> админ-панель</a> | организации
             </div>
             
             
