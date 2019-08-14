@@ -1,0 +1,12 @@
+{
+    "name": "metrkv/metrkv",
+    "require": {
+        "vlucas/valitron": "^1.4"
+    },
+    "autoload": {
+        "psr-4":{
+            "engine\\": "vendor/engine",
+            "application\\": "application"
+        }
+    }
+}

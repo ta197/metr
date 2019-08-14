@@ -8,7 +8,7 @@ use
     application\models\Address, 
     application\models\FiltersHandler, 
     application\models\ParseFilters;
-use  vendor\engine\core\App,  vendor\engine\core\IController;
+use  engine\core\App,  engine\core\IController;
 
 class CategoryController extends ParentAdminController implements IController
 {

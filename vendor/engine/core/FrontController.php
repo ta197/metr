@@ -1,7 +1,7 @@
 <?php
-namespace  vendor\engine\core;
+namespace  engine\core;
 
-use  vendor\engine\core\Singleton;
+use  engine\core\Singleton;
 
 class FrontController
 {
@@ -39,9 +39,12 @@ class FrontController
   {
     if(!in_array($splits[0], PREFIX)){
       $this->route['modul'] = 'main';
+      $prefix = '';
     }else{
       $this->route['modul'] = array_shift ($splits);
+      $prefix = '/'.$this->route['modul'];
     }
+    $this->route['prefix'] = $prefix.'/';
     return $splits;
   }
 
@@ -69,7 +72,7 @@ class FrontController
   public function route() {
     if(class_exists($this->getController())) {
       $rc = new \ReflectionClass($this->getController());
-      if($rc->implementsInterface('vendor\\engine\\core\\'.'IController')) {
+      if($rc->implementsInterface('engine\\core\\'.'IController')) {
         if($rc->hasMethod($this->getAction())) {
           $method = $rc->getMethod($this->getAction());
           $controller = $rc->newInstance($this);
@@ -83,7 +86,7 @@ class FrontController
         throw new \Exception("Interface", 404);
       }
     } else {
-      throw new \Exception('Нет контроллера  ' .$this->route['controller'], 404);
+      throw new \Exception("Нет контроллера {$this->route['controller']}", 404);
     }
   }
 

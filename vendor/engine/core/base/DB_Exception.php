@@ -1,5 +1,5 @@
 <?php
-namespace  vendor\engine\core\base;
+namespace engine\core\base;
 
 class DBException extends \PDOException
 {

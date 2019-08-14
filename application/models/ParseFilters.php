@@ -1,6 +1,6 @@
 <?php
 namespace application\models;
-use  vendor\engine\core\base\DB, vendor\engine\core\Model;
+use  engine\core\base\DB, engine\core\Model;
 class ParseFilters extends Model
 {
     

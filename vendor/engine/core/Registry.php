@@ -1,7 +1,8 @@
 <?php
-namespace  vendor\engine\core;
-use  vendor\engine\core\Singleton;
-use vendor\engine\libs\Cache;
+namespace engine\core;
+use engine\core\Singleton;
+use engine\libs\Cache;
+use application\config\config;
 
 class Registry
 {

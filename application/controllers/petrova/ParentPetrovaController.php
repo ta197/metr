@@ -1,7 +1,7 @@
 <?php
 namespace application\controllers\petrova;
 
-use application\models\View,  vendor\engine\core\RouteController;
+use application\models\View,  engine\core\RouteController;
 
 class ParentPetrovaController extends RouteController
 {

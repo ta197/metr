@@ -1,7 +1,15 @@
 <div class= "header__breadcrumb top-content side-content">
     Такой страницы не существует!
 </div>              
-<?php include_once TITLE_H1; ?> 
+<?php include_once TITLE_H1; ?>
+
+<h4 class ="side-content red bottom_15">Попробуйте перейти на главную страницу</h4>
+<ul class = "link-buttons side-content lowered_15">
+    <li class = "link-buttons__item link-buttons__item_bottom-15">
+        <a href="/admin" class="button-dark">на главную</a>
+    </li>  
+</ul>
+
 <h4 class ="side-content red bottom_45">Попробуйте ввести запрос в поиск или воспользуйтесь меню</h4>
 <div class="side-content">
     <form action="/search/response/search/" method="get" class="base-form search-form">
@@ -10,3 +18,4 @@
         <label for="" class="search-form__note">Например, <span class ="listing__link italic">обои база ленина 13</span></label>
     </form>
 </div>
+

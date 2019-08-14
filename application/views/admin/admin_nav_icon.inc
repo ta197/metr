@@ -7,7 +7,7 @@ echo <<<HEREDOC
     <a href="/admin/category" class="nav__icon nav__icon_routing">категории</a>
     <a href="/admin/company" class="nav__icon nav__icon_lists">компании</a>
     <a href="/admin/catalog" class="nav__icon nav__icon_search">каталог</a>
-    <a href="/admin/users" class="nav__icon nav__icon_lists">пользователи</a>
+    <a href="/admin/user/users" class="nav__icon nav__icon_lists">пользователи</a>
 HEREDOC;
 }else{
 echo <<<HEREDOC
@@ -15,7 +15,7 @@ echo <<<HEREDOC
     <a href="/admin/category" class="nav__icon{$navStatus['admin']['CategoryActiv']}{$navStatus['admin']['CategoryDisabled']} nav__icon_routing">категории</a>
     <a href="/admin/company" class="nav__icon{$navStatus['admin']['CompanyActiv']}{$navStatus['admin']['CompanyDisabled']} nav__icon_lists">компании</a>
     <a href="/admin/catalog" class="nav__icon{$navStatus['admin']['CatalogActiv']}{$navStatus['admin']['CatalogDisabled']} nav__icon_search">каталог</a>
-    <a href="/admin/users" class="nav__icon{$navStatus['admin']['UserActiv']}{$navStatus['admin']['UserDisabled']} nav__icon_lists">пользователи</a>
+    <a href="/admin/user/users" class="nav__icon{$navStatus['admin']['UserActiv']}{$navStatus['admin']['UserDisabled']} nav__icon_lists">пользователи</a>
 HEREDOC;
 }
 

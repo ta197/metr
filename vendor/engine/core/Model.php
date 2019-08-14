@@ -1,13 +1,14 @@
 <?php
-namespace vendor\engine\core;
-use  vendor\engine\core\base\DB;
+namespace engine\core;
+use engine\core\base\DB;
+use Valitron\Validator;
 
 abstract class Model
 {
     static public $table;
     protected $pk = 'id';
     public $attributes = [];
-    public $errors = [];
+    protected $errors = [];
     public $rules = [];
 
  /////////////////////////////////////////////////////////////////////
@@ -34,29 +35,43 @@ abstract class Model
     /**
      * 
      */ 
-    public function validate($data) {
-       // $v = new Validator($data);
-       // $v->rules($this->rules);
-       // if($v->validate()){
-        //    return true;
-       // }
-        //$this->errors = $v->errors();
-       // return false;
-
-
-       return true;
-       //return false;
+    public function validate($data, $rules){
+        $rules = $this->rules[$rules];
+        Validator::langDir(ROOT.'/public/valitron/lang');
+        Validator::lang('ru');
+        $v = new Validator($data);
+        $v->rules($rules);
+        if($v->validate()){
+            return true;
+        }
+        $this->errors = $v->errors();
+        return false;
     }
 
 /////////////////////////////////////////////////////////////////////
     /**
      * 
      */ 
-    public function getErrors() {
-        
+    public function getErrors(){
+        return $this->errors;
      }
-         
-    
+
+/////////////////////////////////////////////////////////////////////
+    /**
+     * 
+     */ 
+    public function setError(string $error){
+        $this->errors['others'][] = $error;
+    }
+
+/////////////////////////////////////////////////////////////////////
+    /**
+     * 
+     */ 
+    //ublic function save() {
+        //$sql = "INSERT INTO user(login,password, name, email) VALUES ($login,$password,$name, $email)";
+    //}
+
 /////////////////////////////////////////////////////////////////////
     /**
      * 
@@ -75,25 +90,43 @@ abstract class Model
     }
 
 /////////////////////////////////////////////////////////////////////
+
+    /**
+     * 
+     * запись в таблице по полю в виде объекта
+     * $id array
+     * 
+     */ 
+    public function findObjByWhere($val, $where) {
+        //$field = $field ?: $this->pk;
+            $sql  = "SELECT *
+            FROM ".static::$table." " .$where;
+            //var_dump($sql); die;
+    return $data = DB::prepare($sql)->execute($val)->fetchObject(static::class);
+    }
+    
+    
+/////////////////////////////////////////////////////////////////////       
     /**
      * 
      * запись в таблице по полю в виде объекта
      */ 
-    public function findOneObj($id, $field ='') {
+    public function findObjByField($id, $field ='') {
         $field = $field ?: $this->pk;
             $sql  = "SELECT *
             FROM ".static::$table."
             WHERE $field = ?";
     return $data = DB::prepare($sql)->execute([$id])->fetchObject(static::class);
     }    
-    
+ 
+        
 
 /////////////////////////////////////////////////////////////////////
     /**
      * 
      * запись в таблице по первичному ключу
      */ 
-    public function findOne($id, $field ='') {
+    public function findRowByField($id, $field ='') {
         $field = $field ?: $this->pk;
             $sql  = "SELECT *
             FROM ".static::$table."

@@ -1,6 +1,6 @@
 <?php
 namespace application\models;
-
+//use application;
 class View
 {
     public $data = [
@@ -38,7 +38,7 @@ class View
     // }
 
     public function render() {
-            $file_view = "././application/views/{$this->route['modul']}/{$this->route['controller']}/{$this->file_view}.php";
+            $file_view = "../application/views/{$this->route['modul']}/{$this->route['controller']}/{$this->file_view}.php";
             ob_start();
             foreach ($this->data as $prop=> $value){
                 $$prop = $value;
@@ -54,7 +54,7 @@ class View
         
             if(false === $this->file_layout) return $content;
         
-            $file_layout = "././application/views/layouts/{$this->file_layout}.php";
+            $file_layout = "../application/views/layouts/{$this->file_layout}.php";
         
             if(is_file($file_layout)){
                 include_once $file_layout;

@@ -1,5 +1,5 @@
 <?php
-namespace  vendor\engine\core;
+namespace  engine\core;
 
 use application\models\View;
 
@@ -8,7 +8,7 @@ class RouteController
     public $route;
     public $file_layout = LAYOUT_DEFAULT_FILE;
     public $view;
-    protected $fc;
+    public $fc;
     public $file_view;
     public $output;
 

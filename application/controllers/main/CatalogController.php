@@ -6,7 +6,7 @@ use     application\models\View,
         application\models\Category, 
         application\models\Company, 
         application\models\Address;
-use  vendor\engine\core\App,  vendor\engine\core\IController;        
+use  engine\core\App, engine\core\IController;        
 
 class CatalogController  extends ParentController implements IController
 {

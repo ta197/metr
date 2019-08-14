@@ -1,8 +1,3 @@
-<?php
-session_start();
-$users = require_once 'admin_users.inc';
-//$users = require_once ADMIN_USERS_FILE;
-?>
             <div class= "header__breadcrumb side-content top-content">
                 <a href="/">На сайт</a>  | <a href="/admin"> админ-панель</a> | список пользователей
             </div>
@@ -12,14 +7,13 @@ $users = require_once 'admin_users.inc';
                        
             <div class="listing side-content">
 <?php
-               
            if(!empty($_SESSION['user']))
             echo 'Вы '.$_SESSION['user']['name'];
 
 
-            if(empty($_SESSION['user']) || empty($_SESSION['user']['is_admin'])){
+            if(empty($_SESSION['user']) || $_SESSION['user']['role'] != 'admin'){
                 echo '<div>У вас недостаточно прав для просмотра</div>';
-                //die;
+              
             }
             else{
 echo <<<HEREDOC
@@ -46,5 +40,5 @@ HEREDOC;
                 // echo '</pre>';
 ?> 
 
-                <div class="link-buttons"><a href="/admin/users/logout" class="button-dark">Выход</a></div>         
+                <div class="link-buttons"><a href="/admin/user/logout" class="button-dark">Выход</a></div>         
             </div>

@@ -6,7 +6,7 @@ use
     application\models\Category,
     application\models\Company, 
     application\models\Goods;
-use  vendor\engine\core\App,   vendor\engine\core\IController;
+use  engine\core\App,  engine\core\IController;
     
 class CategoryController extends ParentController implements IController
 {

@@ -1,7 +1,7 @@
 <?php
-namespace  vendor\engine\core\base;
+namespace  engine\core\base;
 
-use vendor\engine\core\DB;
+use engine\core\base\DB;
 
 class MyPDOStatement extends \PDOStatement
 {

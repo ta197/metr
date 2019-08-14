@@ -11,9 +11,9 @@ echo <<<HEREDOC
         <li class="footer__column-item"> <a href="/about/partners" class="footer__nav-item">рекламодателям</a></li>
     </ul>
     <ul class="footer__column">
-        <li class="footer__column-item"><a href="/user/signup" class="footer__nav-item">signup</a></li><br/>
-        <li class="footer__column-item"><a href="/user/login" class="footer__nav-item">login</a></li><br/>
-        <li class="footer__column-item"> <a href="/user/logout" class="footer__nav-item">logout</a></li>
+        <li class="footer__column-item"><a href="/user/signup" class="footer__nav-item">регистрация</a></li><br/>
+        <li class="footer__column-item"><a href="/user/login" class="footer__nav-item">авторизация</a></li><br/>
+        <li class="footer__column-item"> <a href="/user/logout" class="footer__nav-item">выход</a></li>
     </ul>
 HEREDOC;
 }else{
@@ -24,9 +24,9 @@ echo <<<HEREDOC
         <li class="footer__column-item"> <a href="/about/partners" class="footer__nav-item{$navStatus['about']['PartnersActiv']}{$navStatus['about']['PartnersDisabled']}">рекламодателям</a></li>
     </ul>
     <ul class="footer__column">
-        <li class="footer__column-item"><a href="/user/signup" class="footer__nav-item">signup</a></li><br/>
-        <li class="footer__column-item"><a href="/user/login" class="footer__nav-item">login</a></li><br/>
-        <li class="footer__column-item"><a href="/user/logout" class="footer__nav-item">logout</a></li>
+        <li class="footer__column-item"><a href="/user/signup" class="footer__nav-item">регистрация</a></li><br/>
+        <li class="footer__column-item"><a href="/user/login" class="footer__nav-item">авторизация</a></li><br/>
+        <li class="footer__column-item"><a href="/user/logout" class="footer__nav-item">выход</a></li>
     </ul>
 HEREDOC;
 }

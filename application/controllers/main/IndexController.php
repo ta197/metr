@@ -2,7 +2,7 @@
 namespace application\controllers\main;
 
 use application\models\View;
-use application\controllers\App,  vendor\engine\core\IController;
+use engine\core\App,  engine\core\IController;
 
 class IndexController extends ParentController implements IController
 {

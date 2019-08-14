@@ -1,4 +1,4 @@
 <?php
-namespace vendor\engine\core;
+namespace engine\core;
 
 interface IController {}

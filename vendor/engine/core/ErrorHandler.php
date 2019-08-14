@@ -1,5 +1,5 @@
 <?php
-namespace  vendor\engine\core;
+namespace  engine\core;
 
 use application\models\View;
 
@@ -7,7 +7,7 @@ class ErrorHandler
 {
     protected $error;
     public $route;
-    public $file_layout = LAYOUT_DEFAULT_FILE;
+    public $file_layout =  DEFAULT_ERR;
     public $view;
     public $fc;
     public $file_view;
@@ -35,8 +35,8 @@ class ErrorHandler
     }
 
     public function exceptionHandler($e){
-        $this->logErrors('исключение', $e->getMessage(), $e->getFile(), $e->getLine());
-        $this->displayError('исключение',  $e->getCode(), $e->getMessage(), $e->getFile(), $e->getLine(),  $e->getCode());
+        $this->logErrors('исключение', $e->getCode().' | '.$e->getMessage(), $e->getFile(), $e->getLine());
+        $this->displayError('исключение',  $e->getCode(), $e->getMessage(), $e->getFile(), $e->getLine(),  $e->getCode().' | '.$e->getTraceAsString());
     }
 
     public function fatalErrorHandler(){
@@ -53,7 +53,7 @@ class ErrorHandler
 
     protected function logErrors($type ='', $message = '', $file = '', $line = ''){
         
-            error_log("[" . date('Y-m-d H:i:s') ."]\r\nВид ошибки: $type \r\nТекст ошибки: $message \r\nФайл: $file \r\nСтрока: $line \r\n====================================\r\n\r\n ", 3, 'tmp/errors.log');
+            error_log("[" . date('Y-m-d H:i:s') ."]\r\nВид ошибки: $type \r\nТекст ошибки: $message \r\nФайл: $file \r\nСтрока: $line \r\n====================================\r\n\r\n ", 3, '../tmp/errors.log');
             
     }
 
@@ -61,8 +61,6 @@ class ErrorHandler
         $this->fc = FrontController::getInstance();
         $this->route =  $this->fc->route;
         $this->view = new View($this->route);
-
-        
 
         $this->view->error = $error;
         $this->view->errno = $errno;
@@ -72,12 +70,14 @@ class ErrorHandler
         $this->view->response = $response;
 
         //$this->view->findLayoutByModul();
-        if($this->route['modul'] !== 'main'){
+        if($this->route['modul'] !== 'main' && $this->route['modul'] !== 'admin'){
             $this->file_layout = $this->route['modul'];
-        }elseif($this->route['modul'] === 'main' && $errstr === 'Нет контроллера  ' .$this->route['controller']){
-            $this->file_layout = DEFAULT_ERR;
-            $this->view->route['modul'] = 'err';
         }
+        if($this->route['modul'] === 'main' && $errstr !== "Нет контроллера {$this->route['controller']}"){
+            $this->file_layout = LAYOUT_DEFAULT_FILE;
+           // $this->view->route['modul'] = 'err';
+        }
+
         $this->view->route['controller'] ='err';
         $this->view->file_layout = $this->file_layout;
         

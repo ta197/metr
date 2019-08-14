@@ -3,7 +3,7 @@ namespace application\controllers\main;
 use 
   application\models\View, 
   application\models\Search;
-use  vendor\engine\core\App,  vendor\engine\core\IController;
+use  engine\core\App,  engine\core\IController;
 
 class SearchController extends ParentController implements IController
 {

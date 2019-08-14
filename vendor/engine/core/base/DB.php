@@ -1,5 +1,5 @@
 <?php
-namespace  vendor\engine\core\base;
+namespace  engine\core\base;
 
 class DB 
 {
@@ -16,7 +16,7 @@ class DB
 				\PDO::ATTR_ERRMODE            => \PDO::ERRMODE_EXCEPTION,
 				\PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC,
 				\PDO::ATTR_EMULATE_PREPARES   => TRUE,
-				\PDO::ATTR_STATEMENT_CLASS    => array('vendor\engine\core\base\MyPDOStatement'),
+				\PDO::ATTR_STATEMENT_CLASS    => array('engine\core\base\MyPDOStatement'),
 			];
 
 			$params = parse_ini_file ('config.ini');

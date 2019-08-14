@@ -1,7 +1,7 @@
 <?php
 namespace application\controllers\admin;
 
-use  vendor\engine\core\App,  vendor\engine\core\IController;
+use  engine\core\App,  engine\core\IController;
 
 class IndexController extends ParentAdminController implements IController
 {
