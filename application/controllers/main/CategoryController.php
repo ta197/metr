@@ -2,15 +2,17 @@
 namespace application\controllers\main;
 
 use 
-    application\models\View, 
+    engine\core\base\View,
+    engine\core\base\Controller, 
     application\models\Category,
     application\models\Company, 
     application\models\Goods;
-use  engine\core\App,  engine\core\IController;
+use  engine\core\IController, engine\core\Page, engine\core\Menu;
     
 class CategoryController extends ParentController implements IController
 {
   
+/////////////////////////////////////////////////////////////////////   
   public function indexAction()
   {
     $catMenu = new Category();
@@ -20,12 +22,11 @@ class CategoryController extends ParentController implements IController
      // App::$app->cache->set('count', $this->view->counter);
     //}
     
-    $this->view->catMenu = $catMenu->getBigCatMenu();
+    $this->view->catMenu = $catMenu
+      ->fields(['name', 'cat_id', 'level', 'activated', 'parent_id', 'lft', 'rgt'])
+      ->where('level>? AND visible= ?')->order_by("lft")->select()->generator([0, 1]);
 
-    $this->view->navStatus = $this->view->navStatus(['metr'], 'CategoryActiv', 'CategoryDisabled');
-    $this->view->title = 'категории';
-    $this->view->h1 = 'Все категории';
-
+    //$this->b($this->view->nav, 1);
   }
 
 
@@ -37,27 +38,28 @@ class CategoryController extends ParentController implements IController
  */
   public function sectionAction()
   {
-   // try{
-      $id = $this->checkOneParam('cat');
+    $par = $this->checkParams(['cat'], ['sub']);
+    $id = (int)$par["cat"];
       $instCat = new Category();
-      $this->view->cat = $instCat->getCategoryObj($id);
+      $this->view->cat = $instCat->getObjById($id);
       if(!$this->view->cat)
           throw new \Exception("нет такой категории", 404);
       $this->view->catMenu = $instCat->getCatMenu($this->view->cat);
-      $this->view->cat->countGoods = (new Goods())->countGoodsByCat($id);
+    
+      $this->view->cat->countGoods = (new Goods())->where('cat_id = ?')->count('goods_id')->fetchColumn([$id]);
+     
       $this->view->countCatSubMenu = $instCat->countCatSubMenu($this->view->catMenu, $this->view->cat); 
       $this->view->brc = $instCat->getBrc($this->view->cat);
       $company = new Company();
-      $this->view->counter = $company->countCompaniesByCategory($id);
-      $this->view->listCompany = $company->getCompaniesByCategoryAndGoods($id);
+      $this->view->counter = $company->countCompaniesByCategory()->fetchColumn([$id]) ;
+      $this->view->listCompany = $company->getCompaniesByCategoryAndGoods()->generator([$id]);
+      
+      $this->view->page
+          ->plusTitle(' | '.$this->view->cat->name)
+          ->setHeaderTitle($this->view->cat->name);
 
-      $this->view->navStatus = $this->view->navStatus(['metr'], 'CategoryActiv');
-      $this->view->title =  $this->view->cat->name;
-      $this->view->h1 =  $this->view->cat->name;
-    //}catch(AppException $e){
-      //$e->err404($e, $this->fc);
-    //}
   }
 /////////////////////////////////////////////////////////////////////
 
+/////////////////////////////////////////////////////////////////////
 }

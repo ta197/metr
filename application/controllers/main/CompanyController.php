@@ -2,32 +2,45 @@
 namespace application\controllers\main;
 
 use 
-    application\models\View, 
+    engine\core\base\View, 
     application\models\Company, 
     application\models\Address, 
     application\models\FiltersHandler, 
     application\models\ParseFilters;
-use engine\core\App, engine\core\IController;
+use engine\core\App, engine\core\IController, engine\core\Pagination, engine\core\Page, engine\core\Menu;
     
 class CompanyController extends ParentController implements IController
 {
-    
+       
     public function indexAction()
     {
+        $page_num = isset($this->fc->getParams()["page"]) ? (int)$this->fc->getParams()["page"] : 1;
+    
         $this->view->filters = (new FiltersHandler(null))->getFilters();
         $company =new Company();
-        //$listLettersLegal = $company->getAllLettersAndLegal();
-        //$fildAncor = 'LEFT(c.company, 1)';
-        $this->view->h1 = 'Все организации справочника';
-        $this->view->title = 'компании';
-        $letters = $company->getAncorsByAlphabet();
-        $this->view->counter = count($letters);
-        $this->view->listLetters = $company->isCyrillicAlphabet($company->uniqueAncors($letters));
-        $this->view->listCompany = $company->getCompaniesByName();
+        $companyCount = $company->where('archive IS NULL')->count('company')->fetchColumn();
+    
+        $letters = $company->getAncorsByAlphabet()->fetchAll();
+        //$this->view->counter = count($letters);
 
-        $this->view->navStatus = $this->view->navStatus(['metr'], 'CompanyActiv', 'CompanyDisabled');
-        $this->file_layout = 'index_company';
-        $this->file_view = 'index_company';
+        $this->view->listLetters = $company->isCyrillicAlphabet($company->uniqueAncors($letters));
+
+		$pagination = new Pagination('/company/index');
+        $limit = $pagination->on_page(2)->page_num($page_num)->page();
+       
+        $this->view->listCompany = $company
+            ->getCompanies( 'LEFT(c.company, 1)', 'c.archive IS NULL', 'c.company')
+            ->limit($limit)->inEnd('limit')
+            ->generator();
+         
+      $this->view->pagination  =  $pagination->navparams($companyCount);
+      
+      $this->view->page
+          ->setStyles(['pagination'])
+          ->setScripts(['json2', 'getXmlHttpRequest', 'FilterFormRequest', 'newTitle', 'newForm', 'newLetters','newListCompanies', 'filterAjax', 'newPagination']);
+          
+    //$this->b($this->view, 1);
+
     }
 
  ///////////////////////////////////////////////////////////////////// 
@@ -40,6 +53,11 @@ class CompanyController extends ParentController implements IController
         $parse = new ParseFilters();
         $search = $this->fc->getParams()["search"];
 
+        $page_num = isset($this->fc->getParams()["page"]) ? (int)$this->fc->getParams()["page"] : 1;
+        //$pagination = new Pagination('/company/filters/search');
+        //$limit = $pagination->on_page(2)->page_num($page_num)->page();
+        //H::bug($limit, 1);
+
         if(!$search) $decode = $parse->decodeFilters();
         else $decode = $parse->queryFilters();
 
@@ -47,7 +65,7 @@ class CompanyController extends ParentController implements IController
             $where = $filters->combineWhere()->getWhere();
             $sort = $filters->getSort();
             $order = $filters->getOrder();
-            $this->view->h1 = $filters->getTitle();
+            $this->view->header_title = $filters->getTitle();
             $this->view->filters = $filters->getFilters();
 
         $this->view->error = $filters->getError();
@@ -60,11 +78,13 @@ class CompanyController extends ParentController implements IController
             $letters = $company->getAncorsForFilter($where, $sort);
             $this->view->countCompany = count($letters);
             $this->view->listLetters = $company->isCyrillicAlphabet($company->uniqueAncors($letters, $order));
-            $this->view->listCompany = $company->getCompaniesByFilters($where, $order, $sort);
+
+            $this->view->listCompany = $company->getCompaniesByFilters($where, $order, $sort)->fetchAll();
+            $companyCount = count($this->view->listCompany);
+            //$this->view->navparams  =  $pagination->navparams($companyCount);
         }
 
         if($search){
-            $this->view->navStatus = $this->view->navStatus(['metr'], 'CompanyActiv', 'CompanyDisabled');
             $this->file_layout = 'index_company';
             $this->file_view = 'index_company';
         }else{
@@ -72,8 +92,50 @@ class CompanyController extends ParentController implements IController
           $this->file_view  = 'company_filters_json';
         }
 
+        $this->view->page
+          ->setStyles(['pagination'])
+          ->setScripts(['json2', 'getXmlHttpRequest', 'FilterFormRequest', 'newTitle', 'newForm', 'newLetters','newListCompanies', 'filterAjax', 'newPagination']);
+          
+    //$this->b($this->view->page->id_page);
     }
-  
+
+ ///////////////////////////////////////////////////////////////////// 
+/**
+ * 
+ * 
+ */
+public function alphabetAction()
+{
+    $letter = trim(urldecode($this->fc->getParams()["letter"]));
+    $page_num = isset($this->fc->getParams()["page"]) ? (int)$this->fc->getParams()["page"] : 1;
+    $pagination = new Pagination('/company/alphabet/letter/'.$letter);
+    $limit = $pagination->on_page(2)->page_num($page_num)->page();
+    $this->view->filters = (new FiltersHandler(null))->getFilters();
+    $company =new Company();
+
+    $this->view->counter = $company->where('archive IS NULL AND LEFT(company, 1) = ?')->count('company')->fetchColumn([$letter]);
+
+    $letters = $company->getAncorsByAlphabet()->fetchAll();
+    //$this->view->counter = count($letters);
+
+    $this->view->listLetters = $company->isCyrillicAlphabet($company->uniqueAncors($letters));
+
+    $this->view->listCompany = $company
+        ->getCompanies( 'LEFT(company, 1)', 'c.archive IS NULL AND LEFT(company, 1) = ?', 'c.company')
+        ->limit($limit)->inEnd('limit')
+        ->fetchAll([$letter]);
+   
+    $this->view->pagination  =  $pagination->navparams($this->view->counter);
+
+    $this->view->page
+          ->setStyles(['pagination'])
+          ->setScripts(['json2', 'getXmlHttpRequest', 'FilterFormRequest', 'newTitle', 'newForm', 'newLetters','newListCompanies', 'filterAjax', 'newPagination'])
+          ->plusTitle($letter)
+          ->plusHeaderTitle($letter);
+    $this->file_view = 'index_company';
+
+}
+
     
 /////////////////////////////////////////////////////////////////////
     /**
@@ -84,18 +146,28 @@ class CompanyController extends ParentController implements IController
      * 
      */
     public function archiveAction(){
-
+        $page_num = isset($this->fc->getParams()["page"]) ? (int)$this->fc->getParams()["page"] : 1;
         $company = new Company();
-        $letters = $company->getAncorsByAlphabet($archive ='IS NOT NULL');
+        $letters = $company->getAncorsByAlphabet('IS NOT NULL')->fetchAll();
         $this->view->counter = count($letters);
-       
         $this->view->listLetters = $company->isCyrillicAlphabet($company->uniqueAncors($letters));
 
-        $this->view->listCompany = $company->getCompaniesByName($archive = 'IS NOT NULL');
+        $pagination = new Pagination('/company/archive');
+        $limit = $pagination->on_page(2)->page_num($page_num)->page();
 
-        $this->view->navStatus = $this->view->navStatus(['metr'], 'CompanyActiv');
-        $this->view->title = 'архивные организации';
-        $this->view->h1 = 'Организации, прекратившие работу';
+        $this->view->listCompany = $company
+            ->getCompanies( 'LEFT(c.company, 1)', 'c.archive IS NOT NULL', 'c.company')
+            ->limit($limit)->inEnd('limit')
+            ->generator();
+        
+        $this->view->pagination  =  $pagination->navparams($this->view->counter);
+
+       $this->view->title .= ' в архиве';
+
+        $this->view->page
+            ->setTitle( $this->view->title)
+            //->setScripts(['newPagination'])
+            ->setStyles(['pagination']);
     } 
 
     
@@ -109,16 +181,26 @@ class CompanyController extends ParentController implements IController
  * layout_default 
  */
     public function youngAction(){
+        $page_num = isset($this->fc->getParams()["page"]) ? (int)$this->fc->getParams()["page"] : 1;
         
         $company = new Company();
-        $letters = $company->getAncorsByYears(START_WORK_YEAR);
+        $letters = $company->getAncorsByYears()->fetchAll([START_WORK_YEAR]);
         $this->view->counter = count($letters);
         $this->view->listLetters = $company->uniqueAncors($letters);
-        $this->view->listCompany = $company->getCompaniesByYears(START_WORK_YEAR);
 
-        $this->view->navStatus = $this->view->navStatus(['metr'], 'CompanyActiv');
-        $this->view->title = 'новые организации';
-        $this->view->h1 = 'Новые организации';
+		$pagination = new Pagination('/company/young');
+        $limit = $pagination->on_page(2)->page_num($page_num)->page();
+       
+        $this->view->listCompany = $company
+            ->getCompanies('c.year', 'c.archive IS NULL AND  c.year >= ?', 'c.year DESC, c.company ASC')
+            ->limit($limit)->inEnd('limit')
+            ->generator([START_WORK_YEAR]);
+         
+      $this->view->pagination  =  $pagination->navparams($this->view->counter);
+      
+      $this->view->page
+          ->setStyles(['pagination']);
+
     }
     
 /////////////////////////////////////////////////////////////////////
@@ -130,7 +212,6 @@ class CompanyController extends ParentController implements IController
  */
    public function cardAction()
    {
-    //try{
         $id = $this->checkOneParam('name');
         $this->view->name = (new Company())->getTitleCompanyById($id);
         if(!$this->view->name)
@@ -145,12 +226,9 @@ class CompanyController extends ParentController implements IController
        
         $this->file_layout = 'company_card'; //map
         
-        $this->view->navStatus = $this->view->navStatus(['metr'], 'CompanyActiv');
-        $this->view->title = $this->view->name->company_name;
-        $this->view->h1 = $this->view->name->company_name;
-    // }catch(AppException $e){
-    //     $e->err404($e, $this->fc);
-    // }
+        $this->view->page
+            ->plusTitle('| '.$this->view->name->company_name)
+            ->setHeaderTitle($this->view->name->company_name);
    }
 
  /////////////////////////////////////////////////////////////////////  

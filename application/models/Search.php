@@ -1,6 +1,6 @@
 <?php
 namespace application\models;
-use  engine\core\base\DB, engine\core\Model;
+use  engine\core\db\DB, engine\core\base\Model;
 
 class Search extends Model
 {

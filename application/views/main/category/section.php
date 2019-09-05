@@ -1,7 +1,9 @@
 
         <div class= "header__breadcrumb top-content side-content">
             <a href="/">главная</a> | <a href = "/category">категории</a>  
-            <?php include_once BRC; echo " | " . $title; ?>
+            <?php 
+            include_once BRC; echo " | " . $this->page->header_title; 
+            ?>
         </div>
         <?php include_once TITLE_H1; ?>
 

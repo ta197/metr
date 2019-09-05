@@ -1,10 +1,18 @@
 <?php
 namespace application\controllers\petrova;
 
-use application\models\View,  engine\core\RouteController;
+use engine\core\base\Controller;
 
-class ParentPetrovaController extends RouteController
+class ParentPetrovaController extends Controller
 {
+    public $base_title = 'Петрова Т.В.';
     public $file_layout = 'petrova';
+
+    public function __construct($fc){
+        parent::__construct($fc);
+            //$this->isRole();
+        
+    }
+
 
 }

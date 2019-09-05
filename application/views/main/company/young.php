@@ -12,8 +12,12 @@ if(!empty($listLetters)){
 ?>
 
 <?php include_once ALPHABET_LETTERS; ?>
-<div class="listing side-content lowered_16">
-<?php include_once LIST_COMPANIES; ?>
+<div id ="listing" class="listing side-content lowered_16">
+    <section id = "pagination" >
+        <?php include '../application/views/navbar.php'; ?>
+    </section>
+    <?php include_once LIST_COMPANIES;?>
+    <?php include '../application/views/navbar.php'; ?>
 </div>
 <ul class="link-buttons side-content">
     <li class="link-buttons__item"><a href="/company/archive" class="button-dark">архивные организации</a></li>

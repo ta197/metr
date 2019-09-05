@@ -8,7 +8,7 @@
     </h1>   
 </header>
 
-<?php include '../application/views/petrova/menu_example.inc'; ?>
+<?php include ROOT.'/application/views/petrova/menu_example.inc'; ?>
 <div class="side-content">	
     <section id="idea" class="section__hr">
       <h3>Основная идея сайта</h3>
@@ -206,4 +206,4 @@ END</code></pre>
         
 </div> 
     
-<?php include '../application/views/petrova/menu_example.inc';?>
+<?php include ROOT.'/application/views/petrova/menu_example.inc';?>

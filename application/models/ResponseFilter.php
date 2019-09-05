@@ -1,6 +1,6 @@
 <?php
 namespace application\models;
-use engine\core\Model;
+use engine\core\base\Model;
 
 class ResponseFilter extends Model
 {

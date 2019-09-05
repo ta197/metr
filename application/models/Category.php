@@ -1,6 +1,6 @@
 <?php
 namespace application\models;
-use  engine\core\base\DB, engine\core\Model;
+use  engine\core\db\DB, engine\core\base\Model;
 
 class Category extends Model {
     
@@ -13,8 +13,9 @@ class Category extends Model {
     public $rgt;
     public $level;
     public $countGoods = null;
-    protected $pk = 'cat_id';
-    public  static $table = 'cats';
+    static public $pk = 'cat_id';
+    static public $table = 'cats';
+    static public $sql;
     
 /////////////////////////////////////////////////////////////////////
     /**
@@ -31,7 +32,7 @@ class Category extends Model {
      */   
     public function getCategoryObj($id){
       //$nameId = 'cat_id';
-      $fields = "name, {$this->pk}, parent_id, lft, rgt, level, ref";
+      $fields = "name, ". static::$pk .", parent_id, lft, rgt, level, ref";
       return $this->getObjById($id, $fields);
     }
     
@@ -39,28 +40,28 @@ class Category extends Model {
     /**
      *  
      */
-    public function getBigCatMenu($fields = 'visible'){
-      switch ($fields):
-       case 'visible': 
-         $fields = "name, cat_id, level, activated "; 
-         $vis = [1, 2]; break;
-       case 'full': 
-         $fields = "name, cat_id, level, activated, visible, lft, rgt"; 
-         $vis = [0, 1]; break;
-       default: 
-         $fields = "name, cat_id, level"; 
-         $vis = [1, 2]; break;
-      endswitch;
-     $sql = "SELECT $fields FROM `cats` 
-        WHERE level>0 AND visible IN (?, ?) 
-        ORDER BY lft";
-       $data = DB::prepare($sql)->execute($vis);
-       if(false !== $data){
-         while ($row = $data->fetch()){
-          yield $row;
-         }
-       }
-   }
+  //   public function getBigCatMenu($fields = 'visible'){
+  //     switch ($fields):
+  //      case 'visible': 
+  //        $fields = "name, cat_id, level, activated, parent_id, lft, rgt "; 
+  //        $vis = [1, 2]; break;
+  //      case 'full': 
+  //        $fields = "name, cat_id, level, activated, visible, lft, rgt"; 
+  //        $vis = [0, 1]; break;
+  //      default: 
+  //        $fields = "name, cat_id, level"; 
+  //        $vis = [1, 2]; break;
+  //     endswitch;
+  //    $sql = "SELECT $fields FROM `cats` 
+  //       WHERE level>0 AND visible IN (?, ?) 
+  //       ORDER BY lft";
+  //      $data = DB::prepare($sql)->execute($vis);
+  //      if(false !== $data){
+  //        while ($row = $data->fetch()){
+  //         yield $row;
+  //        }
+  //      }
+  //  }
 
      
 /////////////////////////////////////////////////////////////////////

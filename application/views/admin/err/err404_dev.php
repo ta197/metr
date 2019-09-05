@@ -21,14 +21,6 @@
     </li>  
 </ul>
 
-<div class="side-content">
-    <pre>
-    <?php
-    print_r($this);
-    ?>
-    </pre>
-</div>
-
 <h4 class ="side-content red bottom_45">Попробуйте ввести запрос в поиск или воспользуйтесь меню</h4>
 <div class="side-content">
     <form action="/search/response/search/" method="get" class="base-form search-form">

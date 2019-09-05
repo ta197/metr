@@ -2,26 +2,21 @@
 namespace application\controllers\admin;
 
 use 
-    application\models\View,
-    engine\libs\H,
-    application\models\User;
-    
-use  engine\core\App,  engine\core\IController;
+    engine\core\base\View,
+    application\models\User,
+    engine\core\App,  
+    engine\core\IController;
 
 class UserController extends ParentAdminController implements IController
 {
-
+    
 /////////////////////////////////////////////////////////////////////
     /**
      * 
      */
     public function indexAction()
     { 
-        $this->view->users = User::getUsersAll();
-        $this->view->navStatus = $this->view->navStatus(['admin'], 'UserActiv', 'UserDisabled'); 
-        $this->view->title = 'список пользователей';
-        $this->view->h1 = 'Список пользователей';    
-
+        $this->view->users = (new User())->partAll();
     }
 
 /////////////////////////////////////////////////////////////////////
@@ -29,6 +24,7 @@ class UserController extends ParentAdminController implements IController
      * 
      */
     public function loginAction(){
+        //$this->page = null;
         if(!empty($_POST)){
             $data = $_POST;
             $user = new User();
@@ -36,22 +32,21 @@ class UserController extends ParentAdminController implements IController
 
             if(!$user->validate($data, 'login')){
                 $_SESSION['error'] = $user->getErrors();
-                H::redirect();
+                $this->redirect();
             }
-            if(!$user->login(true)){
+            $newUser = $user->login(true);
+            if(!$newUser){
                 $user->setError('Неверный логин или пароль!');
                 $_SESSION['error'] = $user->getErrors();
             }
-            if(User::isAdmin()){
-                H::redirect('/admin');
+            if(User::getSessAdminId()){
+                $_SESSION['success'] = 'Вы успешно авторизованы!';
+                $this->redirect('/admin');
             }else{
-                H::redirect();
+                $this->redirect();
             }
-            
         }
         $this->file_layout = 'default_err';
-        $this->view->title = 'авторизация';
-        $this->view->h1 = 'Авторизация админа';
     }
 
 /////////////////////////////////////////////////////////////////////
@@ -59,9 +54,10 @@ class UserController extends ParentAdminController implements IController
      * 
      */    
     public function logoutAction(){
+        //$this->page = null;
         if(isset($_SESSION['user'])) unset($_SESSION['user']);
         if(isset($_SESSION['success'])) unset($_SESSION['success']);
-        H::redirect('/admin/user/login');
+        $this->redirect('/admin/user/login');
        // session_destroy();
         //header('Location: /admin/user/login');
     }
@@ -71,26 +67,30 @@ class UserController extends ParentAdminController implements IController
      * 
      */
     public function usersAction(){
-        $this->view->users = User::getUsersAll();
-        $this->view->navStatus = $this->view->navStatus(['admin'], 'UserActiv', 'UserDisabled'); 
-        $this->view->title = 'список пользователей';
-        $this->view->h1 = 'Список пользователей'; 
+        $this->view->users = (new User())->partAll();
     }
-
 
 /////////////////////////////////////////////////////////////////////
     /**
      * 
      */
      public function adminsAction(){
-        $this->view->users = User::getUsersAll(); 
-        $this->view->navStatus = $this->view->navStatus(['admin'], 'UserActiv', 'UserDisabled'); 
-        $this->view->title = 'список админов';
-        $this->view->h1 = 'Список администраторов'; 
+        $this->view->users = (new User())->partAll();
     }
 
 /////////////////////////////////////////////////////////////////////
-  
+ /////////////////////////////////////////////////////////////////////
+    /**
+     * 
+     */    
+    public function profileAction(){
+        $id = $this->checkOneParam('id');
+        $user = new User();
+        $this->view->user = $user
+            ->where('id = ?')
+            ->partObj([$id]);   
+    }
+
 
 /////////////////////////////////////////////////////////////////////
 }

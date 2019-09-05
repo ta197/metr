@@ -1,44 +1,32 @@
-            <div class= "header__breadcrumb side-content top-content">
-                <a href="/">На сайт</a>  | <a href="/admin"> админ-панель</a> | список пользователей
-            </div>
+<div class= "header__breadcrumb side-content top-content">
+    <a href="/">На сайт</a>  | <a href="/admin"> админ-панель</a> | список пользователей
+</div>
             
-            <?php include_once TITLE_H1; ?>   
+<?php include_once TITLE_H1; ?>   
                
-                       
-            <div class="listing side-content">
+<div class="listing side-content">
 <?php
-           if(!empty($_SESSION['user']))
-            echo 'Вы '.$_SESSION['user']['name'];
+     if(!empty($sessAdminId)){
+        echo '<div>Вы '.$_SESSION['user']['name'].'</div>';
+     }else{
+        echo '<div>У вас недостаточно прав для просмотра</div>';
+     }
+?>
+</div>
 
-
-            if(empty($_SESSION['user']) || $_SESSION['user']['role'] != 'admin'){
-                echo '<div>У вас недостаточно прав для просмотра</div>';
-              
-            }
-            else{
-echo <<<HEREDOC
-                <table>
-                <tr>
-                    <th>Имя</th>
-                    <th>Логин</th>
-                </tr>
-HEREDOC;
-                foreach ($users as $user): 
-echo <<<HEREDOC
-                <tr>
-                    <td>{$user['name']} </td>
-                    <td>{$user['login']} </td>
-                </tr>
-HEREDOC;
-                endforeach; 
-         echo   '</table>';
-
-}
-            // var_dump($_SESSION['user']);    
-                // echo '<pre>';
-                // print_r($this);
-                // echo '</pre>';
+<?php 
+include_once '../application/views/main/list_users.inc'; 
 ?> 
+   
+<div class="listing side-content">
+    <div class="link-buttons"><a href="/admin/user" class="button-dark">Пользователи и админы</a></div>
+    <div class="link-buttons"><a href="/admin/user/admins" class="button-dark">Админы</a></div>        
+</div>
 
-                <div class="link-buttons"><a href="/admin/user/logout" class="button-dark">Выход</a></div>         
-            </div>
+<?php
+
+// var_dump($_SESSION['user']);    
+    echo '<pre>';
+    //print_r($this);
+    echo '</pre>';
+?> 

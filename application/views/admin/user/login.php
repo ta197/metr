@@ -10,10 +10,10 @@
     <form method="POST" action="/admin/user/login" class="base-form">
         
         <label for="login">Логин</label>
-        <input id="login" type= "text" name="login" placeholder="от 3 до 15 знаков">
+        <input id="login" type= "text" name="login" placeholder="login">
         
         <label for="password">Пароль</label>
-        <input id="password" type= "password" name="password" placeholder="от 6 до 15 знаков">
+        <input id="password" type= "password" name="password" placeholder="password">
         
         <div class ="link-buttons">
             <button type="submit" class="button-dark">Вход</button>

@@ -35,7 +35,8 @@
 <div class="side-content">
     <pre>
     <?php
-    print_r($this);
+    //print_r($_SESSION['user']);
+    //print_r($this)
     ?>
     </pre>
 </div>

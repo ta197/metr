@@ -1,7 +1,7 @@
 <?php
 namespace application\controllers\main;
 
-use application\models\View;
+use engine\core\base\View, engine\core\Page, engine\core\Menu;
 use engine\core\App,  engine\core\IController;
 
 class IndexController extends ParentController implements IController
@@ -10,6 +10,10 @@ class IndexController extends ParentController implements IController
 
   public function indexAction()
   {
-    $this->view->title = 'главная';
+    
+    $this->view->page
+      ->setScripts(['typing_carousel']);
   }
+
+
 }

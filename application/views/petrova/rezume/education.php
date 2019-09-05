@@ -40,7 +40,7 @@
     
     <section id="certif" class="section__hr">
 	<h3>Электронные сертификаты</h3>
-	<? include_once PETROVA_CERTIFICATES ;?>
+	<? include_once ROOT.'/application/views/petrova/petrova_certificates.inc'; ?>
 </section>
 
     <section id="mod" class="section__hr">

@@ -5,7 +5,11 @@
 <?php include_once TITLE_H1; ?> 
 <?php include_once ALPHABET_LETTERS; ?>
 <div class="listing side-content lowered_16">
-<?php include_once LIST_COMPANIES;?>
+    <section id = "pagination" >
+        <?php include '../application/views/navbar.php'; ?>
+    </section>
+    <?php include_once LIST_COMPANIES;?>
+    <?php include '../application/views/navbar.php'; ?>
 </div>
    
 <ul class="link-buttons side-content">

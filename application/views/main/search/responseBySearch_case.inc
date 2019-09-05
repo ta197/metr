@@ -8,11 +8,11 @@
     echo '<h2 class="side-content subtitle subtitle__margin-30 bottom_45">'.$section.'<span class = "counter"> ('.count($items).')</span></h2>';
    
     switch($section):
-        case 'Компании':  include_once RESPONSE_BY_SEARCH_LIST_COMPANY; break;
-        case 'Категории':  include_once RESPONSE_BY_SEARCH_LIST_CATEGORY; break;
-        case 'Товары, услуги':  include_once RESPONSE_BY_SEARCH_LIST_GOODS; break;
-        //case 'Местонахождения':  include_once RESPONSE_BY_SEARCH_LIST_PLACE; break;
-        default:  include_once EMPTY_RESPONSE; break;
+        case 'Компании':  include_once ROOT.'/application/views/main/search/responseBySearch_list_company.inc'; break;
+        case 'Категории':  include_once ROOT.'/application/views/main/search/responseBySearch_list_category.inc'; break;
+        case 'Товары, услуги':  include_once ROOT.'/application/views/main/search/responseBySearch_list_goods.inc'; break;
+        //case 'Местонахождения':  include_once ROOT.'/application/views/main/search/responseBySearch_list_place.inc';
+        default:  include_once ROOT.'/application/views/main/search/empty_response.inc'; break;
         
     endswitch;
 }

@@ -1,9 +1,12 @@
 <?php
 namespace application\models;
-use  engine\core\base\DB, engine\core\Model;
+use  engine\core\db\DB, engine\core\base\Model;
 
 class Company extends Model
 {
+    static public $pk = 'company_id';
+    static public $table = 'companies';
+    
     public $company;
     public $company_name;
     public $quotes;
@@ -16,9 +19,10 @@ class Company extends Model
     public $archive;
     public $year;
     public $company_extend;
-    protected $pk = 'company_id';
-    public static $table = 'companies';
+    
     public $addresses =[];
+
+    static public $sql;
     
 /////////////////////////////////////////////////////////////////////
      /**
@@ -32,39 +36,36 @@ class Company extends Model
     /**
      * 
      */
-    public function getCompaniesByName($archive = 'IS NULL')
-    {
-        $sql = "SELECT
-            LEFT(c.company, 1) AS ancor,
-            c.company, c.company_id, c.site, legal.name, 
-            company_to_string(c.name_type, c.shop, legal.name, c.name_legal, c.quotes, c.company) AS company_name,
+    // public function getCompaniesByName($archive = 'IS NULL')
+    // {
+    //     static::$sql  = "SELECT
+    //         LEFT(c.company, 1) AS ancor,
+
+    //         c.company, c.company_id, c.site, legal.name, 
+    //         company_to_string(c.name_type, c.shop, legal.name, c.name_legal, c.quotes, c.company) AS company_name,
             
-            GROUP_CONCAT(CONCAT_WS('', a.ul, a.phone)
-                        SEPARATOR '~~') 
-                        AS addresses
-            FROM `address` AS a
-            RIGHT JOIN `companies` AS c ON (a.company_id =  c.company_id)
-            LEFT JOIN `legal` ON (legal.id = c.legal)
-            WHERE c.archive $archive
-            GROUP BY c.company_id
-            ORDER BY c.company";
+    //         GROUP_CONCAT(CONCAT_WS('', a.ul, a.phone)
+    //                     SEPARATOR '~~') 
+    //                     AS addresses
+    //         FROM `address` AS a
+    //         RIGHT JOIN `companies` AS c ON (a.company_id =  c.company_id)
+    //         LEFT JOIN `legal` ON (legal.id = c.legal)
+    //         WHERE c.archive $archive
+    //         GROUP BY c.company_id
+    //         ORDER BY c.company";
             
-            $data = DB::prepare($sql)->execute();
-                if(false !== $data){
-                    while ($row = $data->fetch()){
-                        yield $row;
-                    }
-                }
-    }
-    
+    //     return $this;
+    // }
+
 /////////////////////////////////////////////////////////////////////
     /**
      * 
      */
-    public function getCompaniesByYears($year, $archive = 'IS NULL')
+    public function getCompanies($ancor, $where, $order)
     {
-        $sql = "SELECT
-            c.year AS ancor,
+        static::$sql = "SELECT
+            $ancor AS ancor,
+
             c.company, c.company_id, c.site, legal.name, 
             company_to_string(c.name_type, c.shop, legal.name, c.name_legal, c.quotes, c.company) AS company_name,
             
@@ -74,17 +75,41 @@ class Company extends Model
             FROM `address` AS a
             RIGHT JOIN `companies` AS c ON (a.company_id =  c.company_id)
             LEFT JOIN `legal` ON (legal.id = c.legal)
-            WHERE c.archive $archive AND  c.year >= ?
+
+            WHERE $where
+
             GROUP BY c.company_id
-            ORDER BY c.year DESC, c.company ASC";
+
+            ORDER BY $order";
             
-            $data = DB::prepare($sql)->execute([$year]);
-            if(false !== $data){
-                while ($row = $data->fetch()){
-                    yield $row;
-                }
-            }
+        return $this;
     }
+
+    
+    
+/////////////////////////////////////////////////////////////////////
+    // /**
+    //  * 
+    //  */
+    // public function getCompaniesByYears($archive = 'IS NULL')
+    // {
+    //     static::$sql = "SELECT
+    //         c.year AS ancor,
+    //         c.company, c.company_id, c.site, legal.name, 
+    //         company_to_string(c.name_type, c.shop, legal.name, c.name_legal, c.quotes, c.company) AS company_name,
+            
+    //         GROUP_CONCAT(CONCAT_WS('', a.ul, a.phone)
+    //                     SEPARATOR '~~') 
+    //                     AS addresses
+    //         FROM `address` AS a
+    //         RIGHT JOIN `companies` AS c ON (a.company_id =  c.company_id)
+    //         LEFT JOIN `legal` ON (legal.id = c.legal)
+    //         WHERE c.archive $archive AND  c.year >= ?
+    //         GROUP BY c.company_id
+    //         ORDER BY c.year DESC, c.company ASC";
+            
+    //     return $this;
+    // }
 
     
 /////////////////////////////////////////////////////////////////////
@@ -132,7 +157,7 @@ class Company extends Model
  */  
  public function getAncorsByAlphabet($archive = 'IS NULL') //список начальных букв, включая латиницу и цифры // не уникальные, а все, чтобы посчитав, знать кол-во компаний
     {
-        $sql  = "SELECT
+        static::$sql  = "SELECT
             LEFT(c.company, 1) AS ancor
             FROM `companies` AS c
             LEFT JOIN `places` AS p ON (p.company_id =  c.company_id)
@@ -141,7 +166,7 @@ class Company extends Model
             WHERE (c.archive $archive)
             GROUP BY c.company_id
             ORDER BY ancor ASC";
-        return $data = DB::prepare($sql)->execute()->fetchAll();
+        return $this;
     }
 
     
@@ -149,9 +174,9 @@ class Company extends Model
 /**
  * 
  */  
-    public function getAncorsByYears( $years, $archive = 'IS NULL') //список начальных букв, включая латиницу и цифры // не уникальные, а все, чтобы посчитав знать кол-во компаний
+    public function getAncorsByYears($archive = 'IS NULL') //список начальных букв, включая латиницу и цифры // не уникальные, а все, чтобы посчитав знать кол-во компаний
     {
-        $sql  = "SELECT
+        static::$sql  = "SELECT
             c.year AS ancor
             FROM `companies` AS c
             LEFT JOIN `places` AS p ON (p.company_id =  c.company_id)
@@ -160,7 +185,7 @@ class Company extends Model
             WHERE c.archive $archive AND  c.year >= ?
             GROUP BY c.company_id
             ORDER BY ancor DESC";
-        return $data = DB::prepare($sql)->execute([$years])->fetchAll();
+        return $this;
     }
 
     
@@ -196,39 +221,39 @@ class Company extends Model
 
 
 ///////////////////////////////////////////////////////////////////// 
-/**
- * список компаний по категории (без информации о наличии каталога этой категории у компании)
- */     
-    public function getCompaniesByCategory($id){    
-        return self::$db->queryEach(
-            "SELECT
-            p.place_id,
-            c.company, LEFT(c.company, 1) AS letter, c.company_id, c.site, 
-            company_to_string(c.name_type, c.shop, legal.name, c.name_legal, c.quotes, c.company) AS company_name, 
-            GROUP_CONCAT(DISTINCT CONCAT_WS('', places_to_string(p.city, p.street, p.house, centres.address, centres.name_center, p.detail, p.unit_floor, p.unit_not),
-                       	phones_to_string(p.tel, p.addtel, p.cell, p.add_cell))
-                        SEPARATOR '~~') 
-                        AS addresses
-            FROM `places` AS p
-            LEFT JOIN `places_cats` ON (places_cats.place_id = p.place_id)
-            JOIN `companies` AS c ON (p.company_id =  c.company_id)
-            LEFT JOIN `centres` ON (p.centre = centres.id)
-            LEFT JOIN `legal` ON (legal.id = c.legal)
-            WHERE c.archive IS NULL AND places_cats.cat_id = ?
-            GROUP BY c.company_id
-            ORDER BY c.company",
-            [$id]);
-    }
+// /**
+//  * список компаний по категории (без информации о наличии каталога этой категории у компании)
+//  */     
+//     public function getCompaniesByCategory($id){    
+//         return self::$db->queryEach(
+//             "SELECT
+//             p.place_id,
+//             c.company, LEFT(c.company, 1) AS letter, c.company_id, c.site, 
+//             company_to_string(c.name_type, c.shop, legal.name, c.name_legal, c.quotes, c.company) AS company_name, 
+//             GROUP_CONCAT(DISTINCT CONCAT_WS('', places_to_string(p.city, p.street, p.house, centres.address, centres.name_center, p.detail, p.unit_floor, p.unit_not),
+//                        	phones_to_string(p.tel, p.addtel, p.cell, p.add_cell))
+//                         SEPARATOR '~~') 
+//                         AS addresses
+//             FROM `places` AS p
+//             LEFT JOIN `places_cats` ON (places_cats.place_id = p.place_id)
+//             JOIN `companies` AS c ON (p.company_id =  c.company_id)
+//             LEFT JOIN `centres` ON (p.centre = centres.id)
+//             LEFT JOIN `legal` ON (legal.id = c.legal)
+//             WHERE c.archive IS NULL AND places_cats.cat_id = ?
+//             GROUP BY c.company_id
+//             ORDER BY c.company",
+//             [$id]);
+//     }
 
 
 ///////////////////////////////////////////////////////////////////// 
 /**
  * список компаний по категории (с информацией о наличии каталога этой категории у компании)
  */      
-    public function getCompaniesByCategoryAndGoods($id){
+    public function getCompaniesByCategoryAndGoods(){
         //$arr[] = $this->clearInt($id);
         
-        $sql  = "SELECT
+        static::$sql  = "SELECT
             p.place_id,
             c.company, LEFT(c.company, 1) AS letter, c.company_id, c.site, COUNT(goods.goods_id) as cat_catalog,
             company_to_string(c.name_type, c.shop, legal.name, c.name_legal, c.quotes, c.company) AS company_name, 
@@ -246,13 +271,7 @@ class Company extends Model
             WHERE  c.archive IS NULL AND  places_cats.cat_id = ?
             GROUP BY c.company_id
             ORDER BY c.company";
-
-            $data = DB::prepare($sql)->execute([$id]);
-            if(false !== $data){
-                while ($row = $data->fetch()){
-                    yield $row;
-                }
-            }
+        return $this;
     }
    
 ///////////////////////////////////////////////////////////////////// 
@@ -286,13 +305,13 @@ class Company extends Model
 /**
  * 
  */   
-    public function countCompaniesByCategory($id){
-        $sql   = "SELECT count(DISTINCT(c.company_id))
+    public function countCompaniesByCategory(){
+        static::$sql = "SELECT count(DISTINCT(c.company_id))
             FROM `places` AS p
             LEFT JOIN `places_cats` ON (places_cats.place_id = p.place_id)
             JOIN `companies` AS c ON (p.company_id =  c.company_id)
             WHERE  c.archive IS NULL AND  places_cats.cat_id = ?";
-        return  $count = DB::prepare($sql)->execute([$id])->fetchColumn();
+        return  $this;
     }
 
 ///////////////////////////////////////////////////////////////////// 
@@ -317,7 +336,7 @@ class Company extends Model
  */   
     public function getCompaniesByFilters($where='WHERE c.archive IS NULL ', $order = 'c.company', $sort = 'ASC')
     {
-        $sql  = "SELECT
+        static::$sql  = "SELECT
             c.company, LEFT(c.company, 1) AS letter, c.company_id, c.site, c.rating,
             company_to_string(c.name_type, c.shop, legal.name, c.name_legal, c.quotes, c.company) AS company_name,
             
@@ -332,7 +351,8 @@ class Company extends Model
             GROUP BY c.company_id
             ORDER BY $order $sort";
 
-        return $data = DB::prepare($sql)->execute()->fetchAll();
+        //return $data = DB::prepare($sql)->execute()->fetchAll();
+        return $this;
     }
 
 /////////////////////////////////////////////////////////////////////

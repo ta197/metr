@@ -3,8 +3,9 @@
 echo <<<HEREDOC
 <div class="category-bigmenu side-left">
 HEREDOC;
-
+if(isset($catMenu)):
 $level = 0;
+
   foreach ($catMenu as $category){
       if ($category['level'] == $level) {echo "</li>"."\n";}
       else if ($category['level']>$level){
@@ -42,6 +43,7 @@ $level = 0;
       echo "\t"."</li>"."\n";
       echo "\t"."</ul>"."\n";
   }
-
+else: echo 'меню нет';
+endif;
 ?>
 </div>

@@ -4,11 +4,11 @@
         
         <header class="side-content">
             <h1 class="header__title" lang="ru-Ru">
-                Общая информация
+				<?= $this->page->header_title; ?>
             </h1>   
         </header>
 
-        <?php include_once PETROVA_CONTACTS; ?>
+        <?php include_once ROOT.'/application/views/petrova/petrova_contacts.inc'; ?>
         
         <div class="side-content">
             <section class="section__hr"> 

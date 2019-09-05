@@ -4,7 +4,7 @@
 
 <header class="side-content">
     <h1 class="header__title" lang="ru-Ru">
-        Дополнительная информация
+        <?= $this->page->header_title; ?>
     </h1>   
 </header>
 

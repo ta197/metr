@@ -1,6 +1,6 @@
 <?php
 namespace application\models;
-use  engine\core\base\DB, engine\core\Model;
+use  engine\core\db\DB, engine\core\base\Model;
 
 class Address extends Model
 {
@@ -10,7 +10,7 @@ class Address extends Model
     public $cell;
     public $addtel;
     public $add_cell;
-    protected $pk = 'place_id';
+    static public  $pk = 'place_id';
     static public $table = 'places';
     public $addresses;
     public $categories;
@@ -63,8 +63,7 @@ class Address extends Model
         JOIN `companies` AS c ON (p.company_id =  c.company_id)
         LEFT JOIN `centres` ON (p.centre = centres.id)
         WHERE p.place_id = ?";
-        $data = DB::prepare($sql)->execute([$place])->fetchObject(self::class);
-        return $data;
+        return $data = DB::prepare($sql)->execute([$place])->fetchObject(self::class);
     }
 
     

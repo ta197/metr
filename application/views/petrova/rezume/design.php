@@ -52,7 +52,7 @@
         
         </div>
           
-        <?php include_once PETROVA_CONTACTS; ?>	
+        <?php include_once ROOT.'/application/views/petrova/petrova_contacts.inc'; ?>	
 
          
         <?php 

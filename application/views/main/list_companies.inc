@@ -1,5 +1,7 @@
 <?php
-if(empty($listCompany)){return;}
+if(empty($listCompany)){
+    echo 'Таких компаний нет';
+}
 if(!empty($listLetters) and empty($countListLetters)){
     $countListLetters = count($listLetters);
 }

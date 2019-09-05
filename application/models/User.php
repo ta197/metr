@@ -1,11 +1,12 @@
 <?php
 namespace application\models;
-use  engine\core\base\DB, engine\core\Model;
+use  engine\core\db\DB, engine\core\base\Model;
 
 class User extends Model
 {
-    protected $pk = 'id';
-    public static $table = 'user';
+    static public $pk = 'id';
+    static public $table = 'user';
+    static public $sql;
 
     public $attributes = [
         'login' => '',
@@ -15,7 +16,7 @@ class User extends Model
         'role' => 'user'
     ];
 
-    public $rules = [
+    protected $rules = [
         'signup' => [
             'required' => [
                 ['login'],
@@ -40,20 +41,25 @@ class User extends Model
             ] 
         ]
     ];
+
+    static public $coreProps = ['id', 'role', 'login', 'name', 'email'];
     
 /////////////////////////////////////////////////////////////////////
      /**
      * 
      */   
-    //public function __construct(){
-        
-    //}
+    // public function __construct(){
+     
+    // }
 
 /////////////////////////////////////////////////////////////////////
 
         public function checkUnique(){
-            $user = $this->findObjByWhere([$this->attributes['login'],  $this->attributes['email']], 'WHERE login = ? OR email = ?');
-            //var_dump($user); die;
+          
+            $user = $this->where('login = ? OR email = ?')
+                ->select()
+                ->fetchObject([$this->attributes['login'],  $this->attributes['email']]) ;
+    
             if($user){
                 if($user->login == $this->attributes['login']){
                     $this->errors['unique'][] = 'Этот логин уже занят';
@@ -82,36 +88,46 @@ public function login(bool $isAdmin = false){
    
     if($login && $password){
         if($isAdmin){
-            $user = $this->findObjByWhere([$login, 'admin'], 'WHERE login = ? AND role = ?');
+            //$user = $this->findObjByWhere([$login, 'admin'], 'WHERE login = ? AND role = ?');
+            $user = $this->where('login = ? AND role = ?')->select()
+                    ->fetchObject([$login, 'admin']);
         }else{
-            $user = $this->findObjByField($login, 'login');
+            //$user = $this->findObjByField($login, 'login');
+            $user = $this->where('login = ?')->select()
+                        ->fetchObject([$login]);
         }
        
         if($user){
             if(password_verify($password, $user->password)){
+               $user->password = null;
                 foreach ($user as $key => $value) {
                     if($key !== 'password') $_SESSION['user'][$key] = $value;
+                    
                 }
-                return true;; 
+                return $user; 
             }
         }
     }
     return false;
 }
   
-   
 /////////////////////////////////////////////////////////////////////
 
-public static function isAdmin(){
-    return (isset($_SESSION['user']) && $_SESSION['user']['role'] == 'admin');
+public static function getSessUserId(){
+    return $_SESSION['user']['id'] ?? false;
 }
 
+/////////////////////////////////////////////////////////////////////  
+
+public static function getSessAdminId(){
+    return ((isset($_SESSION['user'])) && $_SESSION['user']['role'] == 'admin') ? $_SESSION['user']['id'] : false;
+}
+
+
+
 /////////////////////////////////////////////////////////////////////
 
-public static function getUsersAll(){
-    $sql  = "SELECT * FROM user ORDER BY id DESC";
-    return $data = DB::prepare($sql)->execute()->fetchAll();
-}  
+
 
 /////////////////////////////////////////////////////////////////////
 }

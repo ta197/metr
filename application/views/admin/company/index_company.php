@@ -36,7 +36,7 @@
             <div>
                 <?php 
                 echo '<pre>';
-                 print_r($this);
+                //print_r($this);
                 echo '</pre>';
                 ?>             
             </div>

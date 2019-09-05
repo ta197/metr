@@ -1,7 +1,7 @@
 <div class= "header__breadcrumb top-content side-content">
-    error! dev
+    error! dev main
 </div>             
-<?php include_once TITLE_H1; ?>
+<?php include TITLE_H1; ?>
 
 <div class="side-content bottom_30">
 <?php
@@ -24,7 +24,7 @@
 <div class="side-content">
     <pre>
     <?php
-    print_r($this);
+    //print_r($this);
     ?>
     </pre>
 </div>

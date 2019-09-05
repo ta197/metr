@@ -29,6 +29,7 @@ $counter = $count; ?>
             }else if(!$bySort or !$arrWords){
                 echo '<p class="side-content notice">
                 По вашему запросу '.$query.' ничего не найдено.</p>';
-                }else include_once RESPONSE_BY_SEARCH_CASE;
+            }else 
+                include_once ROOT.'/application/views/main/search/responseBySearch_case.inc';
             ?>
                                     

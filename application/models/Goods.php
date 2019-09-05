@@ -1,11 +1,11 @@
 <?php
 namespace application\models;
-use  engine\core\base\DB, engine\core\Model;
+use  engine\core\db\DB, engine\core\base\Model;
 
 class Goods extends Model
 {
     static public $table = 'goods';
-    protected $pk = 'goods_id';
+    static public $pk = 'goods_id';
      
 /////////////////////////////////////////////////////////////////////
     /**
@@ -221,8 +221,8 @@ class Goods extends Model
      /**
      * Выводит все товары одной компании
      */
-    public function getGoodsByCompany($name){
-        $sql  = "SELECT
+    public function getGoodsByCompany(){
+        static::$sql  = "SELECT
             g.goods_id, 
             g.name AS goods, 
             g.date,
@@ -255,7 +255,7 @@ class Goods extends Model
             GROUP BY g.goods_id
             ORDER BY goods";
 
-            return $data = DB::prepare($sql)->execute([$name])->fetchAll(\PDO::FETCH_CLASS, self::class);
+            return $this;
     }
     
 /////////////////////////////////////////////////////////////////////
@@ -263,9 +263,9 @@ class Goods extends Model
      * 
      * Выводит все товары одного местоположения
      */
-    public function getGoodsByPlace($p){
+    public function getGoodsByPlace(){
      
-        $sql  = "SELECT
+        static::$sql  = "SELECT
         g.goods_id, 
         g.name AS goods, 
         g.date,
@@ -297,7 +297,7 @@ class Goods extends Model
         WHERE c.archive IS NULL and p.place_id = ?
         GROUP BY g.goods_id
         ORDER BY goods";
-    return  $data = DB::prepare($sql)->execute([$p])->fetchAll(\PDO::FETCH_CLASS, self::class);
+    return  $this;
     }
 
     
@@ -337,12 +337,15 @@ class Goods extends Model
      * 
      * Выводит количество товаров одной категории по её id
      */
-    public function countGoodsByCat($id){
-        return $this->countRowIdByField('goods_id', 'cat_id', $id);
-      }
+    // public function countGoodsByCat($id){
+    //     $sql  ="SELECT
+    //            COUNT('goods_id')
+    //            FROM ".static::$table."
+    //            WHERE cat_id = ?";
+    //    return $data = DB::prepare($sql)->execute([$id])->fetchColumn();
+    //   }
     
-    
-    
+  
 /////////////////////////////////////////////////////////////////////
     /* Компания - адесная информация
     SELECT companies.company, places.*

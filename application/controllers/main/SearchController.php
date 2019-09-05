@@ -1,9 +1,9 @@
 <?php
 namespace application\controllers\main;
 use 
-  application\models\View, 
+  engine\core\base\View, 
   application\models\Search;
-use  engine\core\App,  engine\core\IController;
+use  engine\core\App,  engine\core\IController, engine\core\Page, engine\core\Menu;
 
 class SearchController extends ParentController implements IController
 {
@@ -11,9 +11,7 @@ class SearchController extends ParentController implements IController
 /////////////////////////////////////////////////////////////////////  
   public function indexAction()
   {
-    $this->view->navStatus = $this->view->navStatus(['metr'], 'SearchActiv', 'SearchDisabled');
-    $this->view->title = 'поиск';
-    $this->view->h1 = 'Поиск по сайту';
+    
   }
 
 /////////////////////////////////////////////////////////////////////
@@ -24,9 +22,6 @@ class SearchController extends ParentController implements IController
   public function responseAction()
   {
     $query = $this->fc->getParams()["search"];
-    $this->view->navStatus = $this->view->navStatus(['metr'], 'SearchActiv', 'SearchDisabled');
-    $this->view->title = 'поиск';
-    $this->view->h1 = 'Результат поиска';
     $search = (new Search());
     $this->view->clearQuery = $search->clearQuery($query);
     $this->view->errQuery = $search->errorQueryExecution($this->view->clearQuery);
@@ -41,6 +36,7 @@ class SearchController extends ParentController implements IController
           } else  $this->view->bySort = 0;
       } else  $this->view->bySort = 0;
     } else  $this->view->bySort = 0;
+
   }
   /////////////////////////////////////////////////////////////////////
 

@@ -2,7 +2,7 @@
 namespace application\controllers\admin;
 
 use 
-    application\models\View, 
+    engine\core\base\View, 
     application\models\Category, 
     application\models\Company, 
     application\models\Address, 
@@ -12,24 +12,24 @@ use engine\core\App, engine\core\IController;
 
 class CompanyController extends ParentAdminController implements IController
 {
-    public $file_layout = 'admin';
 
-
+/////////////////////////////////////////////////////////////////////
     /**
      * 
      */   
-    public function indexAction(){
-        //try{
+    public function indexAction()
+    {
         $par = $this->fc->getParams();
         if(empty($par)){
             $company = new Company();
-            $letters = $company->getAncorsByAlphabet();
+            $letters = $company->getAncorsByAlphabet()->fetchAll();
             $this->view->counter = count($letters);
             $this->view->listLetters = $company->isCyrillicAlphabet($company->uniqueAncors($letters));
-            $this->view->listCompany = $company->getCompaniesByName();
+            
+            $this->view->listCompany = $company
+                ->getCompanies( 'LEFT(c.company, 1)', 'c.archive IS NULL', 'c.company')
+                ->generator();
 
-            $this->view->navStatus = $this->view->navStatus(['admin'], 'CompanyActiv', 'CompanyDisabled');
-            $this->view->title = 'организации';
             $this->view->h1 = 'Организации';    
            
         }else{
@@ -42,9 +42,6 @@ class CompanyController extends ParentAdminController implements IController
                     $this->view->name = (new Company())->getTitleCompanyById($id);
                     if($this->view->name){
                          $this->view->p = (new Address())->getPlacesByCompanyId($id);
-
-                         //$output = $this->view->render(COMPANY_CARD_VIEW_FILE);
-                        // $this->fc->setBody($output);
                     }
                     else{
                         throw new \Exception("Нет организации с таким id", 404);
@@ -56,24 +53,21 @@ class CompanyController extends ParentAdminController implements IController
                 throw new \Exception("Нет параметра name организации", 404);
             }
         }  
-        // }catch(AppException $e){
-        //     $e->err404($e, $this->fc);
-        // }
     }
 
-    /////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////
     /**
      * 
      */
     public function createAction(){
         
         $catMenu = new Category();
-            $this->view->catMenu = $catMenu->getBigCatMenu();
+        $this->view->catMenu = $catMenu
+            ->fields(['name', 'cat_id', 'level', 'activated', 'parent_id', 'lft', 'rgt'])
+            ->where('level>? AND visible= ?')->order_by("lft")->select()->generator([0, 1]);
             
-        $this->view->navStatus = $this->view->navStatus(['admin'], 'CompanyActiv', 'CompanyDisabled');
-        $this->view->title = 'компании';
-        $this->view->h1 = 'Добавить компанию';
     }
+
 /////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////

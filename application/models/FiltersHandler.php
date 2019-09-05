@@ -1,11 +1,11 @@
 <?php
 namespace application\models;
-use  engine\core\base\DB, engine\core\Model;
+use  engine\core\db\DB, engine\core\base\Model;
 
 class FiltersHandler extends Model
 {
     public $legalStr = null;
-    
+    public static $table = 'companies';
     public $countShop = 0;
 
     public $shop;

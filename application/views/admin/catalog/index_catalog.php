@@ -39,9 +39,12 @@
 
             <?php include_once ADMIN_CAT_MENU ?>
             
-            <?php 
+            <? if(DEBUG):?>
+            <div class="listing side-content">  
+                <?php 
                 echo '<pre>';
-                print_r($this);
-                echo '</pre>';
-            ?>       
-           
+                    //print_r($this);
+                echo '</pre>'; 
+                ?>
+            </div>
+            <? endif; ?>

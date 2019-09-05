@@ -10,17 +10,19 @@ class FrontController
   private $_controller, 
           $_action, 
           $_params, 
-          $_body, 
+          $_body,
           $route = [];
+  private  $_baseUrl;        
     
   final private function __construct()
   { 
     $this->splits = explode('/', trim($_SERVER['REQUEST_URI'],'/'));
     $this->splits = $this->shiftPrefix($this->splits);
-      
+   //$this->_baseUrl = $this->route['prefix'];  
     if(!empty($this->splits[0])){
       $this->_controller = '\application\controllers\\'. "{$this->route['modul']}". '\\'.ucfirst($this->splits[0]).'Controller';
       $this->route['controller'] = $this->splits[0];
+      $this->_baseUrl .=  '/'.$this->route['controller'];
     }else{
       $this->_controller = '\application\controllers\\'. "{$this->route['modul']}". '\IndexController';
       $this->route['controller'] = 'index';
@@ -29,10 +31,16 @@ class FrontController
     if(!empty($this->splits[1])){
       $this->_action = $this->splits[1].'Action';
       $this->route['action'] = $this->splits[1];
+     $this->_baseUrl .= '/'. $this->route['action'];
     }else{
       $this->_action = 'indexAction';
       $this->route['action'] = "index_{$this->route['controller']}";
+      if(!empty($this->splits[2])){
+        $this->_baseUrl .= '/index';
+      }
     }
+    //$this->route['base_url'] = $this->_baseUrl;
+    $this->route['base_url'] = !empty($this->_baseUrl) ? $this->_baseUrl : '/';
  }
 
   private function shiftPrefix($splits)
@@ -45,7 +53,9 @@ class FrontController
       $prefix = '/'.$this->route['modul'];
     }
     $this->route['prefix'] = $prefix.'/';
+    $this->_baseUrl = $prefix;
     return $splits;
+
   }
 
   public function checkParams()
@@ -80,7 +90,7 @@ class FrontController
           $controller->runView();
          
         } else {
-          throw new \Exception("Нет action  $this->_action", 404);
+          throw new \Exception("Нет action  $this->_action", '404');
         }
       } else {
         throw new \Exception("Interface", 404);
@@ -103,6 +113,10 @@ class FrontController
   public function getParams() {
     return $this->_params;
   }
+  public function getBaseUrl() {
+    return $this->_baseUrl;
+  }
+
   public function getController() {
     return $this->_controller;
   }

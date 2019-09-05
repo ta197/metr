@@ -1,9 +1,9 @@
 <div class= "header__breadcrumb top-content side-content">
-    <a href="/petrova/rezume/">резюме Петровой Т.В.</a> |  <a href="/petrova/rezume/education">образование</a> |  <a href="/petrova/rezume/education/#certif">сертификаты</a> |  сертификат <?=$subh1?>
+    <a href="/petrova/rezume/">резюме Петровой Т.В.</a> |  <a href="/petrova/rezume/education">образование</a> |  <a href="/petrova/rezume/education/#certif">сертификаты</a> |  сертификат <?=$this->page->subh1?>
 </div>              
 <?php include_once TITLE_H1; ?>
 <div class ="side-content bottom_60">
-    <img class ="max_600" src="/public/img/petrova/4267.jpg" alt="сертификат <?=$subh1?>">   
+    <img class ="max_600" src="/public/img/petrova/4267.jpg" alt="сертификат <?php echo $this->page->subh1; ?>">   
 </div>
 
  <ul class = "link-buttons side-content lowered_15">

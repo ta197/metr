@@ -1,23 +1,17 @@
 <nav>
-    
-<?php
-if(empty ($navStatus['admin'])){
-echo <<<HEREDOC
-    <a href="/admin" class="nav__icon nav__icon_logo">админ-панель</a>
-    <a href="/admin/category" class="nav__icon nav__icon_routing">категории</a>
-    <a href="/admin/company" class="nav__icon nav__icon_lists">компании</a>
-    <a href="/admin/catalog" class="nav__icon nav__icon_search">каталог</a>
-    <a href="/admin/user/users" class="nav__icon nav__icon_lists">пользователи</a>
-HEREDOC;
-}else{
-echo <<<HEREDOC
-    <a href="/admin" class="nav__icon{$navStatus['admin']['IndexActiv']}{$navStatus['admin']['IndexDisabled']} nav__icon_logo">админ-панель</a>
-    <a href="/admin/category" class="nav__icon{$navStatus['admin']['CategoryActiv']}{$navStatus['admin']['CategoryDisabled']} nav__icon_routing">категории</a>
-    <a href="/admin/company" class="nav__icon{$navStatus['admin']['CompanyActiv']}{$navStatus['admin']['CompanyDisabled']} nav__icon_lists">компании</a>
-    <a href="/admin/catalog" class="nav__icon{$navStatus['admin']['CatalogActiv']}{$navStatus['admin']['CatalogDisabled']} nav__icon_search">каталог</a>
-    <a href="/admin/user/users" class="nav__icon{$navStatus['admin']['UserActiv']}{$navStatus['admin']['UserDisabled']} nav__icon_lists">пользователи</a>
-HEREDOC;
-}
 
-?>
+<?php 
+//var_dump($nav['nav_icon']); die;
+if(!empty($nav['admin_icon'])){ ?>
+ <?php $disabled = ''; ?>
+    <?php foreach($nav['admin_icon'] as $k=>$item): ?>
+    <?php if($item['id_page'] === $this->page->id_page){
+            $disabled = ' nav__icon_activ nav__icon_disabled'; 
+    }else{
+            $disabled = '';
+    } ?>
+       <a href="<?= $item['link'] ?>" class="nav__icon<?= $disabled; ?> <?= $item['icon'] ?>"><?= $item['name'] ?></a> 
+   <?php endforeach;?>
+<?php } ?> 
+
 </nav>

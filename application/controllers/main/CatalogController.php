@@ -1,7 +1,7 @@
 <?php
 namespace application\controllers\main;
 
-use     application\models\View, 
+use     engine\core\base\View, 
         application\models\Goods, 
         application\models\Category, 
         application\models\Company, 
@@ -33,22 +33,20 @@ class CatalogController  extends ParentController implements IController
  */    
     public function categoryAction()
     {
-        //try{
             $cat = $this->checkOneParam('cat');
             $instCat = new Category();
-            $this->view->catObj = $instCat->getCategoryObj($cat); 
+            $this->view->catObj = $instCat->getObjById($cat); 
             if(!$this->view->catObj)
                     throw new \Exception("нет такой категории", 404);
             $this->view->brc = $instCat->getBrc($this->view->catObj);
             $this->view->listGoods = (new Goods())->getGoodsByCategory($cat);
             $this->view->counter = count($this->view->listGoods);
-            $this->view->navStatus = $this->view->navStatus(['metr'], 'CategoryActiv');
-            $this->view->title =  $this->view->catObj->name.' | каталог';
-            $this->view->h1 = 'Каталог категории '.$this->view->quote_ucfirst( $this->view->catObj->name);
+                        
             $this->view->componentLinkBRC = '/category/section/cat/';
-        //}catch(AppException $e){
-            //$e->err404($e, $this->fc);
-        //}
+            
+            $this->view->page 
+                ->plusTitle(' '.$this->view->catObj->name)
+                ->plusHeaderTitle($this->view->quote_ucfirst( $this->view->catObj->name));
     }
 
 
@@ -65,14 +63,17 @@ class CatalogController  extends ParentController implements IController
 
     public function catcompanyAction()
     {
-        //try{
             $par = $this->checkParams(['cat', 'name'],['g']);
             $company = (int)$par["name"];
             $this->view->name = (new Company())->getTitleCompanyById($company);
                     if(!$this->view->name) throw new \Exception("Нет такой компании", 404);
             $cat = (int)$par["cat"];
             $instCat = new Category();
-            $this->view->catObj = $instCat->getCategoryObj($cat);
+
+            $this->view->catObj = $instCat
+                ->where('cat_id = ?')
+                ->partObj([$cat], ['name', 'cat_id', 'parent_id', 'lft', 'rgt', 'level', 'ref']);
+
                 if($this->view->catObj){
                     $this->view->brc = $instCat->getBrcAllCatalog($this->view->catObj, $company);
                 }else throw new \Exception("Нет такой категории", 404);           
@@ -83,22 +84,29 @@ class CatalogController  extends ParentController implements IController
                 $this->view->goods = $goods->getGoodsByCompanyGoods($company, $g);
                     if($this->view->goods){
                         $this->view->listGoods = $goods->getGoodsCompanyByCatExGoods($company, $cat, $g);
-                        $this->view->title = $this->view->name->company. ' | ' . $this->view->goods->goods;
-                        $this->view->h1 = $this->view->goods->goods;
+
+                        //$this->view->title .= ' | '. $this->view->name->company. ' | ' . $this->view->goods->goods;
+                       // $this->view->h1 = $this->view->goods->goods;
+                        $this->view->page 
+                            ->plusTitle(' | '. $this->view->name->company. ' | ' . $this->view->goods->goods)
+                            ->plusHeaderTitle($this->view->goods->goods);
                         $this->file_view = 'goods_card_by_company';
-                    } else throw new \Exception("Нет такого товара", 404);
+                    } else 
+                        throw new \Exception("Нет такого товара", 404);
             }else{//каталог товаров
                 $this->view->listGoods = $goods->getGoodsByCompanyAndChildCat($company, $this->view->catObj->lft, $this->view->catObj->rgt);
-                $this->view->title = $this->view->name->company. ' | ' . $this->view->catObj->name;
-                $this->view->h1 = 'Каталог '.$this->view->quote_ucfirst($this->view->catObj->name);
+                $this->view->page 
+                    ->plusTitle($this->view->name->company. ' | ' . $this->view->catObj->name)
+                    ->plusHeaderTitle($this->view->quote_ucfirst($this->view->catObj->name));
                 $this->view->counter = count($this->view->listGoods);
                 $this->file_view = 'goods_by_category_and_company';
             }
-            $this->view->navStatus = $this->view->navStatus(['metr'], 'CompanyActiv');
-            $this->view->subh1 = ' в организации '.$this->view->name->company_name;
-        // }catch(AppException $e){
-        //     $e->err404($e, $this->fc);
-        // }
+            $this->view->page
+                ->setSubHeaderTitle('в организации '.$this->view->name->company_name);
+           // $this->view->subh1 = ' в организации '.$this->view->name->company_name;
+           //$this->view->title = $this->view->name->company. ' | ' . $this->view->catObj->name;
+           // $this->view->h1 = 'Каталог '.$this->view->quote_ucfirst($this->view->catObj->name);
+           
     }
 
 
@@ -111,22 +119,19 @@ class CatalogController  extends ParentController implements IController
  */
     public function companyAction()
     {
-        //try{
+       
             $company = $this->checkOneParam('name');
                 $this->view->name = (new Company())->getTitleCompanyById($company);
                     if(!$this->view->name){
                         throw new \Exception("нет такой компании", 404);   
                     }
-                $this->view->listGoods = (new Goods())->getGoodsByCompany($company);
+                $this->view->listGoods = (new Goods())->getGoodsByCompany()
+                                                        -> fetchAllClass([$company]);
                 $this->view->counter = count($this->view->listGoods);
         
-                $this->view->navStatus = $this->view->navStatus(['metr'], 'CompanyActiv');
-                $this->view->title = $this->view->name->company.' | каталог';
-                $this->view->h1 = 'Каталог организации '.$this->view->name->company_name;    
-
-        // }catch(AppException $e){
-        //     $e->err404($e, $this->fc);
-        // }
+                $this->view->page 
+                    ->plusTitle(' | '. $this->view->name->company.' | каталог')
+                    ->plusHeaderTitle($this->view->name->company_name);
     }
 
 /////////////////////////////////////////////////////////////////////
@@ -138,7 +143,6 @@ class CatalogController  extends ParentController implements IController
  */
     public function goodsAction()
     {
-        //try{
             $goods = $this->checkOneParam('g');
             $this->view->cardGoods = (new Goods())->getGoods($goods);
             if(!$this->view->cardGoods){
@@ -147,12 +151,10 @@ class CatalogController  extends ParentController implements IController
             $this->view->brc = (new Category())->getBrc($this->view->cardGoods);
             $this->view->listCompany = (new Company())->getCompaniesByGoods($goods);
             $this->view->componentLinkBRC = '/category/section/cat/';
-        
-            $this->view->navStatus = $this->view->navStatus(['metr'], 'CategoryActiv');
-            $this->view->title = $this->view->h1 = $this->view->cardGoods->name;
-        // }catch(AppException $e){
-        //     $e->err404($e, $this->fc);
-        // }
+
+            $this->view->page 
+                    ->plusTitle(' | '.$this->view->cardGoods->name)
+                    ->plusHeaderTitle($this->view->cardGoods->name);
     }
 
 /////////////////////////////////////////////////////////////////////  
@@ -164,21 +166,21 @@ class CatalogController  extends ParentController implements IController
  */
     public function placeAction()
     {
-        //try{
             $place = $this->checkOneParam('p');
             $this->view->name = (new Address())->getPlaceById($place);
             if(!$this->view->name){
                 throw new \Exception("нет такого place", 404); 
             }
-            $this->view->listGoods = (new Goods())->getGoodsByPlace($place);
+            $this->view->listGoods = (new Goods())
+                        ->getGoodsByPlace()
+                        ->fetchAllClass([$place]);
             $this->view->counter = count($this->view->listGoods);
-            $this->view->navStatus = $this->view->navStatus(['metr'], 'CompanyActiv');
-            $this->view->title = $this->view->name->company.' | каталог';
-            $this->view->h1 = 'Каталог организации '.$this->view->name->company_name;
-            $this->view->subh1 =' (адрес: '.$this->view->name->address.')';
-        // }catch(AppException $e){
-        //     $e->err404($e, $this->fc);
-        // }
+
+            $this->view->page 
+                    ->plusTitle(' | '. $this->view->name->company.' | каталог')
+                    ->plusHeaderTitle($this->view->name->company_name)
+                    ->plusSubHeaderTitle($this->view->name->address.")");
+    
     }   
 /////////////////////////////////////////////////////////////////////
 

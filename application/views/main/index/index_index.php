@@ -5,7 +5,7 @@
             data-period="2000"
             data-rotate='[ "найти отделочника?", "заказать окно?", "купить шуруповерт?", "выбрать обои?", "составить смету?" ]'>
         </span>
-        </h1>
+    </h1>
 </header>
      
 <h3 class="subtitle subtitle_top-indent side-content bottom_60">

@@ -17,7 +17,7 @@ $level = 0;
       }
       else{
           echo "</li>"."\n";
-          for($i=$level-$category['level'];$i;$i--)
+          for($i = $level - $category['level']; $i; $i--)
               {
               	echo "\t"."</ul>"."\n";
               	echo "\t\t"."</li>"."\n";
@@ -31,9 +31,9 @@ $level = 0;
          echo $category['name']; 
       }
      
-      $level=$category['level'];
+      $level = $category['level'];
   }
-  for($i=$level;$i;$i--)
+  for($i = $level; $i; $i--)
   {
       echo "\t"."</li>"."\n";
       echo "\t"."</ul>"."\n";

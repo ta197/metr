@@ -1,13 +1,16 @@
-            <div class= "header__breadcrumb top-content side-content">
-            <a href="/">На сайт</a>  | <a href="/admin"> админ-панель</a> | <a href="/admin/category">категории</a>  |  новая категория
-            </div>
+<div class= "header__breadcrumb top-content side-content">
+    <a href="/">На сайт</a>  | <a href="/admin"> админ-панель</a> | <a href="/admin/category">категории</a>  |  новая категория
+</div>
             
-            <?php include_once TITLE_H1; ?>
+<?php include_once TITLE_H1; ?>
            
-            <?php 
-        if(!empty($createCat)){
-            
-         echo '<h3 class = "side-content red">Категория <a href ="/category/section/cat/'."$createCat->cat_id".'">'."$quote_query</a> уже есть!</h3>";
+        <?php 
+        if(!empty($createCat))
+        {
+            echo '<h3 class = "side-content red">Категория 
+                <a href ="/category/section/cat/'."$createCat->cat_id".'">'."$quote_query</a> 
+                уже есть!
+                </h3>";
         }
         ?>   
 
@@ -16,13 +19,14 @@
 
     <div class="side-content bottom_60">
 
-    <form name="settingsForm"  action="/admin/category/create" method="post" >
+    <form name="settingsForm"  action="/admin/category/create" method="post">
         <fieldset class="base-form">
         <h3 class="bottom_45"> К какому разделу будет относиться (и его уровень, id)</h3>
         <ul>
             <li>
                 <?php 
-                //include_once 'cat_menu_optionsForSelect.php'; ?>
+                //include_once 'cat_menu_optionsForSelect.php'; 
+                ?>
             </li>
         </ul >
         </fieldset>
@@ -60,8 +64,8 @@
     //include_once ADMIN_CAT_MENU 
 ?>
     <?php 
-        echo '<pre>';
-        print_r($_POST);
-        print_r($this);
-        echo '</pre>';
-    ?>       
+       // echo '<pre>';
+        //print_r($_POST);
+       // print_r($this);
+       // echo '</pre>';
+    ?>

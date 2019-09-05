@@ -2,7 +2,8 @@
 namespace  engine\core;
 
 use  engine\core\Registry;
-use engine\core\ErrorHandler;
+use 
+    engine\core\ErrorHandler;
 use engine\libs\H;
 
 class App
@@ -15,7 +16,8 @@ class App
 
         self::$app = Registry::getInstance();
         new ErrorHandler();
-        self::$h = new H;
+        
+        static::$h = new H();
     }
 
     
