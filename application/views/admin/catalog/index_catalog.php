@@ -37,7 +37,7 @@
         </div> 
         
 
-            <?php include_once ADMIN_CAT_MENU ?>
+            <?php include_once ROOT.'/application/views/admin/admin_cat_menu.inc';?>
             
             <? if(DEBUG):?>
             <div class="listing side-content">  

@@ -12,15 +12,19 @@ class FrontController
           $_params, 
           $_body,
           $route = [];
-  private  $_baseUrl;        
-    
+  private  $_baseUrl; 
+         
+/////////////////////////////////////////////////////////////////////
+ /**
+  *  
+  */    
   final private function __construct()
   { 
     $this->splits = explode('/', trim($_SERVER['REQUEST_URI'],'/'));
     $this->splits = $this->shiftPrefix($this->splits);
    //$this->_baseUrl = $this->route['prefix'];  
     if(!empty($this->splits[0])){
-      $this->_controller = '\application\controllers\\'. "{$this->route['modul']}". '\\'.ucfirst($this->splits[0]).'Controller';
+      $this->_controller = '\application\controllers\\'. "{$this->route['modul']}". '\\'.$this->upperCamelCase($this->splits[0]).'Controller';
       $this->route['controller'] = $this->splits[0];
       $this->_baseUrl .=  '/'.$this->route['controller'];
     }else{
@@ -29,7 +33,7 @@ class FrontController
     }
     
     if(!empty($this->splits[1])){
-      $this->_action = $this->splits[1].'Action';
+      $this->_action = $this->lowerCamelCase($this->splits[1]).'Action';
       $this->route['action'] = $this->splits[1];
      $this->_baseUrl .= '/'. $this->route['action'];
     }else{
@@ -43,6 +47,10 @@ class FrontController
     $this->route['base_url'] = !empty($this->_baseUrl) ? $this->_baseUrl : '/';
  }
 
+/////////////////////////////////////////////////////////////////////
+ /**
+  *  
+  */
   private function shiftPrefix($splits)
   {
     if(!in_array($splits[0], PREFIX)){
@@ -58,6 +66,10 @@ class FrontController
 
   }
 
+/////////////////////////////////////////////////////////////////////
+ /**
+  *  
+  */
   public function checkParams()
   {
     $cnt = count($this->splits);
@@ -78,7 +90,11 @@ class FrontController
         $this->_params = array_combine($keys, $values);
     }
   }
-       
+
+/////////////////////////////////////////////////////////////////////
+ /**
+  *  
+  */      
   public function route() {
     if(class_exists($this->getController())) {
       $rc = new \ReflectionClass($this->getController());
@@ -100,6 +116,33 @@ class FrontController
     }
   }
 
+/////////////////////////////////////////////////////////////////////
+ /**
+  * преобразует имена к виду CamelCase
+  * @param string $name строка для преобразования
+  * @return string
+  */
+  protected function upperCamelCase($name) 
+  {
+    return str_replace(' ', '', ucwords(str_replace('-', ' ', $name)));
+  }
+
+/////////////////////////////////////////////////////////////////////
+  /**
+  * преобразует имена к виду camelCase
+  * @param string $name строка для преобразования
+  * @return string
+  */
+  protected function lowerCamelCase($name) 
+  {
+    return lcfirst($this->upperCamelCase($name));
+  }
+  
+  
+/////////////////////////////////////////////////////////////////////
+ /**
+  *  
+  */
   public function __get($prop){
     switch($prop):
       case 'modul': return $this->route['modul'];
@@ -110,23 +153,55 @@ class FrontController
     endswitch;
   }
 
+/////////////////////////////////////////////////////////////////////
+ /**
+  *  
+  */
   public function getParams() {
     return $this->_params;
   }
+
+/////////////////////////////////////////////////////////////////////
+ /**
+  *  
+  */
   public function getBaseUrl() {
     return $this->_baseUrl;
   }
 
+/////////////////////////////////////////////////////////////////////
+ /**
+  *  
+  */
   public function getController() {
     return $this->_controller;
   }
+
+/////////////////////////////////////////////////////////////////////
+ /**
+  *  
+  */
   public function getAction() {
     return $this->_action;
   }
+
+/////////////////////////////////////////////////////////////////////
+ /**
+  *  
+  */
   public function getBody() {
     return $this->_body;
   }
+
+/////////////////////////////////////////////////////////////////////
+ /**
+  *  
+  */
   public function setBody($body) {
     $this->_body = $body;
   }
+
+/////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////
 }	

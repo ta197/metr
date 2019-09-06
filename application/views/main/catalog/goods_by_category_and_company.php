@@ -3,7 +3,7 @@
     |  <a href="/company/card/name/<?= $name->company_id; ?>"><?= $name->company_name; ?></a> 
     |  <a href="/catalog/company/name/<?= $name->company_id; ?>">каталог</a> 
     <?php  
-        $componentLinkBRC = '/catalog/catcompany/name/'.$name->company_id.'/cat/';
+        $componentLinkBRC = '/catalog/company-category/name/'.$name->company_id.'/cat/';
         include_once BRC;
         echo ' | '.$catObj->name;
     ?>

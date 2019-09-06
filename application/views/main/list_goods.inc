@@ -33,7 +33,7 @@
                     $sub = explode("^", $substr);
                     //list($companies_name, $companies_id, $companies_addr, $companies_phones) =  explode("^", $substr);
                     echo "\t\t".'<dd class="listing__link ellipsis leftfield">
-                        <a href="/catalog/catcompany/name/'.$sub[1].'/cat/'.$this->catObj->cat_id.'/g/'."$item->goods_id".'">
+                        <a href="/catalog/company-category/name/'.$sub[1].'/cat/'.$this->catObj->cat_id.'/g/'."$item->goods_id".'">
                         <div class="separator_list"></div>'."$sub[0]"
                         .'</a>: ';
                     if(!empty($sub[2])) echo $sub[2];
@@ -44,7 +44,7 @@
             }
 
             if(!empty($item->category))   
-            echo "\t\t".'<dd class="listing__link leftfield"><a href="/catalog/catcompany/name/'.$name->company_id.'/cat/'."$item->cat_id".'">
+            echo "\t\t".'<dd class="listing__link leftfield"><a href="/catalog/company-category/name/'.$name->company_id.'/cat/'."$item->cat_id".'">
             <div class="separator_rout__first"></div>'."$item->category".' в каталоге организации</a>'.'</dd>'."\n";     
 
             if($item->long_description)   

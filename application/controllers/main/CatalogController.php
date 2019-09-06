@@ -61,7 +61,7 @@ class CatalogController  extends ParentController implements IController
  * параметр g (необязательный)
  */
 
-    public function catcompanyAction()
+    public function companyCategoryAction()
     {
             $par = $this->checkParams(['cat', 'name'],['g']);
             $company = (int)$par["name"];

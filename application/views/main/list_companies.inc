@@ -32,12 +32,12 @@ $ancor_label ='';
            if($item['site']) echo '<div class="gap">|</div><a href="http://www.'."{$item['site']}".'" target ="_blank">сайт</a>';
            
            //if(!empty($item['max_catid'])){
-           //   echo '<div class="gap">|</div><a href="/catalog/catcompany/name/'."{$item['company_id']}".'/cat/'.$cat->cat_id.'">каталог</a>';
+           //   echo '<div class="gap">|</div><a href="/catalog/company-category/name/'."{$item['company_id']}".'/cat/'.$cat->cat_id.'">каталог</a>';
            //}
            
             //ссылка на каталог раздела в одной компании
             if(!empty($item['cat_catalog'])){
-               echo '<div class="gap">|</div><a href="/catalog/catcompany/name/'."{$item['company_id']}".'/cat/'.$cat->cat_id.'"> '.$cat->name.' в каталоге организации</a>';
+               echo '<div class="gap">|</div><a href="/catalog/company-category/name/'."{$item['company_id']}".'/cat/'.$cat->cat_id.'"> '.$cat->name.' в каталоге организации</a>';
             }
 
            echo '</dd>'."\n";
