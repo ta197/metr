@@ -9,15 +9,12 @@ use engine\libs\H;
 class App
 {
     public static $app;
-    public static $h;
 
     public function __construct(){
         session_start();
 
         self::$app = Registry::getInstance();
         new ErrorHandler();
-        
-        static::$h = new H();
     }
 
     

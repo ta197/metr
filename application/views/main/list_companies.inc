@@ -2,13 +2,13 @@
 if(empty($listCompany)){
     echo 'Таких компаний нет';
 }
-if(!empty($listLetters) and empty($countListLetters)){
-    $countListLetters = count($listLetters);
+if(!empty($navLetters) and empty($countListLetters)){
+    $countListLetters = count($navLetters->list);
 }
-
+//var_dump($navLetters->list); die;
 $ancor_label ='';
     foreach ($listCompany as $item):
-        if(!empty($listLetters) and $countListLetters >= MIN_ANCOR){
+        if(!empty($navLetters->list) and $countListLetters >= MIN_ANCOR){
             if(!empty($item['ancor']) and ($ancor_label!==$item['ancor']) && (strlen($item['ancor'])>1)){
                 $ancor_label = $item['ancor'];
                 echo '<h2 id="letter'.$ancor_label.'" class ="listing__letter">'.$ancor_label.'</h2>'."\n";

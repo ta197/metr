@@ -25,7 +25,7 @@ $counter = $count; ?>
 
             <?php
             if($errQuery){
-                include_once ERROR;
+                include_once ROOT.'/application/views/main/error.inc';
             }else if(!$bySort or !$arrWords){
                 echo '<p class="side-content notice">
                 По вашему запросу '.$query.' ничего не найдено.</p>';

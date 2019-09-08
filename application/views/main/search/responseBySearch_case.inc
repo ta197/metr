@@ -12,7 +12,7 @@
         case 'Категории':  include_once ROOT.'/application/views/main/search/responseBySearch_list_category.inc'; break;
         case 'Товары, услуги':  include_once ROOT.'/application/views/main/search/responseBySearch_list_goods.inc'; break;
         //case 'Местонахождения':  include_once ROOT.'/application/views/main/search/responseBySearch_list_place.inc';
-        default:  include_once ROOT.'/application/views/main/search/empty_response.inc'; break;
+        default:  include_once ROOT.'/application/views/main/empty_response.inc'; break;
         
     endswitch;
 }

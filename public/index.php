@@ -20,15 +20,7 @@ new  engine\core\App;
 
 /* Инициализация и запуск FrontController */
 $front = engine\core\FrontController::getInstance();
-
-//try{
-    //Есть ли параметры и их значения?
-    $front->checkParams();
-    $front->route();
-//}catch(application\controllers\AppException $e){
-    //$e->err404($e, $front);
-//}
-
+$front->run();
 
 /* Вывод данных */
 echo $front->getBody();

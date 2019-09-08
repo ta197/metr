@@ -5,7 +5,7 @@ function newLetters(alphabet){
             var letter = document.createElement("a");
             letter.href = "#letter" + alphabet[i];
             //location.hash = "#letter" + alphabet[i];
-            letter.className = "alphabet__letter";
+            letter.className = "nav__letter";
             var textLetter = document.createTextNode(decodeURIComponent(alphabet[i]));
             letter.appendChild(textLetter);
             letters.appendChild(letter);

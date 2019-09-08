@@ -12,7 +12,15 @@ class FrontController
           $_params, 
           $_body,
           $route = [];
-  private  $_baseUrl; 
+  private  $_baseUrl;
+
+
+  
+/**
+  * таблица маршрутов
+  * @var array
+  */
+  protected $routes = [];
          
 /////////////////////////////////////////////////////////////////////
  /**
@@ -45,11 +53,40 @@ class FrontController
     }
     //$this->route['base_url'] = $this->_baseUrl;
     $this->route['base_url'] = !empty($this->_baseUrl) ? $this->_baseUrl : '/';
+    
+   // return $this;
  }
 
 /////////////////////////////////////////////////////////////////////
  /**
   *  
+  */      
+  public function run() 
+  {
+    $this->checkParams();
+    if(class_exists($this->getController())) {
+      $rc = new \ReflectionClass($this->getController());
+      if($rc->implementsInterface('engine\\core\\'.'IController')) {
+        if($rc->hasMethod($this->getAction())) {
+          $method = $rc->getMethod($this->getAction());
+          $controller = $rc->newInstance($this);
+          $method->invoke($controller);
+          $controller->runView();
+         
+        }else{
+          throw new \Exception("Нет action  $this->_action", '404');
+        }
+      }else{
+        throw new \Exception("Interface", 404);
+      }
+    }else {
+      throw new \Exception("Нет контроллера {$this->route['controller']}", 404);
+    }
+  }
+
+  /////////////////////////////////////////////////////////////////////
+ /**
+  *  определяет какой модуль, вырезает его из $splits
   */
   private function shiftPrefix($splits)
   {
@@ -70,7 +107,7 @@ class FrontController
  /**
   *  
   */
-  public function checkParams()
+  private function checkParams()
   {
     $cnt = count($this->splits);
     if($cnt % 2 !== 0 and $cnt!==1){
@@ -90,32 +127,40 @@ class FrontController
         $this->_params = array_combine($keys, $values);
     }
   }
-
 /////////////////////////////////////////////////////////////////////
- /**
-  *  
-  */      
-  public function route() {
-    if(class_exists($this->getController())) {
-      $rc = new \ReflectionClass($this->getController());
-      if($rc->implementsInterface('engine\\core\\'.'IController')) {
-        if($rc->hasMethod($this->getAction())) {
-          $method = $rc->getMethod($this->getAction());
-          $controller = $rc->newInstance($this);
-          $method->invoke($controller);
-          $controller->runView();
-         
-        } else {
-          throw new \Exception("Нет action  $this->_action", '404');
-        }
-      } else {
-        throw new \Exception("Interface", 404);
+    /**
+     * ищет URL в таблице маршрутов
+     * @param string $url входящий URL
+     * @return boolean
+     */
+    public function matchRoute($url) {
+      foreach($this->routes as $pattern => $route){
+          if(preg_match("#$pattern#i", $url, $matches)){
+              foreach($matches as $k => $v){
+                  if(is_string($k)){
+                      $route[$k] = $v;
+                  }
+              }
+              if(!isset($route['action'])){
+                  $route['action'] = 'index_index';
+              }
+              $this->route = $route;
+              return true;
+          }
       }
-    } else {
-      throw new \Exception("Нет контроллера {$this->route['controller']}", 404);
-    }
+      return false;
   }
-
+/////////////////////////////////////////////////////////////////////
+    /**
+     * добавляет маршрут в таблицу маршрутов
+     * 
+     * @param string $regexp регулярное выражение маршрута
+     * @param array $route маршрут ([controller, action, params])
+     */
+    public function add($regexp, $route = []) {
+      $this->routes[$regexp] = $route;
+  }
+    
 /////////////////////////////////////////////////////////////////////
  /**
   * преобразует имена к виду CamelCase

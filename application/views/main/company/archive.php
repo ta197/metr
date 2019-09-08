@@ -1,15 +1,23 @@
 <div class= "header__breadcrumb side-content top-content">
-    <a href="/">главная</a>  |  <a href="/company">организации</a>  |  архивные организации
+    <a href="/">главная</a>  |  <a href="/company">организации</a>  
+    <? if(!empty($navLetters->letter)){
+            echo '| <a href="/company/archive">архивные организации</a>  | на букву '. $navLetters->letter;
+        }else{
+            echo '| архивные организации';
+        }
+    ?>
 </div>
 
 <?php include_once TITLE_H1; ?> 
-<?php include_once ALPHABET_LETTERS; ?>
+
+<div id ="letters" class="listing side-content">            
+    <?php include_once NAV_LETTERS; ?>
+</div>
+
 <div class="listing side-content lowered_16">
-    <section id = "pagination" >
-        <?php include '../application/views/navbar.php'; ?>
-    </section>
+
     <?php include_once LIST_COMPANIES;?>
-    <?php include '../application/views/navbar.php'; ?>
+    <?php include ROOT.'/application/views/navbar.php'; ?>
 </div>
    
 <ul class="link-buttons side-content">

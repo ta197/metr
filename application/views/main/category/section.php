@@ -34,11 +34,8 @@
             echo '</div>';
         }
         else{
-            include_once EMPTY_RESPONSE;
+            include_once ROOT.'/application/views/main/empty_response.inc';
         }
-            // include_once (!$countCompany)
-            //     ? EMPTY_RESPONSE
-            //     : LIST_COMPANIES;
         ?>
             
 

@@ -35,12 +35,12 @@
 if(!empty($error))
     echo '<div class="listing side-content">'.$error.'</div>';
 ?>             
-<?php include_once ALPHABET_LETTERS; ?>
+<div id ="letters" class="listing side-content">            
+    <?php include_once NAV_LETTERS; ?>
+</div>
+
 
 <div id ="listing" class="listing side-content">
-    <section id = "pagination" >
-        <?php include '../application/views/navbar.php'; ?>
-    </section>
     <?php include_once LIST_COMPANIES;?>
     <?php include '../application/views/navbar.php'; ?>
 </div>

@@ -2,13 +2,18 @@
 namespace application\controllers\admin;
 
 use 
-    engine\core\base\View, 
+    engine\core\base\View,
+    application\models\NavLetters, 
+    engine\core\Page,
+    engine\core\Pagination, 
+    engine\core\Menu,
     application\models\Category, 
     application\models\Company, 
     application\models\Address, 
     application\models\FiltersHandler, 
     application\models\ParseFilters;
-use engine\core\App, engine\core\IController;
+use engine\core\App, 
+engine\core\IController;
 
 class CompanyController extends ParentAdminController implements IController
 {
@@ -22,9 +27,10 @@ class CompanyController extends ParentAdminController implements IController
         $par = $this->fc->getParams();
         if(empty($par)){
             $company = new Company();
-            $letters = $company->getAncorsByAlphabet()->fetchAll();
-            $this->view->counter = count($letters);
-            $this->view->listLetters = $company->isCyrillicAlphabet($company->uniqueAncors($letters));
+
+            $this->view->navLetters = (new NavLetters('/admin/company/alphabet'))
+                ->getAncorsByAlphabet()->uniqueAncors()->isCyrillicAlphabet()->list();
+            $this->view->counter = count($this->view->navLetters->full_list);
             
             $this->view->listCompany = $company
                 ->getCompanies( 'LEFT(c.company, 1)', 'c.archive IS NULL', 'c.company')
@@ -54,7 +60,41 @@ class CompanyController extends ParentAdminController implements IController
             }
         }  
     }
+///////////////////////////////////////////////////////////////////// 
+    /**
+     * 
+     * 
+     */
+    public function alphabetAction()
+    {
+        $letter = trim(urldecode($this->fc->getParams()["letter"]));
+        $this->view->navLetters = (new NavLetters('/admin/company/alphabet', $letter))
+            ->getAncorsByAlphabet()->uniqueAncors()->isCyrillicAlphabet()->list();
 
+        $company = new Company();
+
+        $this->view->counter = $company
+            ->where('archive IS NULL AND LEFT(company, 1) = ?')
+            ->count('company')->fetchColumn([$letter]);
+
+        $page_num = isset($this->fc->getParams()["page"]) ? (int)$this->fc->getParams()["page"] : 1;
+        $pag = (new Pagination('/admin/company/alphabet/letter/'.$letter))->limit($page_num);
+        $this->view->pagination = $pag->navparams($this->view->counter);
+
+        $this->view->listCompany = $company
+            ->getCompanies( 'LEFT(company, 1)', 
+                            'c.archive IS NULL AND LEFT(company, 1) = ?', 
+                            'c.company')
+            ->limit($pag->limit)->inEnd('limit')
+            ->fetchAll([$letter]);
+
+        $this->view->page
+              ->setStyles(['pagination'])
+              ->plusTitle($letter)
+              ->plusHeaderTitle($letter);
+    }
+    
+/////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////
     /**
      * 

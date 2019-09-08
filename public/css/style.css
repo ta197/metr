@@ -771,7 +771,7 @@ input[type="radio"]:checked + label:after {
 
 /*////////////////////////////////////////////////*/
 
-.alphabet__letter{
+.nav__letter{
     color:  #0677a0;
     font-weight: 200;
     font-size: 20px;
@@ -786,7 +786,7 @@ input[type="radio"]:checked + label:after {
     text-align: center;
 }
 
-.alphabet__letter:hover{
+.nav__letter:hover{
     text-decoration: none;
     font-weight: 400;
     font-size: 22px;
@@ -796,6 +796,23 @@ input[type="radio"]:checked + label:after {
     left:-26px;
     text-indent: 4px;
 }
+
+.nav__letter_active{
+    text-decoration: none;
+    font-weight: 400;
+    font-size: 22px;
+    background-color: #556d7e94;
+    color: #fdfdfd;
+    position:relative;
+    left:-26px;
+    text-indent: 4px;
+}
+
+.nav__letter_disabled:hover{
+    cursor: default;
+    background-color:#556d7e94;
+}
+
 
 /*////////////////////////////////////////////////*/
 

@@ -4,12 +4,12 @@ namespace engine\libs;
 class Cache {
 
     public function __construct(){
-
+       //установить права на директорию, куда будет складываться кэш
     }
 
-    public function set($key, $data, $second = 3600){
+    public function set($key, $data, $seconds = 3600){
         $content['data'] = $data;
-        $content['end_time'] = time() + $second;
+        $content['end_time'] = time() + $seconds;
         if(file_put_contents(CACHE.'/'. md5($key) . '.txt', serialize($content))){
             return true;
         }
