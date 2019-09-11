@@ -28,8 +28,7 @@ class CompanyController extends ParentAdminController implements IController
         if(empty($par)){
             $company = new Company();
 
-            $this->view->navLetters = (new NavLetters('/admin/company/alphabet'))
-                ->getAncorsByAlphabet()->uniqueAncors()->isCyrillicAlphabet()->list();
+            $this->view->navLetters = (new NavLetters())->companyAncors();
             $this->view->counter = count($this->view->navLetters->full_list);
             
             $this->view->listCompany = $company
@@ -68,8 +67,8 @@ class CompanyController extends ParentAdminController implements IController
     public function alphabetAction()
     {
         $letter = trim(urldecode($this->fc->getParams()["letter"]));
-        $this->view->navLetters = (new NavLetters('/admin/company/alphabet', $letter))
-            ->getAncorsByAlphabet()->uniqueAncors()->isCyrillicAlphabet()->list();
+        $this->view->navLetters = (new NavLetters('company/alphabet', 'letter', $letter))
+            ->companyAncors();
 
         $company = new Company();
 

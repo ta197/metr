@@ -6,7 +6,6 @@ use engine\core\ErrorController;
 class ErrorHandler
 {
     protected $error;
-    //public $sessUserId;
 
 /////////////////////////////////////////////////////////////////////
     /**
@@ -22,10 +21,6 @@ class ErrorHandler
 
         set_error_handler([$this, 'errorHandler']);
         ob_start();
-
-       // $this->sessUserId = User::getSessUserId() ?? false;
-            //if($this->sessUserId)
-              //  $sessAdminId = User::getSessAdminId() ?? false;
 
         register_shutdown_function([$this, 'fatalErrorHandler']);
         set_exception_handler([$this, 'exceptionHandler']);
@@ -65,8 +60,8 @@ class ErrorHandler
 
 /////////////////////////////////////////////////////////////////////
     /**
-     *  
-     */
+    *  
+    */
     public function fatalErrorHandler(){
         $error = error_get_last();
         if(!empty($error) && $error['type'] && (E_ERROR || E_PARSE || E_COMPILE_ERROR || E_CODE_ERROR)){
@@ -90,21 +85,31 @@ class ErrorHandler
     /**
      *  
      */
-    protected function logErrors($type ='', $message = '', $file = '', $line = ''){
+    protected function logErrors($type ='', 
+                                $message = '', 
+                                $file = '', 
+                                $line = '')
+    {
         
-            error_log("[" . date('Y-m-d H:i:s') ."]\r\n
-                Вид ошибки: $type \r\n
-                Текст ошибки: $message \r\n
-                Файл: $file \r\n
-                Строка: $line \r\n====================================\r\n\r\n ", 
-            3, ROOT.'/tmp/errors.log');
+        error_log("[" . date('Y-m-d H:i:s') ."]\r\n
+            Вид ошибки: $type \r\n
+            Текст ошибки: $message \r\n
+            Файл: $file \r\n
+            Строка: $line \r\n====================================\r\n\r\n ", 
+        3, ROOT.'/tmp/errors.log');
     }
 
 /////////////////////////////////////////////////////////////////////
     /**
      *  
      */
-    public function displayError($error, $errno, $errstr, $errfile, $errline, $response = 500){
+    public function displayError($error, 
+                                $errno, 
+                                $errstr, 
+                                $errfile, 
+                                $errline, 
+                                $response = 500)
+    {
       
         $this->error = func_get_args();
          
@@ -112,7 +117,7 @@ class ErrorHandler
             $this->error[5] = 500;
         }
         new ErrorController( $this->error);
-   //var_dump($response); die();
+  
     }
 /////////////////////////////////////////////////////////////////////
 

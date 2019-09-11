@@ -28,16 +28,16 @@ $ancor_label ='';
                   $place = ltrim($place, " | ");
                    echo "\t\t".'<dd class="listing__company-address">'."$place</dd>\n";
                }
-           echo "\t\t".'<dd class="listing__link"><a href="/company/card/name/'.$item['company_id'].'">подробнее</a>';
+           echo "\t\t".'<dd class="listing__link"><a href="'. $this->route['prefix']. 'company/card/name/'.$item['company_id'].'">подробнее</a>';
            if($item['site']) echo '<div class="gap">|</div><a href="http://www.'."{$item['site']}".'" target ="_blank">сайт</a>';
            
            //if(!empty($item['max_catid'])){
-           //   echo '<div class="gap">|</div><a href="/catalog/company-category/name/'."{$item['company_id']}".'/cat/'.$cat->cat_id.'">каталог</a>';
+           //   echo '<div class="gap">|</div><a href="'. $this->route['prefix'] .'catalog/company-category/name/'."{$item['company_id']}".'/cat/'.$cat->cat_id.'">каталог</a>';
            //}
            
             //ссылка на каталог раздела в одной компании
             if(!empty($item['cat_catalog'])){
-               echo '<div class="gap">|</div><a href="/catalog/company-category/name/'."{$item['company_id']}".'/cat/'.$cat->cat_id.'"> '.$cat->name.' в каталоге организации</a>';
+               echo '<div class="gap">|</div><a href="'. $this->route['prefix'] .'catalog/company-category/name/'."{$item['company_id']}".'/cat/'.$cat->cat_id.'"> '.$cat->name.' в каталоге организации</a>';
             }
 
            echo '</dd>'."\n";

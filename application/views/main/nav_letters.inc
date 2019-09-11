@@ -21,12 +21,11 @@
                 }
                 
                 if(empty($navLetters->ancor)){
-                    echo '<a href="'.$navLetters->base_url.'/'.$navLetters->type_letter.'/'.$v.'" class ="nav__letter'.$active.'">'.$v.'</a>';
+                    echo '<a href="'. $this->route['prefix'] .$navLetters->base_url.'/'.$navLetters->type_letter.'/'.$v.'" class ="nav__letter'.$active.'">'.$v.'</a>';
                 }else{
                    echo '<a href="#letter'.$v.'" class ="nav__letter">'.$v.'</a>';  
                 }
             }
       
-    }
-?>             
+    }             
             

@@ -25,8 +25,8 @@ class CompanyController extends ParentController implements IController
         $this->view->counter = $company
             ->where('archive IS NULL')->count('company')->fetchColumn();
     
-        $this->view->navLetters = (new NavLetters())
-            ->getAncorsByAlphabet()->uniqueAncors()->isCyrillicAlphabet()->list();
+        $this->view->navLetters = (new NavLetters())->companyAncors();
+           
        
         $this->view->listCompany = $company
             ->getCompanies( 'LEFT(c.company, 1)', 'c.archive IS NULL', 'c.company')
@@ -78,8 +78,9 @@ class CompanyController extends ParentController implements IController
             $company = new Company();
 
         $this->view->navLetters = (new NavLetters())
-            ->getAncorsForFilter($where, $sort)
-            ->uniqueAncors($order)->isCyrillicAlphabet()->list();
+            ->getAncorsForFilter($where, $sort);
+           // ->uniqueAncors($order)
+           // ->isCyrillicAlphabet()->list();
 
         $this->view->countCompany = $this->view->navLetters->count_full;
 
@@ -119,9 +120,9 @@ class CompanyController extends ParentController implements IController
     public function alphabetAction()
     {
         $letter = trim(urldecode($this->fc->getParams()["letter"]));
-        $this->view->navLetters = (new NavLetters('/company/alphabet', $letter))
-            ->getAncorsByAlphabet()->uniqueAncors()->isCyrillicAlphabet()->list();
-
+        $this->view->navLetters = (new NavLetters('company/alphabet', 'letter', $letter))
+            ->companyAncors();
+//$this->b($this->view->navLetters, 1);
         $this->view->filters = (new FiltersHandler(null))->getFilters();
 
         $company =new Company();
@@ -158,9 +159,7 @@ class CompanyController extends ParentController implements IController
     public function archiveAction()
     {
         $letter = !empty($this->fc->getParams()['letter']) ? trim(urldecode($this->fc->getParams()['letter'])) :  NULL;
-        $this->view->navLetters = (new NavLetters('/company/archive', $letter))
-            ->getAncorsByAlphabet('IS NOT NULL')
-            ->uniqueAncors()->isCyrillicAlphabet()->list();
+        $this->view->navLetters = (new NavLetters('company/archive', 'letter', $letter))->companyAncors('c.archive IS NOT NULL');
        
         $page_num = isset($this->fc->getParams()["page"]) ? (int)$this->fc->getParams()["page"] : 1;
         
@@ -212,8 +211,8 @@ class CompanyController extends ParentController implements IController
     public function youngAction()
     {
         $letter = !empty($this->fc->getParams()['year']) ? trim(urldecode($this->fc->getParams()['year'])) : NULL;
-        $this->view->navLetters = (new NavLetters('/company/young', $letter))
-            ->getAncorsByYears()->setTypeLetter('year')->uniqueAncors()->list();
+        $this->view->navLetters = (new NavLetters('company/young', 'year', $letter))
+            ->companyAncors('c.archive IS NULL AND c.year >= ?', 'DESC', [START_WORK_YEAR]);
         
         $page_num = isset($this->fc->getParams()["page"]) ? (int)$this->fc->getParams()["page"] : 1;
            
