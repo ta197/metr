@@ -109,8 +109,8 @@ class Search extends Model
             GROUP_CONCAT(CONCAT_WS('', places_to_string(p.city, p.street, p.house, centres.address, centres.name_center, p.detail, p.unit_floor, p.unit_not))
                         SEPARATOR '~~') 
                         AS addresses
-            FROM `places` AS p
-            JOIN `companies` AS c ON (p.company_id =  c.company_id)
+            FROM  `companies` AS c
+            JOIN `places` AS p ON (p.company_id =  c.company_id)
             LEFT JOIN `legal` ON (legal.id = c.legal)
             LEFT JOIN `centres` ON (p.centre = centres.id)
             WHERE   c.company LIKE ?  OR p.city LIKE ?  OR centres.name_center LIKE ? OR centres.address LIKE ? OR c.shop LIKE ? OR p.street LIKE ? 

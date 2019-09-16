@@ -1,8 +1,10 @@
 <?php
 namespace application\controllers\main;
 use 
-  engine\core\base\View, 
-  application\models\Search;
+  engine\core\base\View,
+  engine\widgets\search\Search
+  //application\models\Search
+  ;
 use  engine\core\App,  engine\core\IController, engine\core\Page, engine\core\Menu;
 
 class SearchController extends ParentController implements IController
@@ -38,6 +40,24 @@ class SearchController extends ParentController implements IController
     } else  $this->view->bySort = 0;
 
   }
+  
+/////////////////////////////////////////////////////////////////////
+/**
+ * http://metrkv1/search/response/search/?search=%D0%BE%D0%B1%D0%BE%D0%B8
+ * странца ответа на запрос из формы поиска
+ */
+public function answerAction()
+{
+  $query = $this->fc->getParams()["search"];
+  $this->view->search = (new Search($query))->run();
+  //$this->file_view = ROOT.'/engine/widgets/search/view/answer';
+  $this->file_view = 'widgets/search/view/answer';
+      //var_dump($rawDataArr);
+    
+
+}
+/////////////////////////////////////////////////////////////////////
+
   /////////////////////////////////////////////////////////////////////
 
 }
