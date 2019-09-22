@@ -1,36 +1,29 @@
 <div class= "header__breadcrumb side-content top-content">
     <a href="/">главная</a>  |  организации
 </div>
-
-<?php include_once TITLE_H1; ?>   
+<?php include_once TITLE_H1; ?>
+   
 <div class="side-content adjustment">
-
 <form name="filtersForm" action="/company/filters/search/" class="filters-form" method="get">
-    <?php
-    $i=1;
-    foreach($filters as $k=>$group){
-        echo '<ul id="'.$k.'">'."\n\t\t\t\t";
-            foreach($group as $v){
-                echo "\t".'<li>'."\n\t\t\t\t\t\t".'<input type="'.$v['type'].'" id="input'.$i.'"  name="'.$v['name'].'" value="'.$v['value'].'"';
-                //if($v['value'] === "по названию, А-Я")  echo ' checked';
-                if($v['checked'] == true)  echo ' checked';
-                echo '>'."\n\t\t\t\t\t\t".'<label for="input'.$i.'">'.$v['value'];
-                if($v['type']=== "checkbox"){
-                    echo '<span class= "counter"> ('.$v['count'].')</span>';
-                }
-                echo '</label>'."\n\t\t\t\t\t".'</li>'."\n\t\t\t\t";
-                $i++;  
-            }
-        echo '</ul>'."\n\t\t\t\t";
-    }
-    ?>
-              
-<a href = "/company"><div class="filters-form__reset" title="сбросить"></div></a>
-            
-<input type="submit" id="dark" class="button-dark" value="применить"/>
-    
+    <?php $i=1;?>
+    <? foreach($filters as $k=>$arr):?>
+        <ul id="<?=$k?>">
+            <? foreach($arr as $val):?>
+                <li><input type= "<?= $val['type']?>" id="input<?=$i?>" name="<?= $val['name']?>" value="<?=$val['value']?>"<? echo ($val['checked'] == true) ? ' checked' : '';?>>
+                     <label for="input<?=$i ?>"><?=$val['value'] ?>
+                        <? if($val['type']=== "checkbox"){
+                            echo '<span class= "counter"> ('.$val['count'].')</span>';
+                        }?>
+                </label></li>
+                <? $i++;?>  
+            <? endforeach ?>
+       </ul>
+    <? endforeach; ?>
+    <a href = "/company"><div class="filters-form__reset" title="сбросить"></div></a>
+    <input type="submit" id="dark" class="button-dark" value="применить"/>
 </form>
 </div>
+
 <?php
 if(!empty($error))
     echo '<div class="listing side-content">'.$error.'</div>';

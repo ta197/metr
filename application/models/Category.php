@@ -1,21 +1,31 @@
 <?php
 namespace application\models;
-use  engine\core\db\DB, engine\core\base\Model;
+use  engine\core\db\DB, engine\core\ToString;
 
-class Category extends Model {
-    
-    public $name;
-    public $cat_id;
-    public $parent_id;
-    public $visible;
-    public $ref;
-    public $lft;
-    public $rgt;
-    public $level;
-    public $countGoods = null;
-    static public $pk = 'cat_id';
-    static public $table = 'cats';
-    static public $sql;
+class Category extends ToString 
+{
+  static public $pk = 'cat_id';
+  static public $table = 'cats';
+  static public $sql;
+
+  public $name;
+  public $cat_id;
+  public $parent_id;
+  public $visible;
+  public $ref;
+  public $lft;
+  public $rgt;
+  public $level;
+  public $countGoods = null;
+
+  static public $page_link = [
+    'one' => 'category/section/cat/',
+    'list_full' => 'category',
+    'list_alphabet' => 'company/alphabet/letter/',
+  ];
+
+  static public $string = ['name'];
+ 
     
 /////////////////////////////////////////////////////////////////////
     /**

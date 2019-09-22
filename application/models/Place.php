@@ -2,7 +2,7 @@
 namespace application\models;
 use  engine\core\db\DB, engine\core\ToString;
 
-class Address extends ToString 
+class Place extends ToString 
 {
     public $company;
     public $street;
@@ -13,26 +13,14 @@ class Address extends ToString
     static public  $pk = 'place_id';
     static public $table = 'places';
     public $address;
-    public $categories;
 
     static public $page_link = [
         'one' => 'address/place/name/',
     ];
-    public $place = '';
-    static public $string = ['street', 'house', 'tel', 'cell'];
+    public $full_place;
+    static public $string = ['full_place'];
   
-/////////////////////////////////////////////////////////////////////
-    /**
-    * 
-    */    
-    public function setPlace($string){
-        
-        $this->place = $string;
-        
-      return  $this;
-    }
-   
- /////////////////////////////////////////////////////////////////////
+
 /////////////////////////////////////////////////////////////////////
     /**
     * 
@@ -41,7 +29,17 @@ class Address extends ToString
        // parent::__construct();
        //$this->addresses = $addr;
     //}
+/////////////////////////////////////////////////////////////////////
+    /**
+    * 
+    */    
+    public function setFullPlace($string)
+    {
+        $this->full_place = $string;
+        return  $this;
+    }
    
+ /////////////////////////////////////////////////////////////////////   
  /////////////////////////////////////////////////////////////////////
     /**
      *  

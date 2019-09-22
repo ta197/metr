@@ -861,8 +861,9 @@ input[type="radio"]:checked + label:after {
     padding-bottom: 45px;
     padding-top: 29px;
     font-weight: 400;
+  
 }
-.points{
+/* .points{
     float: right;
     color: #fdfdfd;
 }
@@ -871,7 +872,18 @@ input[type="radio"]:checked + label:after {
     font-size: 56px;
     font-weight: 600;
     content: '.';
+} */
+
+.points{
+    /*float: right;*/
+    color: #c8caca;
+    font-size: 56px;
+    font-weight: 600;
+   position: absolute;
+    top: -15px;
+    right: 0;
 }
+
 
 .listing__company-name {
     max-width: 700px;
@@ -1309,9 +1321,9 @@ pre {
     .points{
         float: none;
     }
-    .listing__company_search {
+    /*.listing__company_search {
        padding-top: 0px;
-    }
+    }*/
 
     .section__hr {
         margin-top: 61px;

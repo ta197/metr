@@ -1,11 +1,17 @@
 <?php
 namespace application\models;
-use  engine\core\db\DB, engine\core\base\Model;
+use  engine\core\db\DB, engine\core\ToString;
 
-class Goods extends Model
+class Goods extends ToString
 {
     static public $table = 'goods';
     static public $pk = 'goods_id';
+
+    static public $page_link = [
+        'one' => 'catalog/goods/g/',
+      ];
+    
+      static public $string = ['name'];
      
 /////////////////////////////////////////////////////////////////////
     /**

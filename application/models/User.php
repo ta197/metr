@@ -76,7 +76,8 @@ class User extends Model
 
 public function save(){
     $sql  = "INSERT INTO `user`(login, password, name, email, role) VALUES (?, ?, ?, ?, ?)";
-    $user = DB::prepare($sql)->execute([$this->attributes['login'], $this->attributes['password'], $this->attributes['name'], $this->attributes['email'], $this->attributes['role']]);
+    $user = DB::prepare($sql)
+        ->execute([$this->attributes['login'], $this->attributes['password'], $this->attributes['name'], $this->attributes['email'], $this->attributes['role']]);
     return $id  = DB::lastInsertId();
 }
   

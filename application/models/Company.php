@@ -1,8 +1,8 @@
 <?php
 namespace application\models;
-use  engine\core\db\DB, engine\core\base\Model;
+use  engine\core\db\DB, engine\core\base\Model, engine\core\ToString;
 
-class Company extends Model
+class Company extends ToString
 {
     static public $pk = 'company_id';
     static public $table = 'companies';
@@ -20,17 +20,70 @@ class Company extends Model
     public $year;
     public $company_extend;
     
-    public $addresses =[];
-
+    public $addresses;
+   public $full_places;
     static public $sql;
+
+    static public $page_link = [
+        'one' => 'company/card/name/',
+    ];
+    
+    static public $string = ['primary_key'];
     
 /////////////////////////////////////////////////////////////////////
      /**
      * 
      */   
-    //public function __construct(){
+    public function __construct(){
+        parent::__construct();
+
+        if($this->full_places){
+            $places = explode("~~", $this->full_places);
+            foreach ($places as $place){
+            $place = ltrim($place, " | ");
+            if($place){
+                $this->arrPlaces[] = (new Place())->setFullPlace($place);
+            }
+        }
+    
+        }
+       
+       
+           
         
-    //}
+    }
+
+/////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////
+    /**
+     * 
+     */ 
+  // public function __toString()
+   // {
+       //$arrString = $this->arrProps();
+    //var_dump( $arrString); die;
+      //return implode(static::$delim, $arrString);
+      //return $str = $arrString['company_name'].$arrString['street']. $arrString['house'];
+     //return $arrString['street'].', '. $arrString['house'];
+
+   // }
+
+/////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////
+    /**
+     * 
+     */ 
+  // public function __toString()
+   // {
+       //$arrString = $this->arrProps();
+    //var_dump( $arrString); die;
+      //return implode(static::$delim, $arrString);
+      //return $str = $arrString['company_name'].$arrString['street']. $arrString['house'];
+     //return $arrString['street'].', '. $arrString['house'];
+
+   // }
+
+/////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////
     /**

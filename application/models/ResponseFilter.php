@@ -2,7 +2,7 @@
 namespace application\models;
 use engine\core\base\Model;
 
-class ResponseFilter extends Model
+class ResponseFilter
 {
     public $business =[];
     public $legal = [];
