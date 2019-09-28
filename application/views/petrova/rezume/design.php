@@ -1,5 +1,5 @@
         <div class= "header__breadcrumb side-content top-content">
-            <a href="/petrova/rezume/">резюме Петровой Т.В.</a> |   дизайн
+            <a href="/petrova">резюме Петровой Т.В.</a> |   дизайн
         </div>
         
         <header class="side-content">

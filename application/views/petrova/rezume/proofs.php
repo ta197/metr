@@ -14,7 +14,7 @@
 			<h2>Образование</h2>
 				<p class="lowered_15 full_width">Арзамасский педагогический институт (очно, 1996 год окончания) по специальности филология (учитель русского языка и литературы). </p>
 				<br/>
-                <a href="/petrova/rezume/education" class="button-dark ">об образовании</a>
+                <a href="/petrova/education" class="button-dark ">об образовании</a>
 		</section>
 
 		<section id="proofs-experience" class="section__hr">

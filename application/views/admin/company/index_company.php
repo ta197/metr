@@ -8,7 +8,7 @@
 </ul>
 <h2 class="side-content lowered_0">Выбрать организацию для правки</h2>
 <div class="side-content adjustment">
-    <form action="/search/response/search/" method="get" class="base-form search-form">
+    <form action="/admin/answer/search/" method="get" class="base-form search-form">
         <input type="search" name="search" placeholder="Введите название организации (адрес)">
         <button type="submit"></button>
         <label for="" class="search-form__note">Например, <span class ="listing__link italic">хозяин</span></label>

@@ -1,5 +1,5 @@
 <div class= "header__breadcrumb side-content top-content">
-    <a href="/petrova/rezume/">резюме Петровой Т.В.</a>  |   дополнительно
+    <a href="/petrova">резюме Петровой Т.В.</a>  |   дополнительно
 </div>
 
 <header class="side-content">
@@ -21,7 +21,7 @@
 </section>
 <section id="hobby" class="section__hr">    
     <h2>Увлечения</h2>
-<p class="lowered_15"><a href="/petrova/rezume/education/certificate/english" target ="blank" class="blue">Английский язык.</a></p>
+<p class="lowered_15"><a href="/petrova/education/certificate/english" target ="blank" class="blue">Английский язык.</a></p>
 <p class="lowered_15">Чтение художественной литературы.</p>
 <p class="lowered_15">Путешествия.</p>       
 <p class="lowered_15">Дизайн (интерьеров, моделирование одежды, украшения).</p>     

@@ -14,10 +14,10 @@
     <p>Код ответа: $response</p>";
 ?> 
 </div>
-<h4 class ="side-content red bottom_45">Попробуйте ввести запрос в поиск или воспользуйтесь меню</h4>
+<h4 class ="side-content red bottom_45">Попробуйте вернуться назад  или воспользуйтесь поиском</h4>
     
 <div class="side-content">
-    <form action="/search/response/search/" method="get" class="base-form search-form">
+    <form action="/search/answer/search/" method="get" class="base-form search-form">
         <input type="search" name="search" placeholder="Введите название организации (адрес) или категорию...">
         <button type="submit"></button>
         <label for="" class="search-form__note">Например, <span class ="listing__link italic">обои база ленина 13</span></label>

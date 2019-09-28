@@ -1,5 +1,5 @@
 <div class= "header__breadcrumb side-content top-content">
-    <a href="/petrova/rezume">резюме Петровой Т.В.</a> |   <a href="/petrova/rezume/develop">создание сайтов</a> | сайт metrkv
+    <a href="/petrova">резюме Петровой Т.В.</a> |   <a href="/petrova/develop">создание сайтов</a> | сайт metrkv
 </div>
   
 <header class="side-content">
@@ -182,7 +182,7 @@ END</code></pre>
         <p id= "icon-shrift"><span class="notice">Типографика</span> должна была быть приближена к печатной (например, кавычки, вынесенные за полосу набора). Это напоминает о том, что сайт - электронный вариант <span class="notice">печатного издания.</span> На эту же мысль работают широкие поля (даже верхнее), отказ от привычного горизонтального меню в шапке, цвет основного фона не белый, а немного приглушенный до естественного цвета бумаги.</p>
 
         <blockquote>Такая "незадизайненность" сайта не говорит о том, что я не могу пользоваться графическими редакторами. О моих навыках и опыте дизайнера-верстальщика (правда, в полиграфии)
-            <a href="/petrova/rezume/design" class="notice"> здесь.</a>
+            <a href="/petrova/design" class="notice"> здесь.</a>
         </blockquote>
     </section>
 
@@ -199,7 +199,7 @@ END</code></pre>
     <section class="section__hr">
         <ul class = "link-buttons">
             <li class = "link-buttons__item link-buttons__item_bottom-15">
-                <a href="/petrova/rezume/develop" class="button-dark">вернуться к резюме</a>
+                <a href="/petrova/develop" class="button-dark">вернуться к резюме</a>
             </li>
         </ul>
     </section>

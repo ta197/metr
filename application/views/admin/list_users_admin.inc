@@ -7,9 +7,9 @@ if($this->route['prefix'] == '/admin/')
     echo "\t\t<th>Роль</th>\n";
 
 echo <<<HEREDOC
-        
+        <th>Логин</th>
         <th>Имя</th>
-        <th>Соообщения</th>
+        <th>Email</th>
     </tr>
 HEREDOC;
 
@@ -20,7 +20,7 @@ if($this->route['prefix'] == '/admin/'){
     echo "\n\t<tr>";
 echo <<<HEREDOC
     <td>{$user['role']}</td>
-        
+        <td>{$user['login']} </td>
         <td>{$user['name']} </td>
         <td>{$user['email']} </td>
     </tr>
@@ -30,7 +30,7 @@ HEREDOC;
         echo "\n\t<tr>";
 echo <<<HEREDOC
 <td>{$user['role']}</td>
-       
+        <td>{$user['login']} </td>
         <td>{$user['name']} </td>
         <td>{$user['email']} </td>
     </tr>
@@ -39,7 +39,7 @@ HEREDOC;
         echo "\n\t<tr>";
 echo <<<HEREDOC
     <td>{$user['role']}</td>
-           
+            <td>{$user['login']} </td>
             <td>{$user['name']} </td>
             <td>{$user['email']} </td>
         </tr>
@@ -49,9 +49,9 @@ HEREDOC;
         if($user['role'] != 'admin'){
             echo "\n<tr>";
 echo <<<HEREDOC
-         
+            <td>{$user['login']} </td>
             <td>{$user['name']} </td>
-            <td><a href ="/message/write/user/{$user['id']}">написать</a</td>
+            <td>{$user['email']} </td>
         </tr>
 HEREDOC;
        }

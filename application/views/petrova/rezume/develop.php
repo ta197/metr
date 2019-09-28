@@ -1,5 +1,5 @@
 <div class= "header__breadcrumb side-content top-content">
-    <a href="/petrova/rezume">резюме Петровой Т.В.</a> |   веб-разработчик
+    <a href="/petrova">резюме Петровой Т.В.</a> |   веб-разработчик
 </div>
    
 <header class="side-content">
@@ -18,28 +18,28 @@
 	<ul>
 		<li><h4>Backend</h4>
 		<ul>
-			<li><a href="/petrova/rezume/develop/example/metr#search">PHP*</a></li>
+			<li><a href="/petrova/develop/metr#search">PHP*</a></li>
 			<li>ООП</li>
-            <li><a href="/petrova/rezume/develop/example/metr#sql">SQL (БД MySQL)*</a></li>
+            <li><a href="/petrova/develop/metr#sql">SQL (БД MySQL)*</a></li>
 			<li>Основы Python</li>
-            <li><a href="/petrova/rezume/develop/example/metr#mvc">Паттерны проектирования*</a></li>
+            <li><a href="/petrova/develop/metr#mvc">Паттерны проектирования*</a></li>
 		</ul>
 		</li>
 		<li><h4>Frontend</h4>
 		<ul>
 			<li>HTML 5, CSS 3</li>
-			<li><a href="/petrova/rezume/develop/example/metr#bem">Методология наименований БЭМ*</a></li>
-			<li><a href="/petrova/rezume/develop/example/metr#adaptiv">Адаптивная верстка*</a></li>
-			<li><a href="/petrova/rezume/develop/example/metr#filter">JavaScript, AJAX*</a></li>
+			<li><a href="/petrova/develop/metr#bem">Методология наименований БЭМ*</a></li>
+			<li><a href="/petrova/develop/metr#adaptiv">Адаптивная верстка*</a></li>
+			<li><a href="/petrova/develop/metr#filter">JavaScript, AJAX*</a></li>
 		</ul>
 		</li>
 		<li><h4>Дополнительно</h4>
 		<ul>
-			<li><a href="/petrova/rezume/design#design-skills">Графические редакторы</a></li>
+			<li><a href="/petrova/design#design-skills">Графические редакторы</a></li>
             <li>Прототипирование в Axure</li>
-			<li><a href="/petrova/rezume/proofs">Работа с текстом</a></li>
-			<li><a href="/petrova/rezume/develop/example/metr#icon-shrift">Создание иконочных шрифтов*</a></li>
-			<li><a href="/petrova/rezume/develop/example/metr#git">Git*</a></li>
+			<li><a href="/petrova/proofs">Работа с текстом</a></li>
+			<li><a href="/petrova/develop/metr#icon-shrift">Создание иконочных шрифтов*</a></li>
+			<li><a href="/petrova/develop/metr#git">Git*</a></li>
 		</ul>
 		</li>
 	</ul>
@@ -53,7 +53,7 @@
 		
 		<ul class = "link-buttons">
 			<li class = "link-buttons__item link-buttons__item_bottom-15">
-               	<a href="/petrova/rezume/develop/example/metr" target ="_blank" class="button-dark">подробнее</a>
+               	<a href="/petrova/develop/metr" target ="_blank" class="button-dark">подробнее</a>
           		</li>  
 		</ul>
 		
@@ -65,13 +65,13 @@
                	<a href="https://github.com/ta197/metr"  target ="_blank" class="button-dark">github</a>
           		</li>   
 		</ul>
-		<p class="lowered_15"><a href="/petrova/rezume/develop/example/metr#idea" class="blue">Идея</a> была обеспечить поиск по сайту тремя способами:</p>
+		<p class="lowered_15"><a href="/petrova/develop/metr#idea" class="blue">Идея</a> была обеспечить поиск по сайту тремя способами:</p>
 		<ol>
 			<li>для тех, кому нужна услуга или товар, надо найти все организации, их предоставляющие;</li>
 			<li>для тех, кто ищет конкретную организацию;</li>
 			<li>для тех, кто ищет по отрывочным данным, например по названию улицы, номеру телефона, одному слову в названии и т.д.</li>
 		</ol>
-		<p class="lowered_15">Исходя из задачи на сайте 3 раздела: <a href="/petrova/rezume/develop/example/metr#cat" class="blue">категории</a>, <a href="/petrova/rezume/develop/example/metr#filter" class="blue">компании</a>, <a href="/petrova/rezume/develop/example/metr#search" class="blue">поиск</a>.</p>
+		<p class="lowered_15">Исходя из задачи на сайте 3 раздела: <a href="/petrova/develop/metr#cat" class="blue">категории</a>, <a href="/petrova/develop/metr#filter" class="blue">компании</a>, <a href="/petrova/develop/metr#search" class="blue">поиск</a>.</p>
        	<ul class = "link-buttons">
            	<li class = "link-buttons__item link-buttons__item_bottom-15 ">
                	<a href="/" target ="_blank" class="button-dark">на сайт</a>
@@ -90,7 +90,7 @@
 		<h2>Образование</h2>
 			<p class="lowered_15 full_width">Высшее педагогическое.</p>
 			<br/>
-            <a href="/petrova/rezume/education" class="button-dark ">об образовании</a>
+            <a href="/petrova/education" class="button-dark ">об образовании</a>
        
 	</section>
 </div>      

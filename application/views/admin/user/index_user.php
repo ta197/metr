@@ -4,7 +4,7 @@
 
 <?php include_once TITLE_H1; ?>
 
-<?php include_once '../application/views/main/list_users.inc'; ?>
+<?php include_once '../application/views/main/list_users_admin.inc'; ?>
 
 <div class="listing side-content">
     <div class="link-buttons"><a href="/admin/user/users" class="button-dark">Пользователи</a></div>
