@@ -21,7 +21,7 @@ class Company extends ToString
     public $company_extend;
     
     public $addresses;
-   public $full_places;
+    public $full_places;
     static public $sql;
 
     static public $page_link = [
@@ -34,23 +34,19 @@ class Company extends ToString
      /**
      * 
      */   
-    public function __construct(){
+    public function __construct()
+    {
         parent::__construct();
 
         if($this->full_places){
             $places = explode("~~", $this->full_places);
             foreach ($places as $place){
             $place = ltrim($place, " | ");
-            if($place){
-                $this->arrPlaces[] = (new Place())->setFullPlace($place);
+                if($place){
+                    $this->arrPlaces[] = (new Place())->setFullPlace($place);
+                }
             }
         }
-    
-        }
-       
-       
-           
-        
     }
 
 /////////////////////////////////////////////////////////////////////
@@ -277,6 +273,28 @@ class Company extends ToString
             WHERE  c.archive IS NULL AND  places_cats.cat_id = ?";
         return  $this;
     }
+
+///////////////////////////////////////////////////////////////////// 
+///////////////////////////////////////////////////////////////////// 
+/**
+ * 
+ */   
+public function getCompaniesByCentre(){
+   // $id = $this->clearInt($id);
+    static::$sql = "SELECT
+        c.company, c.company_id, c.site, legal.name, 
+        p.unit_floor, p.unit_not,
+        phones_to_string(p.tel, p.addtel, p.cell, p.add_cell) AS phones,
+        company_to_string(c.name_type, c.shop, legal.name, c.name_legal, c.quotes, c.company) AS company_name
+    FROM `companies` AS c
+    LEFT JOIN `places` AS p ON (p.company_id =  c.company_id)
+    LEFT JOIN `legal` ON (legal.id = c.legal)
+    LEFT JOIN `centres` ON (centres.id = p.centre)
+    WHERE centres.id = ?
+    GROUP BY c.company_id
+    ORDER BY c.company";
+    return  $this;
+}
 
 ///////////////////////////////////////////////////////////////////// 
 /**

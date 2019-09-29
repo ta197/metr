@@ -7,14 +7,17 @@ class FrontController
 {
   use Singleton; 
 
-  const MAP_ROUTES = 'map_routes.php';
+  const MAP_ROUTES = MAPS.'/map_routes.php';
   
   private $_controller, 
           $_action, 
           $_params, 
           $_body;
+
   private $splits;
+
   private $route = [];
+
   private $order = [0=>'modul', 1=>'controller', 2=>'action'];
 
 /**
@@ -30,11 +33,13 @@ class FrontController
   final private function __construct()
   { 
     $url = $_SERVER['REQUEST_URI'];
-    $this->routes = include_once(ROOT.'/application/config/'.self::MAP_ROUTES);
+
+    $this->routes = include_once(self::MAP_ROUTES);
     $route = $this->isCustom($this->routes, $url);
     if($route){
       $url = $this->realUrl($route);
     }
+    
     $this->splits($url)
           ->prefix()->route()->baseUrl()
           ->controller()->action();
@@ -44,7 +49,7 @@ class FrontController
   /**
    * ищет URL в таблице маршрутов 
    * и если находит, возвращает массив элементов маршрута. иначе - пустой массив
-   * @param array $routes, string $url  //входящий URL 
+   * @param array, @param string: $routes, $url  //входящий URL 
    * @return array
    */
   private function isCustom($routes, $url) 
@@ -62,13 +67,12 @@ class FrontController
     return [];
   }
 
-///////////////////////////////////////////////////////////////////// 
 /////////////////////////////////////////////////////////////////////
-  /**
-   * берет массив элементов custom-маршрута и склеивает реальный url
-   * @param array $route 
-   * @return string
-   */
+ /**
+  * берет массив элементов custom-маршрута и склеивает реальный url
+  * @param array $route 
+  * @return string
+  */
   private function realUrl($route) 
   {
     $url = '';
@@ -85,21 +89,21 @@ class FrontController
    return $url;
   }
 
-///////////////////////////////////////////////////////////////////// 
-
 /////////////////////////////////////////////////////////////////////
-  /**
-   * 
-   */
+ /**
+  * @param string $url 
+  * @return object
+  */
   private function splits($url) 
   {
     $this->splits = explode('/', trim($url,'/'));
     return $this;
   }
-/////////////////////////////////////////////////////////////////////
+
 /////////////////////////////////////////////////////////////////////
  /**
   *  определяет какой модуль, вырезает его из $splits
+  *  @return object
   */
   private function prefix()
   {
@@ -112,23 +116,23 @@ class FrontController
     }
     $this->route['prefix'] = $prefix.'/';
     return $this;
-
   }
+
 /////////////////////////////////////////////////////////////////////
-  /**
-   * 
-   */
+ /**
+  *  @return object
+  */
   private function route() 
   {
     $this->route['controller'] = (!empty($this->splits[0]) ? $this->splits[0] : 'index');
     $this->route['action'] = (!empty($this->splits[1]) ? $this->splits[1] : "index_{$this->route['controller']}");
     return $this;
   }
-/////////////////////////////////////////////////////////////////////  
+
 /////////////////////////////////////////////////////////////////////
-  /**
-   * 
-   */
+ /**
+  *  @return object
+  */
   private function baseUrl() 
   {
     $baseUrl = rtrim($this->route['prefix'], '/');  
@@ -145,11 +149,11 @@ class FrontController
     $this->route['base_url'] = !empty($baseUrl) ? $baseUrl : '/';
     return $this;
   }
-///////////////////////////////////////////////////////////////////// 
+
 /////////////////////////////////////////////////////////////////////
-  /**
-   * 
-   */
+ /**
+  *  @return object
+  */
   public function controller() 
   {
     $this->_controller = '\application\controllers\\'
@@ -159,32 +163,33 @@ class FrontController
                       .'Controller';
     return $this;
   }
-///////////////////////////////////////////////////////////////////// 
+
 /////////////////////////////////////////////////////////////////////
-  /**
-   * 
-   */
+ /**
+  *  @return object
+  */
   public function action() 
   {
     $action = explode('_', $this->route['action']);
     $this->_action = $this->lowerCamelCase($action[0]).'Action';
     return $this;
   }
-///////////////////////////////////////////////////////////////////// 
 
 /////////////////////////////////////////////////////////////////////
-    /**
-     * добавляет маршрут в таблицу маршрутов
-     * 
-     * @param string $regexp регулярное выражение маршрута
-     * @param array $route маршрут ([controller, action, params])
-     */
-    public function add($regexp, $route = []) {
-      $this->routes[$regexp] = $route;
+ /**
+  * добавляет маршрут в таблицу маршрутов
+  * 
+  * @param string $regexp регулярное выражение маршрута
+  * @param array $route маршрут ([controller, action, params])
+  */
+  public function add($regexp, $route = []) 
+  {
+    $this->routes[$regexp] = $route;
   }
+
 /////////////////////////////////////////////////////////////////////
  /**
-  *  
+  *   @return void
   */      
   public function run() 
   {
@@ -233,7 +238,6 @@ class FrontController
         $this->_params = array_combine($keys, $values);
     }
   }
-
     
 /////////////////////////////////////////////////////////////////////
  /**
@@ -247,7 +251,7 @@ class FrontController
   }
 
 /////////////////////////////////////////////////////////////////////
-  /**
+ /**
   * преобразует имена к виду camelCase
   * @param string $name строка для преобразования
   * @return string
@@ -256,37 +260,13 @@ class FrontController
   {
     return lcfirst($this->upperCamelCase($name));
   }
-  
 
-
-/////////////////////////////////////////////////////////////////////
-  //   /**
-  //    * ищет URL в таблице маршрутов
-  //    * @param string $url входящий URL
-  //    * @return boolean
-  //    */
-  //   public function matchRoute($url) {
-  //     foreach($this->routes as $pattern => $route){
-  //         if(preg_match("#$pattern#i", $url, $matches)){
-  //             foreach($matches as $k => $v){
-  //                 if(is_string($k)){
-  //                     $route[$k] = $v;
-  //                 }
-  //             }
-  //             if(!isset($route['action'])){
-  //                 $route['action'] = 'index_index';
-  //             }
-  //             $this->route = $route;
-  //             return true;
-  //         }
-  //     }
-  //     return false;
-  // }  
 /////////////////////////////////////////////////////////////////////
  /**
   *  
   */
-  public function __get($prop){
+  public function __get($prop)
+  {
     switch($prop):
       case 'modul': return $this->route['modul'];
       case 'route': return $this->route;
@@ -300,7 +280,8 @@ class FrontController
  /**
   *  
   */
-  public function getParams() {
+  public function getParams() 
+  {
     return $this->_params;
   }
 
@@ -308,7 +289,8 @@ class FrontController
  /**
   *  
   */
-  public function getBaseUrl() {
+  public function getBaseUrl() 
+  {
     return $this->_baseUrl;
   }
 
@@ -316,7 +298,8 @@ class FrontController
  /**
   *  
   */
-  public function getController() {
+  public function getController() 
+  {
     return $this->_controller;
   }
 
@@ -324,7 +307,8 @@ class FrontController
  /**
   *  
   */
-  public function getAction() {
+  public function getAction() 
+  {
     return $this->_action;
   }
 
@@ -332,7 +316,8 @@ class FrontController
  /**
   *  
   */
-  public function getBody() {
+  public function getBody() 
+  {
     return $this->_body;
   }
 
@@ -340,7 +325,8 @@ class FrontController
  /**
   *  
   */
-  public function setBody($body) {
+  public function setBody($body) 
+  {
     $this->_body = $body;
   }
 

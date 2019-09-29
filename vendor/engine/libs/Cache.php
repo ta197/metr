@@ -7,16 +7,18 @@ class Cache {
        //установить права на директорию, куда будет складываться кэш
     }
 
-    public function set($key, $data, $seconds = 3600){
+    public function set($key, $data, $seconds = 3600)
+    {
         $content['data'] = $data;
         $content['end_time'] = time() + $seconds;
         if(file_put_contents(CACHE.'/'. md5($key) . '.txt', serialize($content))){
             return true;
         }
-            return false;
+        return false;
     }
 
-    public function get($key){
+    public function get($key)
+    {
         $file = CACHE.'/'. md5($key) . '.txt';
         if(file_exists($file)){
             $content = unserialize(file_get_contents($file));
@@ -28,7 +30,8 @@ class Cache {
         return false;
     }
 
-    public function delete($key){
+    public function delete($key)
+    {
         $file = CACHE.'/'. md5($key) . '.txt';
         if(file_exists($file)){
             unlink($file);

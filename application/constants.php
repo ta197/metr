@@ -1,11 +1,12 @@
 <?php
-const DEBUG = 0;
+const DEBUG = 1;
 //define( ' DIR_SEPARATOR ', '/' );
    define( 'ROOT', $_SERVER['DOCUMENT_ROOT']);
 const PREFIX = ['admin', 'petrova']; // not main
 const CONFIG = ROOT.'/application/config/config.php';
+const MAPS = ROOT.'/application/config/maps';
 const CACHE = ROOT.'/tmp/cache';
-const BASE_TITLE = 'm2';
+const BASE_TITLE = 'м2';
 
 /*inc для  views */
 const NAV_ICON = ROOT.'/application/views/main/nav_icon.inc';
