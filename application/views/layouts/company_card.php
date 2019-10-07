@@ -2,8 +2,8 @@
 <html lang="ru-Ru">
 <head>
     <meta charset="UTF-8">
-    <? if(isset($this->page->title)):?>
-    <title><?= $this->page->title; ?></title>
+    <? if(isset($page->title)):?>
+    <title><?= $page->title; ?></title>
     <? endif; ?>
     <link rel="stylesheet" href="/public/css/style.css" type="text/css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">

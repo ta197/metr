@@ -17,7 +17,7 @@
         <a  href="company" class="rout__icon rout__icon_lists">компании</a>
         <a  href="search" class="rout__icon rout__icon_search">поиск</a>
 </div>
-<?php 
+<?php
     // echo '<pre>';
     // print_r($this);
     // echo '</pre>';

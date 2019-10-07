@@ -7,7 +7,7 @@
                 
                 <?php 
                 $d = '';
-                if($this->page->id_page == 55 OR $this->page->id_page == 48) $d = ' footer__nav-item_activ  footer__nav-item_disabled'; ?>
+                if($page->id_page == 55 OR $page->id_page == 48) $d = ' footer__nav-item_activ  footer__nav-item_disabled'; ?>
                 <li class="footer__column-item"><a  href="/petrova" class="footer__nav-item<?= $d ?>">главная</a></li><br/>
             </ul>
         </div>

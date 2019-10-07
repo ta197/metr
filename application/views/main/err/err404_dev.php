@@ -36,7 +36,7 @@
     <pre>
     <?php
     //print_r($_SESSION['user']);
-    //print_r($this)
+    print_r($this)
     ?>
     </pre>
 </div>

@@ -2,7 +2,7 @@
     Такой страницы не существует!
 </div>              
                 
-<?php include_once TITLE_H1; ?> 
+<?php include TITLE_H1; ?> 
 
 <h4 class ="side-content red bottom_45">Попробуйте вернуться назад  или воспользуйтесь поиском</h4>
     

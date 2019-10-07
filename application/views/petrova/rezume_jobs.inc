@@ -3,7 +3,7 @@
 <ul class="footer__column">
 
 <?php foreach($nav['rezume_jobs'] as $k=>$item): ?>
-    <?php if($item['id_page'] === $this->page->id_page){
+    <?php if($item['id_page'] === $page->id_page){
             $disabled = ' footer__nav-item_activ  footer__nav-item_disabled'; 
     }else{
             $disabled = '';

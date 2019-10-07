@@ -2,11 +2,11 @@
     <?= (!empty($errQuery)) ?? ''; ?>
 </p>    
     
-    <? if($this->search->errors['others'] && is_array($this->search->errors['others'])){?>
+    <? if($search->errors['others'] && is_array($search->errors['others'])){?>
         <p class="side-content notice">
         <? 
             
-            echo implode('<br>', $this->search->errors['others']);
+            echo implode('<br>', $search->errors['others']);
            
         ?>
          </p> 

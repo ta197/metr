@@ -13,6 +13,7 @@ class ErrorHandler
      */
     public function __construct()
     {
+        ob_start();
         if(DEBUG){
             error_reporting(-1);
         }else{
@@ -20,8 +21,7 @@ class ErrorHandler
         }
 
         set_error_handler([$this, 'errorHandler']);
-        ob_start();
-
+        
         register_shutdown_function([$this, 'fatalErrorHandler']);
         set_exception_handler([$this, 'exceptionHandler']);
     }
@@ -69,14 +69,14 @@ class ErrorHandler
                                 $error['message'], 
                                 $error['file'], 
                                 $error['line']);
-            ob_end_clean();
+            ob_clean();
             $this->displayError('Fatal', 
                                 $error['type'], 
                                 $error['message'], 
                                 $error['file'], 
                                 $error['line']);
         }else{
-            ob_end_flush();
+           // ob_end_clean();
            exit;
         }
     }

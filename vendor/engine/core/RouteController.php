@@ -26,6 +26,9 @@ class RouteController
         $this->view->file_layout =  $this->file_layout;
 
         $this->output = $this->view->render();
+
+      //  $this->output = $this->view->display( $this->output); //TODO: для шаблонизатора
+       
         $this->fc->setBody($this->output);
     }
 

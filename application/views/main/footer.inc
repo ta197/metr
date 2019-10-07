@@ -19,9 +19,9 @@
                     <li class="footer__column-item"><a href="/user/profile/id/<?= $sessUserId ?>" class="footer__nav-item<?= $activ ?>">личный кабинет</a></li><br/>
                 <?php }?> 
 
-            <li class="footer__column-item"><a href="/user/logout" class="footer__nav-item">выйти</a></li>
+                <li class="footer__column-item"><a href="/user/logout" class="footer__nav-item">выйти</a></li>
             <? }else{ ?>
-            <li class="footer__column-item"><a href="/user/login" class="footer__nav-item">войти</a></li>
+                <li class="footer__column-item"><a href="/user/login" class="footer__nav-item">войти</a></li>
             <? } ?>
 
             </ul>

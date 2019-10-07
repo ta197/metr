@@ -50,10 +50,12 @@
     </section>
     <section id="search" class="section__hr">
         <h3>Раздел "Поиск" (PHP)</h3>	
-            <p>Сайт написан на PHP. И на нем же написан обработчик поиска. </p>
+            <p>Сайт написан на PHP, используя объектно-ориентированный подход. И обработчик поиска тоже. Код поиска я оформила как отдельный виджет, чтобы его можно было потом переиспользовать.</p>
+            <p>А весь код сайта можно использовать как небольшой фреймворк. На нем я написала и резюме, и пишу админку.</p>
+            <p>Поиск привожу просто как пример написанного мной класса.</p>
             <p>Целью было написать такой скрипт, который бы не только находил данные по вхождению слова, но и выводил их в зависимости от того, к какому разделу сайта оносится искомое: компания ли это, товар ли, категория ли, а может быть, и то, и то. Кроме того, наиболее вероятный ответ должен быть верхним в списке.</p>
-            <p>Кстати, обработка данных для фильтра раздела "Компании" тоже написана на PHP.</p>
-            <blockquote>Я не брала готовый код, а писала сама, потому что считаю, что так эффективнее делать, пока учишься. А JS-код, наоборот, чаще брала готовый (кроме кода фильтра).</blockquote>
+           
+            <blockquote>Я не брала готовый код, а писала сама, потому что считаю, что так эффективнее учиться. А JS-код, наоборот, иногда брала готовый.</blockquote>
             <ul class = "link-buttons">
                 <li class = "link-buttons__item link-buttons__item_bottom-15">
                     <a href="/search" target ="_blank" class="button-dark">"Поиск" на сайте</a>
@@ -63,12 +65,12 @@
       
     <section id="mvc" class="section__hr">
         <h3>Архитектура (MVC)</h3>	
-            <p>Логика, представление и работа с данными у меня разделены. Я попыталась придерживаться модели <span class="notice">MVC.</span> Это определило структуру каталогов в корне сайта (m, v, c): модели, представления и контроллеры соответственно. </p>
+            <p>Логика, представление и работа с данными у меня разделены. Я попыталась придерживаться модели <span class="notice">MVC.</span></p>
             <p>Применяла и другие шаблоны, например, <span class="notice">Singleton.</span> Он используется и во фронт-контроллере, и в классе, работающем с БД.</p>
     </section>
     <section id="sql" class="section__hr">
-        <h3>База данных (MySQL)</h3>	
-        <p>При проектировании БД основной принцип был такой: данные не должны дублироваться, а в зависимости от запроса БД должна сама компоновать данные перед тем, как их выдать. Достигается это с помощью использования <span class="notice">функций</span> и <span class="notice">представлений</span>, написанных на SQL, хранящихся в базе и выполняемых соответственно на стороне сервера базы данных.</p>
+        <h3>Запросы к базе данных (MySQL)</h3>	
+        <p>При проектировании БД основной принцип был такой: в зависимости от запроса БД должна сама компоновать данные перед тем, как их выдать. Достигается это с помощью использования <span class="notice">функций</span> и <span class="notice">представлений</span>, написанных на SQL, хранящихся в базе и выполняемых соответственно на стороне сервера базы данных.</p>
         <h5 class="lowered_30">Пример кода определения функции (places_to_string)</h5>
         <pre><code>BEGIN
 SET @city = `p.city`, 
@@ -86,28 +88,60 @@ CONCAT_WS(', ',
             @name_center, @detail, 
             CONCAT(@unit_floor, ' этаж'), @unit_not);
 END</code></pre>
-    <h5 class="lowered_15">Пример запроса</h5>
-            <pre><code>public function getCompaniesByCategory($id){    
-  return self::$db->queryEach(
-    "SELECT
-    p.place_id,
-    c.company, LEFT(c.company, 1) AS letter, c.company_id, c.site, 
-    company_to_string(c.name_type, c.shop, legal.name, c.name_legal, c.quotes, c.company) AS company_name, 
-    GROUP_CONCAT(DISTINCT CONCAT_WS('', places_to_string(p.city, p.street, p.house, centres.address, centres.name_center, p.detail, p.unit_floorp.unit_not),
-               	phones_to_string(p.tel, p.addtel, p.cell, p.add_cell))
-                SEPARATOR '~~') 
-                AS addresses
-    FROM `places` AS p
-    LEFT JOIN `places_cats` ON (places_cats.place_id = p.place_id)
-    JOIN `companies` AS c ON (p.company_id =  c.company_id)
-    LEFT JOIN `centres` ON (p.centre = centres.id)
-    LEFT JOIN `legal` ON (legal.id = c.legal)
-    WHERE c.archive IS NULL AND places_cats.cat_id = ?
-    GROUP BY c.company_id
-    ORDER BY c.company",
-    [$id]);
-  }</code></pre>
-            <p>Конечно, такой подход, на первый взгляд, усложняет код некоторых запросов, но зато помогает гибко манипулировать данными.</p>
+
+<h5 class="lowered_30">Создание представления</h5>
+        <pre><code> CREATE VIEW address
+        AS
+        SELECT company_id,
+        places_to_string(p.city, p.street, p.house, centres.address, centres.name_center, p.detail, null, p.unit_not)
+        AS ul,
+        CONCAT_WS('^', company_id, places_to_string(p.city, p.street, p.house, centres.address, centres.name_center, p.detail, null, p.unit_not)) 
+        AS id_ul,
+        SUBSTRING_INDEX(GROUP_CONCAT(phones_to_string(p.tel, p.addtel, p.cell, p.add_cell) SEPARATOR ', '), ', ', 2)
+        AS phone
+        FROM `places` AS p
+        LEFT JOIN `centres` ON (p.centre = centres.id)
+        GROUP BY id_ul</code></pre>
+
+    <h5 class="lowered_15">Пример запроса, использующего представление (address) и функцию (company_to_string)</h5>
+            <pre><code>SELECT
+        c.year AS ancor,
+        c.company, c.company_id, c.site, legal.name, 
+        company_to_string(c.name_type, c.shop, legal.name, c.name_legal, c.quotes, c.company) AS company_name,
+            
+        GROUP_CONCAT(CONCAT_WS('', a.ul, a.phone)
+            SEPARATOR '~~') 
+            AS addresses
+        FROM `address` AS a
+        RIGHT JOIN `companies` AS c ON (a.company_id =  c.company_id)
+        LEFT JOIN `legal` ON (legal.id = c.legal)
+        WHERE c.archive $archive AND  c.year >= ?
+        GROUP BY c.company_id
+        ORDER BY c.year DESC, c.company ASC</code></pre>
+
+        <h5 class="lowered_15">... или не использующего представление, а объединяющего несколько таблиц в одном запросе</h5>
+            <pre><code>SELECT
+            p.place_id,
+            c.company, LEFT(c.company, 1) AS letter, c.company_id, c.site, COUNT(goods.goods_id) as cat_catalog,
+            company_to_string(c.name_type, c.shop, legal.name, c.name_legal, c.quotes, c.company) AS company_name, 
+            GROUP_CONCAT(DISTINCT CONCAT_WS('', places_to_string(p.city, p.street, p.house, centres.address, centres.name_center, p.detail, p.unit_floor, p.unit_not),
+                       	phones_to_string(p.tel, p.addtel, p.cell, p.add_cell))
+                        SEPARATOR '~~') 
+                        AS addresses
+            FROM `places` AS p
+            LEFT JOIN `places_cats` ON (places_cats.place_id = p.place_id)
+            JOIN `companies` AS c ON (p.company_id =  c.company_id)
+            LEFT JOIN `centres` ON (p.centre = centres.id)
+            LEFT JOIN `legal` ON (legal.id = c.legal)
+            LEFT JOIN `places_goods` ON (places_goods.place_id = places_cats.place_id)
+            LEFT JOIN `goods` ON (goods.goods_id = places_goods.goods_id AND goods.cat_id = places_cats.cat_id)
+            WHERE  c.archive IS NULL AND  places_cats.cat_id = ?
+            GROUP BY c.company_id
+            ORDER BY c.company</code></pre>
+            <p>Конечно, такой подход, на первый взгляд, усложняет код некоторых запросов, но зато помогает гибко манипулировать данными. </p>
+            <blockquote>Например, сеть магазинов может иметь несколько адресов, но и по одному адресу на разных этажах магазин предлагает совершенно разный ассортимент: 
+            на первом этаже - исключительно напольные покрытия, а в цоколе - сантехнику. Если нужен весь список компаний, то видим компании с их адресами, 
+            но вот если надо отразить где продается сантехника, то выбираются нужные магазины и не просто указываются их адреса, а еще и точно где: например, в цоколе, если только там.</blockquote>
         </section>
 
         <section id="bem" class="section__hr">

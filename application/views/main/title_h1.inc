@@ -2,28 +2,28 @@
 $indent = '';
 $counted = !empty($counted) ? $counted : '';
 
-if(substr($this->page->header_title, 0, 2) === "«") $indent = ' header_quote-indent';
+if(substr($page->header_title, 0, 2) === "«") $indent = ' header_quote-indent';
     echo '<header class="side-content">';
-        
+       // echo  $page->header_title; die;
             
-           if( !$this->page->header_title && $this->page->err){
+           if( !$page->header_title && $page->err){
                echo '<h1 class="header__title red" lang="ru-Ru">';
                 if(DEBUG == 1){
-                    //throw new \Exception($this->page->err, 404);
-                    echo $this->page->err;
+                    //throw new \Exception($page->err, 404);
+                    echo $page->err;
                 }else{
                     echo 'Ой! Ошибка на странице :(';
                 }
             }else{
                 echo '<h1 class="header__title'.$indent.'" lang="ru-Ru">';
-                echo $this->page->header_title;
+                echo $page->header_title;
             }
 
-            if(!empty($this->page->subh1))
-                echo '<div class = "header__substr-title">'.$this->page->subh1;
+            if(!empty($page->subh1))
+                echo '<div class = "header__substr-title">'.$page->subh1;
             if(!empty($counter))
                 echo '<span class = "counter">('.$counted . $counter.')</span>';
-            if(!empty($this->page->subh1)) echo '</div>';
+            if(!empty($page->subh1)) echo '</div>';
 
             
     echo '</h1>'."\n";

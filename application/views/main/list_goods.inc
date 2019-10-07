@@ -12,7 +12,7 @@
                     echo "\t\t".'<dd class="listing__company-address leftfield">';
                     
                     //echo '<span class="gap">| </span>';
-                    if(!isset($this->name->company_id)) echo '~';
+                    if(!isset($name->company_id)) echo '~';
                     echo round((int)$item->price, 2). ' руб.';
                     if(isset($item->unit)) echo ' '."$item->unit"."</dd>\n"; 
                 }
