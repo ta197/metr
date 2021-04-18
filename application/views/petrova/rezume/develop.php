@@ -84,7 +84,7 @@
 <div class="side-content">
 	<section class="section__hr">
 	<h2>Электронные сертификаты</h2>	
-		<? include_once ROOT.'/application/views/petrova/petrova_certificates.inc';?>
+		<? include_once ROOT. '/application/views/petrova/petrova_geek_brains.inc';?>
 	</section>
 	<section class="section__hr">	
 		<h2>Образование</h2>

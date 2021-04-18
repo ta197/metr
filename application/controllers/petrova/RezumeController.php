@@ -1,7 +1,9 @@
 <?php
 namespace application\controllers\petrova;
 
+use application\models\Certificate;
 use  engine\core\App,  engine\core\IController;
+use engine\core\Page;
 
 class RezumeController extends ParentPetrovaController implements IController
 {
@@ -50,20 +52,36 @@ class RezumeController extends ParentPetrovaController implements IController
 
     public function educationAction()
     {
-        if(isset($this->fc->getParams()["certificate"])){
-            $id = $this->fc->getParams()["certificate"];
-            $this->view->page 
-                ->setTitle($this->view->title.' | сертификат')
-                ->setHeaderTitle('Сертификат');
-            $this->file_view = 'certificate';
+	    $cert = new Certificate();
+	    $this->view->bitrix = $cert->fields()->where('category_code= ?')->order_by('sort')->select()->fetchAll(['bitrix']);
+	    $this->view->english = $cert->fields()->where('category_code= ?')->order_by('sort')->select()->fetchAll(['english']);
+	    $this->view->retraining = $cert->fields()->where('category_code= ?')->order_by('sort')->select()->fetchAll(['retraining']);
+    }
 
-            switch($id){
-                case 'english':  
-                    $this->view->page->setSubHeaderTitle('по английскому');
-                break;
-            default:   $this->view->page->setSubHeaderTitle('');
-          }
-        }
+//////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+
+    public function certificateAction()
+    {
+	    if(null !== ($this->fc->getParams())) {
+		    if(isset($this->fc->getParams()["id"])) {
+			    $id = $this->fc->getParams()['id'];
+			    $certObj = (new Certificate())->getObjById($id);
+			    $this->view->certObj = $certObj;
+			
+			    $this->view->page
+				    ->setTitle(
+					    $this->view->title . ' | ' . $this->view->certObj->type . ' ' . $this->view->certObj->name
+				    );
+			    $this->view->page->setHeaderTitle($this->view->certObj->name);
+			    $this->view->page->setSubHeaderTitle($this->view->certObj->type);
+		    } else{
+			    throw new \Exception("Нет такого документа!", 404);
+		    }
+	    } else {
+		    $certObj = (new Certificate())->getObjById(1);
+		    $this->view->certObj = $certObj;
+	    }
     }
 
 //////////////////////////////////////////////////////////////////////

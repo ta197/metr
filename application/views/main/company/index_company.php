@@ -6,7 +6,7 @@
 <div class="side-content adjustment">
 <form name="filtersForm" action="/company/filters/search/" class="filters-form" method="get">
     <?php $i=1;?>
-    <? foreach($filters as $k=>$arr):?>
+    <? foreach($this->filters as $k=>$arr):?>
         <ul id="<?=$k?>">
             <? foreach($arr as $val):?>
                 <li><input type= "<?= $val['type']?>" id="input<?=$i?>" name="<?= $val['name']?>" value="<?=$val['value']?>"<? echo ($val['checked'] == true) ? ' checked' : '';?>>

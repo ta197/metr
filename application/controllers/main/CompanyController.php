@@ -51,7 +51,7 @@ class CompanyController extends ParentController implements IController
  ///////////////////////////////////////////////////////////////////// 
    /**
     * 
-    * для показа спискка коммппаний по фильтру
+    * для показа списка компаний по фильтру
     */
     public function filtersAction()
     {

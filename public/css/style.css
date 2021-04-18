@@ -1647,7 +1647,27 @@ blockquote {
     padding-bottom: 60px;
 }
 
-.max_600{
+/*//// картинки ///////////////////////////////////////// */
+
+.max_700{
     width: 100%;
-    max-width: 600px;  
+    max-width: 700px;
+}
+
+.max_1000{
+    width: 100%;
+    max-width: 1000px;
+}
+
+.max_800{
+    width: 100%;
+    max-width: 700px;
+}
+
+.link-dashed {
+    border-bottom: 1px dashed #bdcd
+}
+.link-dashed:hover{
+    border-bottom: none;
+    color: #1e3a4b;
 }

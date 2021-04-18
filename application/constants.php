@@ -1,5 +1,5 @@
 <?php
-const DEBUG = 0;
+const DEBUG = 1;
 //define( ' DIR_SEPARATOR ', '/' );
    define( 'ROOT', $_SERVER['DOCUMENT_ROOT']);
 const PREFIX = ['admin', 'petrova']; // not main

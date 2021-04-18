@@ -4,7 +4,7 @@
         
         <header class="side-content">
             <h1 class="header__title" lang="ru-Ru">
-				<?= $page->header_title; ?>
+			<?php echo $page->header_title; ?>
             </h1>   
         </header>
 
@@ -49,14 +49,13 @@
 
 			<li><h4>Место жительства</h4>
 			<ul>
-				<li>Н.Новгород</li>
-				<li><a href="/petrova/add#city">Арзамас</a></li>
+				<li><a href="/petrova/add#city">Н.Новгород</a></li>
+				<li>Арзамас</li>
                 <li>любой город</li>
 			</ul>
 			</li>
 			<li><h4>Рекомендации</h4>
 			<ul>
-				<li><a href="/petrova/add#recom">Шорина О.Н.</a></li>
 				<li><a href="/petrova/add#recom">Рыжова С.А.</a></li>
 			</ul>
 			</li>

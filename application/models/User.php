@@ -83,7 +83,7 @@ public function save(){
   
 /////////////////////////////////////////////////////////////////////
 
-public function login(bool $isAdmin = false){
+public function login( $isAdmin = false){
     $login = !empty(trim($_POST['login'])) ? trim($_POST['login']) : null;
     $password = !empty(trim($_POST['password'])) ? trim($_POST['password']) : null;
    
